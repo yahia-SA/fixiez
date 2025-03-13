@@ -1,0 +1,31 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+  errors:
+    unused_import: warning
+    unused_local_variable: warning
+    dead_code: warning
+    prefer_const_constructors: warning
+    nullable_type_in_catch_clause: error
+    missing_required_param: error
+    missing_return: error
+
+linter:
+  rules:
+    - avoid_print
+    - prefer_const_constructors
+    - prefer_final_fields
+    - sort_constructors_first
+    - prefer_single_quotes
+    - unnecessary_null_checks
+    - avoid_unnecessary_containers
+    - use_super_parameters
+    - always_use_package_imports
+    - annotate_overrides
+    - avoid_null_checks_in_equality_operators
+    - avoid_returning_null_for_future
+    - null_closures
+    - parameter_assignments
