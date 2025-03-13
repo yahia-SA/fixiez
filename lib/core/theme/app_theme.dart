@@ -1,5 +1,6 @@
-import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fixiez/core/theme/app_colors.dart';
 
 class AppTheme {
   static final ThemeData appTheme =ThemeData.light().copyWith(
@@ -14,10 +15,10 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: AppColors.textfield,
-        hintStyle: const TextStyle(color: AppColors.texthint92),
+        fillColor: AppColors.black,
+        hintStyle: const TextStyle(color: AppColors.texthint80),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(10.0.r),
           borderSide: const BorderSide(color: AppColors.texthint80),
         ),
       ),

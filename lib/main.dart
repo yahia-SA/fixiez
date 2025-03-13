@@ -1,4 +1,5 @@
 import 'package:fixiez/core/theme/app_theme.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -22,6 +23,14 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           theme: AppTheme.appTheme,
           home: child,
+          locale: const Locale('ar'),
+          supportedLocales: [const Locale('ar')],
+          localizationsDelegates: [
+          DefaultCupertinoLocalizations.delegate,
+          DefaultMaterialLocalizations.delegate,
+          DefaultWidgetsLocalizations.delegate,
+
+          ],
     );
   }
     );
