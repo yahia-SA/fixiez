@@ -1,4 +1,5 @@
 import 'package:fixiez/core/theme/app_theme.dart';
+import 'package:fixiez/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: AppTheme.appTheme,
-          home: child,
+          home: HomePage(),
     );
   }
     );
