@@ -6,5 +6,7 @@ class AppColors {
   static const Color white     = Color(0xFFFFFFFF);
   static const Color black     = Color(0xFF000000);
   static const Color texthint80  = Color(0xFF808080);
-  static const Color textfield = Color(0xFFDC1C1C);
+  static const Color error = Color(0xFFDC1C1C);
+  static const Color suffixIconColor = Color(0xFFC4C4C4);
+  static const Color feadbackColor = Color(0xFF455A64);
 }
