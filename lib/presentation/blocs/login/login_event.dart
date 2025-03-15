@@ -15,4 +15,5 @@ class LoginSubmitted extends LoginEvent {
   List<Object?> get props => [email, password];
 }
 class TogglePasswordVisibility extends LoginEvent {}
+class ToggleRememberMe extends LoginEvent {}
 
