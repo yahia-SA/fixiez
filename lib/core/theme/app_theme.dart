@@ -40,12 +40,24 @@ class AppTheme {
         ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor:  AppColors.black,
+        fillColor:  AppColors.white,
+        suffixIconConstraints: BoxConstraints(maxHeight: 22.h,maxWidth: 22.w),
         suffixIconColor: AppColors.suffixIconColor,
+        contentPadding: EdgeInsets.symmetric(vertical: 10.h,horizontal: 20.w),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0.r),
+          borderSide:  BorderSide(color: AppColors.texthint80,width: 1.w),
+          
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0.r),
+          borderSide:  BorderSide(color: AppColors.texthint80,width: 1.w),
+          
+        ),
         hintStyle: AppText.med14.copyWith(color: AppColors.texthint92),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0.r),
-          borderSide: const BorderSide(color: AppColors.texthint80),
+          borderSide:  BorderSide(color: AppColors.texthint80,width: 1.w),
           
         ),
       ),
