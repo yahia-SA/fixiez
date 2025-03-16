@@ -1,3 +1,4 @@
+import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class CustomerOrderText extends StatelessWidget {
         width: 326,
         height: 100,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.white,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Colors.grey, width: 0.5),
         ),
@@ -27,7 +28,7 @@ class CustomerOrderText extends StatelessWidget {
             decoration: const InputDecoration(
               hintText: 'اوصف العمل المطلوب',
               border: InputBorder.none,
-              fillColor: Colors.white,
+              fillColor: AppColors.white,
               // Remove any internal padding if necessary
               contentPadding: EdgeInsets.all(0),
             ),

@@ -1,5 +1,6 @@
 
 import 'package:carousel_slider_plus/carousel_slider_plus.dart';
+import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -33,7 +34,7 @@ class _SilderPosterWidgetStateState extends State<SilderPosterWidgetState> {
                   height: 123.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(24),
-                    border: Border.all(color: Colors.white, width: 2),
+                    border: Border.all(color: AppColors.white, width: 2),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(24),
@@ -46,7 +47,7 @@ class _SilderPosterWidgetStateState extends State<SilderPosterWidgetState> {
                       },
                       errorBuilder:
                           (context, error, stackTrace) =>
-                              const Icon(Icons.error, color: Colors.red),
+                              const Icon(Icons.error, color: AppColors.error),
                     ),
                   ),
                 );
@@ -85,7 +86,7 @@ class _SilderPosterWidgetStateState extends State<SilderPosterWidgetState> {
                   decoration: ShapeDecoration(
                     color:
                         _currentIndex == entry.key
-                            ? const Color(0xff0258C9)
+                            ?  AppColors.primary
                             : Colors.grey,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),

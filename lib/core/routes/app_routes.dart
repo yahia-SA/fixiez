@@ -1,4 +1,4 @@
-import 'package:fixiez/home/home_page.dart';
+import 'package:fixiez/presentation/pages/home/home_page.dart';
 import 'package:fixiez/presentation/pages/forgetPassword/forget_password_screen.dart';
 import 'package:fixiez/presentation/pages/login/login_screen.dart';
 import 'package:fixiez/presentation/pages/onboarding/onboarding_screen.dart';

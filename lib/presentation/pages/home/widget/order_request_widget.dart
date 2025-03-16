@@ -1,3 +1,4 @@
+import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class OrderRequestWidget extends StatelessWidget {
               Container(
                 width: 154.w,
                 height: 30.h,
-                color: Colors.white,
+                color: AppColors.white,
                 child: Center(
                   child: Directionality(
                     textDirection: TextDirection.rtl,
@@ -28,12 +29,12 @@ class OrderRequestWidget extends StatelessWidget {
                       underline: Container(),
                       icon: const Icon(
                         Icons.keyboard_arrow_down,
-                        color: Color(0xff0258C9),
+                        color: AppColors.primary,
                       ),
 
                       value: 'السبت القادم',
                       style: AppText.reg16.copyWith(
-                        color: const Color(0xff0258C9),
+                        color:  AppColors.primary,
                       ),
                       onChanged: (String? newValue) {
                         // Handle selection changes for first column
@@ -70,7 +71,7 @@ class OrderRequestWidget extends StatelessWidget {
               Container(
                 width: 154.w,
                 height: 30.h,
-                color: Colors.white,
+                color: AppColors.white,
                 child: Directionality(
                   textDirection: TextDirection.rtl,
                   child: Center(
@@ -79,10 +80,10 @@ class OrderRequestWidget extends StatelessWidget {
                       underline: Container(),
                       icon: const Icon(
                         Icons.keyboard_arrow_down,
-                        color: Color(0xff0258C9),
+                        color: AppColors.primary,
                       ),
                       style: AppText.reg16.copyWith(
-                        color: const Color(0xff0258C9),
+                        color:  AppColors.primary,
                       ),
                       onChanged: (String? newValue) {
                         // Handle selection changes for second column

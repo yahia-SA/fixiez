@@ -1,4 +1,5 @@
 import 'package:fixiez/core/constants/image_assets.dart';
+import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,10 +33,10 @@ class _LocationContainerState extends State<LocationContainer> {
 
           constraints: const BoxConstraints(minHeight: 48.0),
           decoration: ShapeDecoration(
-            color: Colors.white,
+            color: AppColors.white,
 
             shape: RoundedRectangleBorder(
-              side: const BorderSide(color: Colors.white, width: 1),
+              side: const BorderSide(color: AppColors.white, width: 1),
               borderRadius: BorderRadius.circular(12),
             ),
           ),
@@ -90,7 +91,7 @@ class _LocationContainerState extends State<LocationContainer> {
           width: 328.w,
           height: 48.h,
           decoration: ShapeDecoration(
-            color: Colors.white,
+            color: AppColors.white,
 
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),

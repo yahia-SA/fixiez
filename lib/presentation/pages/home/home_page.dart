@@ -1,10 +1,11 @@
+import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
-import 'package:fixiez/home/widget/customer_order_text.dart';
-import 'package:fixiez/home/widget/customer_reviews_list.dart';
-import 'package:fixiez/home/widget/location_contanier.dart';
-import 'package:fixiez/home/widget/order_request_widget.dart';
-import 'package:fixiez/home/widget/service_list_widget.dart';
-import 'package:fixiez/home/widget/silder_poster_widget.dart';
+import 'package:fixiez/presentation/pages/home/widget/customer_order_text.dart';
+import 'package:fixiez/presentation/pages/home/widget/customer_reviews_list.dart';
+import 'package:fixiez/presentation/pages/home/widget/location_contanier.dart';
+import 'package:fixiez/presentation/pages/home/widget/order_request_widget.dart';
+import 'package:fixiez/presentation/pages/home/widget/service_list_widget.dart';
+import 'package:fixiez/presentation/pages/home/widget/silder_poster_widget.dart';
 import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -32,7 +33,7 @@ class HomePage extends StatelessWidget {
                       47,
                     ),
                     decoration: ShapeDecoration(
-                      color: const Color(0xFF0258C9),
+                      color:  AppColors.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -69,7 +70,7 @@ class HomePage extends StatelessWidget {
                     child: TextWidget(
                       'اراء العملاء ',
                       style: AppText.bold20.copyWith(
-                        color: const Color(0xff0258C9),
+                        color:  AppColors.primary,
                       ),
                     ),
                   ),
