@@ -1,15 +1,12 @@
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_theme.dart';
-import 'package:fixiez/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-    WidgetsFlutterBinding.ensureInitialized();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
 
@@ -23,18 +20,19 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context, child) { 
-        return MaterialApp( 
+      builder: (context, child) {
+        return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Fixiez',
           theme: AppTheme.appTheme,
           onGenerateRoute: RouteGenerator.generateRoute,
-          initialRoute: AppRoutes.initial, 
+          initialRoute: AppRoutes.initial,
           builder: (context, child) {
-            return Directionality(textDirection: TextDirection.rtl, child: child!);
+            return Directionality(
+              textDirection: TextDirection.rtl,
+              child: child!,
+            );
           },
-          
-        
         );
       },
     );
