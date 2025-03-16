@@ -2,7 +2,7 @@
 
 import 'package:fixiez/core/constants/image_assets.dart';
 import 'package:fixiez/core/theme/app_text.dart';
-import 'package:fixiez/shared/text_widget.dart';
+import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

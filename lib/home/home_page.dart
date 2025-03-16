@@ -5,7 +5,7 @@ import 'package:fixiez/home/widget/location_contanier.dart';
 import 'package:fixiez/home/widget/order_request_widget.dart';
 import 'package:fixiez/home/widget/service_list_widget.dart';
 import 'package:fixiez/home/widget/silder_poster_widget.dart';
-import 'package:fixiez/shared/text_widget.dart';
+import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

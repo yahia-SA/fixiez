@@ -1,5 +1,5 @@
 import 'package:fixiez/core/theme/app_text.dart';
-import 'package:fixiez/shared/text_widget.dart';
+import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
