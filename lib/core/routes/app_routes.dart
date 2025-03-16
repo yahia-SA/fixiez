@@ -1,3 +1,4 @@
+import 'package:fixiez/home/home_page.dart';
 import 'package:fixiez/presentation/pages/forgetPassword/forget_password_screen.dart';
 import 'package:fixiez/presentation/pages/login/login_screen.dart';
 import 'package:fixiez/presentation/pages/onboarding/onboarding_screen.dart';
@@ -25,7 +26,7 @@ class RouteGenerator {
       case AppRoutes.initial:
         return MaterialPageRoute(builder: (_) => const OnBoarding());
       case AppRoutes.home:
-      //   return MaterialPageRoute(builder: (_) => const Home());
+        return MaterialPageRoute(builder: (_) => const HomePage());
       case AppRoutes.login:
         return MaterialPageRoute(builder: (_) => Login());
       case AppRoutes.signup:
