@@ -34,7 +34,6 @@ class OtpScreen extends StatelessWidget {
       body: Padding(
         padding:  EdgeInsets.symmetric(horizontal:  24.w),
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Center(
               child: SvgPicture.asset(
