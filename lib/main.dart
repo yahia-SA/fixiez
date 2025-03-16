@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           title: 'Fixiez',
           theme: AppTheme.appTheme,
           onGenerateRoute: RouteGenerator.generateRoute,
-          initialRoute: AppRoutes.initial, 
+          initialRoute: AppRoutes.otpScreen, 
           builder: (context, child) {
             return Directionality(textDirection: TextDirection.rtl, child: child!);
           },
