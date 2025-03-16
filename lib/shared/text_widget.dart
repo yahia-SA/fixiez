@@ -17,8 +17,10 @@ class TextWidget extends StatelessWidget {
     this.fontFamily,
     this.color = AppColors.black,
     this.softWrap = true,
+    this.style,
   });
   final String title;
+ final TextStyle? style;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
   final double? fontSize;
@@ -33,7 +35,7 @@ class TextWidget extends StatelessWidget {
     return Text(
       title,
       maxLines: maxLines,
-      style: AppText.reg16.copyWith(
+      style: style ?? AppText.reg16.copyWith(
         color: color,
         fontSize: fontSize,
         fontWeight: fontWeight,
