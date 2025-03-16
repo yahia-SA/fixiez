@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
-abstract class LoginState extends Equatable {
+sealed class LoginState extends Equatable {
+  const LoginState();
   @override
   List<Object?> get props => [];
 }
@@ -16,14 +17,14 @@ class LoginSuccess extends LoginState {
 
 class LoginFailure extends LoginState {
   
-  LoginFailure(this.message);
+  const LoginFailure(this.message);
   final String message;
 
   @override
   List<Object?> get props => [message];
 }
 class ChangePasswordVisibility extends LoginState {
-  ChangePasswordVisibility(this.isVisible);
+  const ChangePasswordVisibility(this.isVisible);
   final bool isVisible;
   @override
   List<Object?> get props => [isVisible];
@@ -31,7 +32,7 @@ class ChangePasswordVisibility extends LoginState {
 }
 
 class RememberMe extends LoginState {
-  RememberMe(this.isRememberMe);
+  const RememberMe(this.isRememberMe);
   final bool isRememberMe;
   @override
   List<Object?> get props => [isRememberMe];

@@ -29,7 +29,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(ChangePasswordVisibility(!currentState.isVisible)); 
     }
     else{
-      emit(ChangePasswordVisibility(true));}
+      emit(const ChangePasswordVisibility(true));}
   }
 
   FutureOr<void> _toggleRememberMe(ToggleRememberMe event, Emitter<LoginState> emit) {
@@ -38,6 +38,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(RememberMe(!currentState.isRememberMe)); 
     }
     else{
-      emit(RememberMe(true));}
+      emit(const RememberMe(true));}
   }
 }
