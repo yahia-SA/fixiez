@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class Sucessful extends StatelessWidget {
-  const Sucessful({super.key});
+class Successful extends StatelessWidget {
+  const Successful({super.key});
 
   @override
   Widget build(BuildContext context) {
