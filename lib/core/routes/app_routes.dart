@@ -1,44 +1,47 @@
-import 'package:fixiez/presentation/pages/onboarding/onboarding.dart';
+import 'package:fixiez/presentation/pages/forgetPassword/forget_password_screen.dart';
+import 'package:fixiez/presentation/pages/login/login_screen.dart';
+import 'package:fixiez/presentation/pages/onboarding/onboarding_screen.dart';
+import 'package:fixiez/presentation/pages/otp/otp_screen.dart';
+import 'package:fixiez/presentation/pages/resetPassword/reset_password_screen.dart';
+import 'package:fixiez/presentation/pages/signup/signup_screen.dart';
+import 'package:fixiez/presentation/pages/sucessful/sucessful_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppRoutes {
-
-  static const initial  = '/';
+  static const initial = '/';
   static const home = '/home';
   static const login = '/login';
   static const signup = '/Signup';
   static const forgetPassword = '/ForgetPassword';
   static const profile = '/Profile';
-  static const code = '/Code';
-  static const newPassword = '/NewPassword';
-  static const sucessful = '/Sucessful';
-  
+  static const otpScreen = '/OtpScreen';
+  static const successful = '/successful';
+  static const resetPassword = '/ResetPassword';
 }
 
 class RouteGenerator {
- static Route<dynamic> generateRoute(RouteSettings settings) {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.initial:
         return MaterialPageRoute(builder: (_) => const OnBoarding());
       case AppRoutes.home:
       //   return MaterialPageRoute(builder: (_) => const Home());
-      // case AppRoutes.login:
-      //   return MaterialPageRoute(builder: (_) => const LOGIN());
-      // case AppRoutes.signup:
-      //   return MaterialPageRoute(builder: (_) => const Signup());
-      // case AppRoutes.forgetPassword:
-      //   return MaterialPageRoute(builder: (_) => const ForgetPassword());
-      // case AppRoutes.profile:
+      case AppRoutes.login:
+        return MaterialPageRoute(builder: (_) => Login());
+      case AppRoutes.signup:
+        return MaterialPageRoute(builder: (_) => Signup());
+      case AppRoutes.forgetPassword:
+        return MaterialPageRoute(builder: (_) => ForgetPassword());
+      case AppRoutes.profile:
       //   return MaterialPageRoute(builder: (_) => const Profile());
-      // case AppRoutes.code:
-      //   return MaterialPageRoute(builder: (_) => const Code());
-      // case AppRoutes.newPassword:
-      //   return MaterialPageRoute(builder: (_) => const NewPassword());
-      // case AppRoutes.sucessful:
-      //   return MaterialPageRoute(builder: (_) => const Sucessful());
+      case AppRoutes.otpScreen:
+        return MaterialPageRoute(builder: (_) => OtpScreen());
+      case AppRoutes.successful:
+        return MaterialPageRoute(builder: (_) => const Successful());
+      case AppRoutes.resetPassword:
+        return MaterialPageRoute(builder: (_) => Resetpassword());
       default:
         return MaterialPageRoute(builder: (_) => const OnBoarding());
-
- }  
- }
+    }
+  }
 }
