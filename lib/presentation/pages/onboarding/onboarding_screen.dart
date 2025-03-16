@@ -13,48 +13,51 @@ class OnBoarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            ImageAssets.onBoarding,
-            width: 328.w,
-            height: 328.h,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 25.h),
-          SizedBox(
-            width: 375.w,
-            height: 65.h,
-            child: Center(
-              child: Text('أسهل طريقة لتنفيذ طلبك', style: context.bold28Blue),
+      body: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 24.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              ImageAssets.onBoarding,
+              width: 328.w,
+              height: 328.h,
+              fit: BoxFit.cover,
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 32.w),
-            child: Text(
-              'الآن يمكنك العثور على أمهر الصنايعية في منطقتك بكل سهولة اطلب خدمتك ، واستمتع بخدمة سريعة وموثوقة وأمان تام',
-              style: context.reg16Hint80,
-              textAlign: TextAlign.center,
+            SizedBox(height: 25.h),
+            SizedBox(
+              width: 375.w,
+              height: 65.h,
+              child: Center(
+                child: Text('أسهل طريقة لتنفيذ طلبك', style: context.bold28Blue),
+              ),
             ),
-          ),
-          SizedBox(height: 38.h),
-          CustomButton(
-            text: 'تسجيل الدخول',
-            onpressed: () {
-              Navigator.pushNamed(context, AppRoutes.login);
-            },
-          ),
-          SizedBox(height: 24.h),
-          CustomButton(
-            text: 'انشاء حساب',
-            onpressed: () {
-              Navigator.pushNamed(context, AppRoutes.signup);
-            },
-            backgroundColor: AppColors.white,
-            foregroundColor: AppColors.primary,
-          ),
-        ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: Text(
+                'الآن يمكنك العثور على أمهر الصنايعية في منطقتك بكل سهولة اطلب خدمتك ، واستمتع بخدمة سريعة وموثوقة وأمان تام',
+                style: context.reg16Hint80!.copyWith(height: 1.6.h),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(height: 38.h),
+            CustomButton(
+              text: 'تسجيل الدخول',
+              onpressed: () {
+                Navigator.pushNamed(context, AppRoutes.login);
+              },
+            ),
+            SizedBox(height: 24.h),
+            CustomButton(
+              text: 'انشاء حساب',
+              onpressed: () {
+                Navigator.pushNamed(context, AppRoutes.signup);
+              },
+              backgroundColor: AppColors.white,
+              foregroundColor: AppColors.primary,
+            ),
+          ],
+        ),
       ),
     );
   }

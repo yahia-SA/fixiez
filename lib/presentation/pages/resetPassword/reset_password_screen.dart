@@ -59,7 +59,7 @@ class Resetpassword extends StatelessWidget {
               ),
             ),
             body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 28.w),
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Form(
                 key: _formKey,
                 child: Column(

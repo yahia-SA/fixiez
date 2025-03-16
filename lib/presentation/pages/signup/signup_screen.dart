@@ -47,7 +47,7 @@ class Signup extends StatelessWidget {
           return Scaffold(
             body: SafeArea(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 28.w),
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
                 child: Column(
                   children: [
                     Center(
