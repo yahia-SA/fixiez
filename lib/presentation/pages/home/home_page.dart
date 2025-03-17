@@ -20,6 +20,7 @@ class HomePage extends StatelessWidget {
         body: Stack(
           children: [
             SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
               child: Column(
                 textDirection: TextDirection.ltr,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -69,9 +70,7 @@ class HomePage extends StatelessWidget {
                     padding: EdgeInsets.only(right: 24.w),
                     child: TextWidget(
                       'اراء العملاء ',
-                      style: AppText.bold20.copyWith(
-                        color:  AppColors.primary,
-                      ),
+                      style: context.bold20Blue,
                     ),
                   ),
                   SizedBox(height: 32.h),
