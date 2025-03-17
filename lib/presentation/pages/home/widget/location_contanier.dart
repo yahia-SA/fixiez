@@ -15,7 +15,7 @@ class LocationContainer extends StatefulWidget {
 class _LocationContainerState extends State<LocationContainer> {
   String? selectedAddress;
   final TextEditingController _textController = TextEditingController();
-  final List<String> addresses = ['aa', 'aa'];
+  final List<String> addresses = ['yahia', 'aa'];
 
   @override
   void dispose() {
@@ -36,8 +36,8 @@ class _LocationContainerState extends State<LocationContainer> {
             color: AppColors.white,
 
             shape: RoundedRectangleBorder(
-              side: const BorderSide(color: AppColors.white, width: 1),
-              borderRadius: BorderRadius.circular(12),
+              side:  BorderSide(color: AppColors.white, width: 1.w),
+              borderRadius: BorderRadius.circular(12.r),
             ),
           ),
           child: Directionality(
@@ -60,7 +60,7 @@ class _LocationContainerState extends State<LocationContainer> {
                       decoration: ShapeDecoration(
                         color: const Color(0xffE0E0E0),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(4.r),
                         ),
                       ),
                       child: const Icon(Icons.keyboard_arrow_down_sharp),
@@ -85,7 +85,7 @@ class _LocationContainerState extends State<LocationContainer> {
             ),
           ),
         ),
-        const SizedBox(height: 20),
+         SizedBox(height: 20.h),
         // Text input field
         Container(
           width: 328.w,
@@ -94,12 +94,13 @@ class _LocationContainerState extends State<LocationContainer> {
             color: AppColors.white,
 
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15.r),
             ),
           ),
           child: TextField(
             autocorrect: true,
             controller: _textController,
+            keyboardType: TextInputType.number,
             textAlign: TextAlign.right,
             onSubmitted: (value) async {},
             onChanged: (value) {},
@@ -109,13 +110,13 @@ class _LocationContainerState extends State<LocationContainer> {
               fillColor: Colors.transparent,
 
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15.0), // Radius
-                borderSide: const BorderSide(color: Colors.grey, width: 2.0),
+                borderRadius: BorderRadius.circular(15.0.r), // Radius
+                borderSide:  BorderSide(color: Colors.grey, width: 2.0.w),
               ),
 
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(15.0),
-                borderSide: const BorderSide(color: Colors.grey, width: 0.1),
+                borderSide:  BorderSide(color: Colors.grey, width: 0.1.w),
               ),
 
               hintText: 'من فضلك اكتب رقم وحدتك ',
