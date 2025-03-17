@@ -1,12 +1,11 @@
-import 'package:fixiez/core/constants/image_assets.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
+import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ForgetPassword extends StatelessWidget {
   ForgetPassword({super.key});
@@ -38,13 +37,7 @@ class ForgetPassword extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: SvgPicture.asset(
-                ImageAssets.logo,
-                width: 255.w,
-                height: 75.h,
-              ),
-            ),
+          const BuildLogo(),
             SizedBox(height: 58.h),
             Text('هل نسيت كلمة المرور ؟', style: context.bold28Blue),
             SizedBox(height: 8.h),

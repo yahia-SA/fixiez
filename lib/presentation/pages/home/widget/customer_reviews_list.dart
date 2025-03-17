@@ -31,23 +31,21 @@ class CustomerReviewsList extends StatelessWidget {
       child: ListView.separated(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-           padding:  EdgeInsets.only(left: 24.w),
+        padding: EdgeInsets.only(left: 24.w),
         itemCount: reviews.length,
         separatorBuilder: (context, index) => const Divider(thickness: 1.0),
         itemBuilder: (context, index) {
           final review = reviews[index];
           return ListTile(
-            contentPadding: EdgeInsets.zero, 
+            contentPadding: EdgeInsets.zero,
             leading: CircleAvatar(
               radius: 50.r,
               backgroundImage: NetworkImage(review['photo']!),
             ),
-            title: TextWidget(
-              review['name']!,
-              style: AppText.bold16,
-            ),
-            subtitle: TextWidget(review['review']!,
-            style: AppText.reg16.copyWith(color: const Color(0xff455A64))
+            title: TextWidget(review['name']!, style: AppText.bold16),
+            subtitle: TextWidget(
+              review['review']!,
+              style: context.feedback,
             ),
           );
         },

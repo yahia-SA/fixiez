@@ -1,4 +1,3 @@
-import 'package:fixiez/core/constants/image_assets.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
@@ -6,13 +5,13 @@ import 'package:fixiez/presentation/blocs/login/login_bloc.dart';
 import 'package:fixiez/presentation/blocs/login/login_event.dart';
 import 'package:fixiez/presentation/blocs/login/login_state.dart';
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
+import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Login extends StatelessWidget {
   Login({super.key});
@@ -49,13 +48,7 @@ class Login extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Center(
-                    child: SvgPicture.asset(
-                      ImageAssets.logo,
-                      width: 255.w,
-                      height: 75.h,
-                    ),
-                  ),
+                  const BuildLogo(),
                   SizedBox(height: 58.h),
                   Form(
                     key: _formKey,
@@ -94,7 +87,7 @@ class Login extends StatelessWidget {
                                     ? state.isVisible
                                     : false;
                             return CustomFormfield(
-                              label:'كلمة المرور',
+                              label: 'كلمة المرور',
                               controller: _passwordController,
                               hint: 'كلمة المرور',
                               type: TextInputType.visiblePassword,
@@ -169,20 +162,20 @@ class Login extends StatelessWidget {
                         ),
                         SizedBox(height: 42.h),
                         state is LoginLoading
-                            ? const CircularProgressIndicator():
-                        CustomButton(
-                          text: 'تسجيل الدخول',
-                          onpressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              // bloc.add(
-                              //   LoginSubmitted(
-                              //     phone: _phoneController.text,
-                              //     password: _passwordController.text,
-                              //   ),
-                              // );
-                            }
-                          },
-                        ),
+                            ? const CircularProgressIndicator()
+                            : CustomButton(
+                              text: 'تسجيل الدخول',
+                              onpressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  // bloc.add(
+                                  //   LoginSubmitted(
+                                  //     phone: _phoneController.text,
+                                  //     password: _passwordController.text,
+                                  //   ),
+                                  // );
+                                }
+                              },
+                            ),
                         SizedBox(height: 142.h),
                         Center(
                           child: RichText(

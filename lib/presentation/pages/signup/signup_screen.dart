@@ -1,16 +1,15 @@
-import 'package:fixiez/core/constants/image_assets.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/blocs/signup/signup_bloc.dart';
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
+import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Signup extends StatelessWidget {
   Signup({super.key});
@@ -25,40 +24,34 @@ class Signup extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => SignupBloc(),
-      child: BlocConsumer<SignupBloc, SignupState>(
-        listener: (context, state) {
-          if (state is SignupSuccess) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRoutes.otpScreen,
-              (route) => false,
-            );
-          } else if (state is SignupFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: AppColors.error,
-              ),
-            );
-          }
-        },
-        builder: (context, state) {
-          var bloc = BlocProvider.of<SignupBloc>(context);
-          return Scaffold(
-            body: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: Column(
-                  children: [
-                    Center(
-                      child: SvgPicture.asset(
-                        ImageAssets.logo,
-                        width: 255.w,
-                        height: 75.h,
-                      ),
-                    ),
-                    SizedBox(height: 50.h),
-                    Form(
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 24.w),
+            child: Column(
+              children: [
+                const BuildLogo(),
+                SizedBox(height: 50.h),
+                BlocConsumer<SignupBloc, SignupState>(
+                  listener: (context, state) {
+                    if (state is SignupSuccess) {
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        AppRoutes.otpScreen,
+                        (route) => false,
+                      );
+                    } else if (state is SignupFailure) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message),
+                          backgroundColor: AppColors.error,
+                        ),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    var bloc = BlocProvider.of<SignupBloc>(context);
+                    return Form(
                       key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,11 +136,14 @@ class Signup extends StatelessWidget {
                                 hint: 'قم بانشاء كلمه مرور الخاصه بك ',
                                 type: TextInputType.visiblePassword,
                                 isPassword: true,
-                                suffix: isPasswordVisible
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                                suffixPressed: () => bloc
-                                    .add(ToggleConfirmPasswordVisibility()),
+                                suffix:
+                                    isPasswordVisible
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
+                                suffixPressed:
+                                    () => bloc.add(
+                                      ToggleConfirmPasswordVisibility(),
+                                    ),
                                 validate: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please confirm your password';
@@ -162,21 +158,21 @@ class Signup extends StatelessWidget {
                           ),
                           SizedBox(height: 24.h),
                           state is SignupLoading
-                              ? const Center(child: CircularProgressIndicator()):
-                          CustomButton(
-                            text: 'إنشاء حساب',
-                            onpressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                // bloc.add(
-                                //   SignupSubmitted(
-                                //     name: _usernameController.text,
-                                //     phone: _phoneController.text,
-                                //     password: _passwordController.text,
-                                //   ),
-                                // );
-                              }
-                            },
-                          ),
+                              ? const Center(child: CircularProgressIndicator())
+                              : CustomButton(
+                                text: 'إنشاء حساب',
+                                onpressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    // bloc.add(
+                                    //   SignupSubmitted(
+                                    //     name: _usernameController.text,
+                                    //     phone: _phoneController.text,
+                                    //     password: _passwordController.text,
+                                    //   ),
+                                    // );
+                                  }
+                                },
+                              ),
                           SizedBox(height: 24.h),
                           Center(
                             child: RichText(
@@ -206,14 +202,15 @@ class Signup extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
-              ),
+              ],
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
 }
+

@@ -1,14 +1,13 @@
-import 'package:fixiez/core/constants/image_assets.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/blocs/resetPassword/reset_password_bloc.dart';
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
+import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class Resetpassword extends StatelessWidget {
   Resetpassword({super.key});
@@ -66,13 +65,7 @@ class Resetpassword extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Center(
-                      child: SvgPicture.asset(
-                        ImageAssets.logo,
-                        width: 255.w,
-                        height: 75.h,
-                      ),
-                    ),
+                    const BuildLogo(),
                     SizedBox(height: 58.h),
                     SizedBox( height: 52.h,child: Text('اعادة تعيين كلمة المرور', style: context.bold28Blue)),
                     SizedBox(height: 8.h),
