@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fixiez/core/theme/app_text.dart';
+import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,11 +21,15 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 327.w,
-      height: 48.h,    
-      child: ElevatedButton(onPressed: onpressed,
-      style: ElevatedButton.styleFrom(backgroundColor: backgroundColor,
-      foregroundColor:foregroundColor ,
-),
- child: Text(text)));
+      height: 48.h,
+      child: ElevatedButton(
+        onPressed: onpressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor,
+          foregroundColor: foregroundColor,
+        ),
+        child: TextWidget(text, style: AppText.semi16),
+      ),
+    );
   }
 }
