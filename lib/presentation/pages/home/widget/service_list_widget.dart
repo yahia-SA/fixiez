@@ -14,10 +14,7 @@ class ServiceListWidger extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (int i = 0; i < 4; i++)
-          Column(
-            children: [
+      children: services.map((service) => Column(children: [
               Padding(
                 padding:  EdgeInsets.symmetric(horizontal: 10.5.w),
                 child: Container(
@@ -30,15 +27,20 @@ class ServiceListWidger extends StatelessWidget {
                       width: 0.5,
                     ),
                   ),
-                  child: Center(child: SvgPicture.asset(ImageAssets.onBoarding)),
+                  child: Center(child: SvgPicture.asset(service['image']!)),
                 ),
               ),
               SizedBox(height: 3.h),
-              TextWidget('نجارة', style: AppText.med14),
+              TextWidget(service['name']!, style: AppText.med14),
             ],
           ),
-        
-      ],
+      ).toList(),
     );
   }
 }
+  final List<Map<String, String>> services = [
+    {'name': 'نجارة', 'image': ImageAssets.carpenter},
+    {'name': 'دهان', 'image': ImageAssets.paint},
+    {'name': 'سباكة', 'image': ImageAssets.plumbing},
+    {'name': 'كهرباء', 'image': ImageAssets.electric},
+  ];
