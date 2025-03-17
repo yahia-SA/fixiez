@@ -7,15 +7,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
-    required this.text,
+    this.text,
     required this.onpressed,
     this.backgroundColor,
     this.foregroundColor,
+    this.widget,
   });
-  final String text;
+  final String? text;
   final VoidCallback onpressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final Widget? widget;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,9 @@ class CustomButton extends StatelessWidget {
           backgroundColor: backgroundColor,
           foregroundColor: foregroundColor,
         ),
-        child: TextWidget(text, style: AppText.semi16),
+        child:
+        widget ?? 
+         TextWidget(text ?? '', style: AppText.semi16),
       ),
     );
   }

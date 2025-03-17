@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
                   SizedBox(height: 16.h),
                   const SilderPosterWidgetState(),
                   SizedBox(height: 20.h),
-                  const ServiceListWidger(),
+                  const ServiceListWidget(),
                   SizedBox(height: 16.h),
                   const CustomerOrderText(),
                   SizedBox(height: 16.h),
