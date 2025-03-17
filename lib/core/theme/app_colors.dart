@@ -8,5 +8,5 @@ class AppColors {
   static const Color texthint80  = Color(0xFF808080);
   static const Color error = Color(0xFFDC1C1C);
   static const Color suffixIconColor = Color(0xFFC4C4C4);
-  static const Color feadbackColor = Color(0xFF455A64);
+  static const Color feedbackColor = Color(0xFF455A64);
 }

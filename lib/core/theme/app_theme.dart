@@ -27,7 +27,7 @@ class AppTheme {
         // body gray
         bodyLarge: AppText.reg16.copyWith(color: AppColors.texthint80),
         // feadback color
-        bodyMedium: AppText.reg16.copyWith(color: AppColors.feadbackColor),
+        bodyMedium: AppText.reg16.copyWith(color: AppColors.feedbackColor),
         
 
         // bodySmall: AppText.reg12.copyWith(color: AppColors.texthint80),
@@ -51,9 +51,20 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0.r),
-          borderSide:  BorderSide(color: AppColors.texthint80,width: 1.w),
+          borderSide:  BorderSide(color: AppColors.primary,width: 1.w),
           
         ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0.r),
+          borderSide:  BorderSide(color: AppColors.error,width: 1.w),
+          
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0.r),
+          borderSide:  BorderSide(color: AppColors.error,width: 1.w),
+          
+        ),
+        errorStyle: AppText.reg14.copyWith(color: AppColors.error),
         hintStyle: AppText.med14.copyWith(color: AppColors.texthint92),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0.r),
