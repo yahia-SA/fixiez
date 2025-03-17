@@ -3,6 +3,7 @@ import 'package:fixiez/presentation/pages/forgetPassword/forget_password_screen.
 import 'package:fixiez/presentation/pages/login/login_screen.dart';
 import 'package:fixiez/presentation/pages/onboarding/onboarding_screen.dart';
 import 'package:fixiez/presentation/pages/otp/otp_screen.dart';
+import 'package:fixiez/presentation/pages/profile/profile_screen.dart';
 import 'package:fixiez/presentation/pages/resetPassword/reset_password_screen.dart';
 import 'package:fixiez/presentation/pages/signup/signup_screen.dart';
 import 'package:fixiez/presentation/pages/sucessful/sucessful_screen.dart';
@@ -34,7 +35,7 @@ class RouteGenerator {
       case AppRoutes.forgetPassword:
         return MaterialPageRoute(builder: (_) => ForgetPassword());
       case AppRoutes.profile:
-      //   return MaterialPageRoute(builder: (_) => const Profile());
+         return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case AppRoutes.otpScreen:
         return MaterialPageRoute(builder: (_) => OtpScreen());
       case AppRoutes.successful:
