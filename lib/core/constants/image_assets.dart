@@ -10,6 +10,7 @@ class ImageAssets {
   static const String dropIcon = '$imagePath/drop_icon.svg';
   static const String settings = '$imagePath/settings_icon.svg';
   static const String call = '$imagePath/call_icon.svg';
+  static const String alert = '$imagePath/alert_circle.svg';
 }
 
 const String imagePath = 'assets/images';
