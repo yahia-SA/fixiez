@@ -3,6 +3,7 @@ import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/pages/home/widget/customer_order_text.dart';
 import 'package:fixiez/presentation/pages/home/widget/customer_reviews_list.dart';
 import 'package:fixiez/presentation/pages/home/widget/location_contanier.dart';
+import 'package:fixiez/presentation/widgets/name_header.dart';
 import 'package:fixiez/presentation/pages/home/widget/order_request_widget.dart';
 import 'package:fixiez/presentation/pages/home/widget/service_list_widget.dart';
 import 'package:fixiez/presentation/pages/home/widget/silder_poster_widget.dart';
@@ -36,24 +37,14 @@ class HomePage extends StatelessWidget {
                     decoration: ShapeDecoration(
                       color:  AppColors.primary,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(12.r),
                       ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(height: 25.h),
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(text: 'اهلا', style: AppText.bold24),
-                              TextSpan(
-                                text: ' عمرو عادل ',
-                                style: AppText.med24,
-                              ),
-                            ],
-                          ),
-                        ),
+                        const NameHeader(),
                         SizedBox(height: 16.h),
                         const LocationContainer(),
                       ],
