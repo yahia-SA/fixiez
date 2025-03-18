@@ -5,6 +5,7 @@ import 'package:fixiez/presentation/blocs/resetPassword/reset_password_bloc.dart
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
 import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
+import 'package:fixiez/utils/ui_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,12 +30,7 @@ class Resetpassword extends StatelessWidget {
               (route) => false,
             );
           } else if (state is ResetPasswordFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-                backgroundColor: AppColors.error,
-              ),
-            );
+            UiHelper.showNotification(state.message);
           }
         },
         builder: (context, state) {
@@ -67,9 +63,16 @@ class Resetpassword extends StatelessWidget {
                   children: [
                     const BuildLogo(),
                     SizedBox(height: 58.h),
-                    SizedBox( height: 52.h,child: Text('اعادة تعيين كلمة المرور', style: context.bold28Blue)),
+                    SizedBox(
+                      height: 52.h,
+                      child: Text(
+                        'اعادة تعيين كلمة المرور',
+                        style: context.bold28Blue,
+                      ),
+                    ),
                     SizedBox(height: 8.h),
-                    SizedBox(height: 30.h,
+                    SizedBox(
+                      height: 30.h,
                       child: Text(
                         'قم بانشاء كلمه سر جديدة ',
                         style: context.reg16Hint92,
@@ -112,7 +115,7 @@ class Resetpassword extends StatelessWidget {
                             (state is ChangeConfirmPasswordVisibility) &&
                             state.isVisible;
                         return CustomFormfield(
-                        label:'تاكيد كلمة المرور الجديدة',
+                          label: 'تاكيد كلمة المرور الجديدة',
                           controller: _confirmPasswordController,
                           hint: 'اعد ادخال كلمة المرور',
                           type: TextInputType.visiblePassword,
@@ -137,20 +140,21 @@ class Resetpassword extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 32.h),
-                    state is ResetPasswordLoading? const CircularProgressIndicator():
-                    CustomButton(
-                      text: 'اعاده تعيين كلمة المرور',
-                      onpressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          // bloc.add(
-                          //   ResetpasswordSubmitted(
-                          //     password: _passwordController.text,
-                          //     confirmPassword: _confirmPasswordController.text,
-                          //   ),
-                          // );
-                        }
-                      },
-                    ),
+                    state is ResetPasswordLoading
+                        ? const CircularProgressIndicator()
+                        : CustomButton(
+                          text: 'اعاده تعيين كلمة المرور',
+                          onpressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              // bloc.add(
+                              //   ResetpasswordSubmitted(
+                              //     password: _passwordController.text,
+                              //     confirmPassword: _confirmPasswordController.text,
+                              //   ),
+                              // );
+                            }
+                          },
+                        ),
                   ],
                 ),
               ),

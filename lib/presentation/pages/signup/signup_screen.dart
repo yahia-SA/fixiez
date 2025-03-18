@@ -1,10 +1,10 @@
 import 'package:fixiez/core/routes/app_routes.dart';
-import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/blocs/signup/signup_bloc.dart';
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
 import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
+import 'package:fixiez/utils/ui_helper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,12 +41,7 @@ class Signup extends StatelessWidget {
                         (route) => false,
                       );
                     } else if (state is SignupFailure) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(state.message),
-                          backgroundColor: AppColors.error,
-                        ),
-                      );
+                      UiHelper.showNotification(state.message);
                     }
                   },
                   builder: (context, state) {
@@ -213,4 +208,3 @@ class Signup extends StatelessWidget {
     );
   }
 }
-

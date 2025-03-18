@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,18 +56,20 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Fixiez',
-          theme: AppTheme.appTheme,
-          onGenerateRoute: RouteGenerator.generateRoute,
-          initialRoute: startRoute,
-          builder: (context, child) {
-            return Directionality(
-              textDirection: TextDirection.rtl,
-              child: child!,
-            );
-          },
+        return OverlaySupport.global(
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Fixiez',
+            theme: AppTheme.appTheme,
+            onGenerateRoute: RouteGenerator.generateRoute,
+            initialRoute: startRoute,
+            builder: (context, child) {
+              return Directionality(
+                textDirection: TextDirection.rtl,
+                child: child!,
+              );
+            },
+          ),
         );
       },
     );
