@@ -1,12 +1,16 @@
+import 'package:fixiez/core/network/local/cache_helper.dart';
+import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  DioHelper.instance;
+  await CacheHelper.init();
   runApp(const MyApp());
 }
 
@@ -26,7 +30,7 @@ class MyApp extends StatelessWidget {
           title: 'Fixiez',
           theme: AppTheme.appTheme,
           onGenerateRoute: RouteGenerator.generateRoute,
-          initialRoute: AppRoutes.initial,
+          initialRoute: AppRoutes.home,
           builder: (context, child) {
             return Directionality(
               textDirection: TextDirection.rtl,
