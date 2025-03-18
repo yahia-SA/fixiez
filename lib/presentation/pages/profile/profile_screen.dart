@@ -2,6 +2,8 @@ import 'package:fixiez/core/constants/image_assets.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/pages/home/widget/silder_poster_widget.dart';
+import 'package:fixiez/presentation/pages/profile/widgets/customer_review_text.dart';
+import 'package:fixiez/presentation/pages/profile/widgets/maintenance_widget.dart';
 import 'package:fixiez/presentation/pages/profile/widgets/price_list_widget.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
 import 'package:fixiez/presentation/widgets/text_widget.dart';
@@ -147,14 +149,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                   SizedBox(height: 20.h),
+                  const MaintenanceWidget(),
                   Padding(
                     padding: EdgeInsets.only(right: 24.w),
                     child: TextWidget(
-                      'باقات الصيانه ',
+                      'التقبيم',
                       style: AppText.bold20.copyWith(color: AppColors.primary),
                     ),
                   ),
-                  SizedBox(height: 20.h),
+                  SizedBox(height: 18.h),
+                  const CustomerReviewText(),
+                  SizedBox(height: 18.h),
+                  Center(
+                    child: CustomButton(onpressed: () {}, text: 'ارسل تقيمك'),
+                  ),
+                  SizedBox(height: 116.h),
                 ],
               ),
             ),
@@ -165,10 +174,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: CustomButton(
                 onpressed: () {},
                 widget: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     TextWidget('تواصل معنا', style: AppText.semi16),
                     SizedBox(width: 5.w),
-                    SvgPicture.asset(ImageAssets.carpenter),
+                    SvgPicture.asset(ImageAssets.call),
                   ],
                 ),
               ),
