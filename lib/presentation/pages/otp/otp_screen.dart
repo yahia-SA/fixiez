@@ -1,3 +1,4 @@
+import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
@@ -10,6 +11,24 @@ import 'package:pinput/pinput.dart';
 class OtpScreen extends StatelessWidget {
    OtpScreen({super.key});
   final TextEditingController _otpController = TextEditingController();
+  void __verifyOtp(BuildContext context) {
+  if (_otpController.text == '1234') {
+    Navigator.pushNamed(context, AppRoutes.resetPassword);
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            const Icon(Icons.error_outline, color: AppColors.error),
+            const SizedBox(width: 8),
+            Text('الرمز المدخل غير صحيح ',style: context.error,),
+          ],
+        ),
+        backgroundColor: AppColors.white,
+      ),
+    );
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +89,7 @@ class OtpScreen extends StatelessWidget {
             SizedBox(height: 32.h,),
             CustomButton(text: 'تحقق', onpressed: (){
                               debugPrint('OTP Entered: ${_otpController.text}');
+                              __verifyOtp(context);
       
             }),
           ],
@@ -78,3 +98,4 @@ class OtpScreen extends StatelessWidget {
     );
   }
 }
+
