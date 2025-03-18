@@ -15,18 +15,19 @@ class DioHelper {
       ),
     );
 
-    dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        options.headers[ApiHeaders.authorization] = 'Bearer $accessToken';
-        return handler.next(options);
-      },
-      onError: (DioException e, handler) async {
-        if (e.response?.statusCode == 401) {
-          return await _handle401Error(e.response!.data['message'], handler);
-        }
-        return handler.next(e);
-      },
-    ),
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          options.headers[ApiHeaders.authorization] = 'Bearer $accessToken';
+          return handler.next(options);
+        },
+        onError: (DioException e, handler) async {
+          if (e.response?.statusCode == 401) {
+            return await _handle401Error(e, handler);
+          }
+          return handler.next(e);
+        },
+      ),
     );
   }
 
@@ -58,7 +59,10 @@ class DioHelper {
 
     try {
       if (kDebugMode) print('🔄 Refreshing Access Token...');
-      if (kDebugMode) print('🌍 Refreshing at: ${dio.options.baseUrl}${ApiEndpoints.refresh}');
+      if (kDebugMode)
+        print(
+          '🌍 Refreshing at: ${dio.options.baseUrl}${ApiEndpoints.refresh}',
+        );
 
       final response = await dio.post(
         ApiEndpoints.refresh,
@@ -81,10 +85,14 @@ class DioHelper {
   }
 
   /// 🔑 **Handles Unauthorized Requests (401)**
-  Future<void> _handle401Error(DioException err, ErrorInterceptorHandler handler) async {
+  Future<void> _handle401Error(
+    DioException err,
+    ErrorInterceptorHandler handler,
+  ) async {
     if (_isRefreshing) {
       await _refreshCompleter?.future;
-      err.requestOptions.headers[ApiHeaders.authorization] = 'Bearer $accessToken';
+      err.requestOptions.headers[ApiHeaders.authorization] =
+          'Bearer $accessToken';
       final retryResponse = await dio.fetch(err.requestOptions);
       return handler.resolve(retryResponse);
     }
@@ -92,7 +100,8 @@ class DioHelper {
     _isRefreshing = true;
     try {
       await _refreshAccessToken();
-      err.requestOptions.headers[ApiHeaders.authorization] = 'Bearer $accessToken';
+      err.requestOptions.headers[ApiHeaders.authorization] =
+          'Bearer $accessToken';
 
       final retryResponse = await dio.fetch(err.requestOptions);
       return handler.resolve(retryResponse);
@@ -104,22 +113,36 @@ class DioHelper {
   }
 
   /// 📥 **GET Request**
-  Future<Response> getData({required String url, Map<String, dynamic>? query}) async {
+  Future<Response> getData({
+    required String url,
+    Map<String, dynamic>? query,
+  }) async {
     return await dio.get(url, queryParameters: query);
   }
 
   ///  POST Request
-  Future<Response> postData({required String url, required dynamic data, Map<String, dynamic>? query}) async {
+  Future<Response> postData({
+    required String url,
+    required dynamic data,
+    Map<String, dynamic>? query,
+  }) async {
     return await dio.post(url, queryParameters: query, data: data);
   }
 
   /// PATCH Request
-  Future<Response> patchData({required String url, required dynamic data, Map<String, dynamic>? query}) async {
+  Future<Response> patchData({
+    required String url,
+    required dynamic data,
+    Map<String, dynamic>? query,
+  }) async {
     return await dio.patch(url, queryParameters: query, data: data);
   }
 
   /// DELETE Request
-  Future<Response> deleteData({required String url, Map<String, dynamic>? query}) async {
+  Future<Response> deleteData({
+    required String url,
+    Map<String, dynamic>? query,
+  }) async {
     return await dio.delete(url, queryParameters: query);
   }
 }
