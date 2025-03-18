@@ -1,26 +1,28 @@
 import 'dart:async';
 
+import 'package:fixiez/domain/usecases/login_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fixiez/presentation/blocs/login/login_event.dart';
 import 'package:fixiez/presentation/blocs/login/login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginInitial()) {
+  LoginBloc(this.loginUseCase) : super(LoginInitial()) {
     on<LoginSubmitted>(_onLoginSubmitted);
     on<TogglePasswordVisibility>(_togglePasswordVisibility);
     on<ToggleRememberMe>(_toggleRememberMe);
   }
-  // final LoginUseCase loginUseCase;
+  final LoginUseCase loginUseCase;
 
   Future<void> _onLoginSubmitted(
       LoginSubmitted event, Emitter<LoginState> emit) async {
     emit(LoginLoading());
-    // final result = await loginUseCase.call(event.email, event.password);
+    try{
+    final user = await loginUseCase(event.phone, event.password);
 
-    // result.fold(
-    //   (failure) => emit(LoginFailure(failure.message)),
-    //   (_) => emit(LoginSuccess()),
-    // );
+    emit(LoginSuccess(user));
+    } catch (e) {
+      emit(LoginFailure(e.toString()));
+    }
   }
 
   FutureOr<void> _togglePasswordVisibility(TogglePasswordVisibility event, Emitter<LoginState> emit) {

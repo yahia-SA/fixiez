@@ -21,9 +21,7 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginBloc(),
-      child: BlocConsumer<LoginBloc, LoginState>(
+    return BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
             Navigator.pushNamedAndRemoveUntil(
@@ -167,12 +165,12 @@ class Login extends StatelessWidget {
                               text: 'تسجيل الدخول',
                               onpressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  // bloc.add(
-                                  //   LoginSubmitted(
-                                  //     phone: _phoneController.text,
-                                  //     password: _passwordController.text,
-                                  //   ),
-                                  // );
+                                  bloc.add(
+                                    LoginSubmitted(
+                                      phone: _phoneController.text,
+                                      password: _passwordController.text,
+                                    ),
+                                  );
                                 }
                               },
                             ),
@@ -211,7 +209,6 @@ class Login extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
+      );
   }
 }

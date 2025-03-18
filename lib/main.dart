@@ -2,8 +2,13 @@ import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_theme.dart';
+import 'package:fixiez/data/datasources/auth_remote_data_source.dart';
+import 'package:fixiez/data/repositories/auth_repository_impl.dart';
+import 'package:fixiez/domain/usecases/login_usecase.dart';
+import 'package:fixiez/presentation/blocs/login/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Future<void> main() async {
@@ -11,13 +16,38 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   DioHelper.instance;
   await CacheHelper.init();
-  runApp(const MyApp());
+  final onBoarding = CacheHelper.getData(key: 'onBoarding');
+  final token = CacheHelper.getData(key: 'token');
+
+  String startRoute;
+  if (onBoarding != null) {
+    startRoute = token != null ? AppRoutes.home : AppRoutes.login;
+  } else {
+    startRoute = AppRoutes.initial;
+  }
+  final dio = DioHelper();
+  final remoteDataSource = AuthRemoteDataSourceImpl(dio); // Ensure RemoteDataSource is implemented
+  final authRepository = AuthRepositoryImpl(remoteDataSource: remoteDataSource);
+  final loginUseCase = LoginUseCase(authRepository); // Pass the correct argument
+
+  runApp(
+    MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(create: (context) => authRepository),
+        RepositoryProvider(create: (context) => loginUseCase),
+      ],
+      child: BlocProvider(
+        create: (context) => LoginBloc(context.read<LoginUseCase>()),
+        child: MyApp(startRoute: startRoute),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, this.startRoute});
+  final String? startRoute;
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -30,7 +60,7 @@ class MyApp extends StatelessWidget {
           title: 'Fixiez',
           theme: AppTheme.appTheme,
           onGenerateRoute: RouteGenerator.generateRoute,
-          initialRoute: AppRoutes.home,
+          initialRoute: startRoute,
           builder: (context, child) {
             return Directionality(
               textDirection: TextDirection.rtl,

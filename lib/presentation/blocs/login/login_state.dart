@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:fixiez/domain/entities/user.dart';
 
 sealed class LoginState extends Equatable {
   const LoginState();
@@ -11,8 +12,8 @@ class LoginInitial extends LoginState {}
 class LoginLoading extends LoginState {}
 
 class LoginSuccess extends LoginState {
-  // final UserModel user;
-  // LoginSuccess(this.user);
+  const LoginSuccess(this.user);
+  final User user;
 }
 
 class LoginFailure extends LoginState {

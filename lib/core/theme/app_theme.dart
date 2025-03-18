@@ -16,7 +16,7 @@ class AppTheme {
         displaySmall: AppText.bold20.copyWith(color: AppColors.primary),
         headlineLarge: AppText.bold16.copyWith(color: AppColors.primary),
         headlineMedium: AppText.bold14.copyWith(color: AppColors.primary),
-        // headlineSmall: AppText.bold20.copyWith(color: AppColors.primary),
+        headlineSmall: AppText.bold24.copyWith(color: AppColors.primary),
         
         // Error Red med14
         titleLarge: AppText.med14.copyWith(color: AppColors.error),

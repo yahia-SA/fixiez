@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: const Color(0xFFF4F7FF),
         body: Stack(
           children: [
             SingleChildScrollView(
@@ -44,7 +45,7 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(height: 25.h),
-                        const NameHeader(),
+                         NameHeader(onBackPressed: (){}),
                         SizedBox(height: 16.h),
                         const LocationContainer(),
                       ],

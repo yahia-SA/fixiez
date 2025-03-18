@@ -1,3 +1,4 @@
+import 'package:fixiez/presentation/pages/admin/admin_page.dart';
 import 'package:fixiez/presentation/pages/home/home_page.dart';
 import 'package:fixiez/presentation/pages/forgetPassword/forget_password_screen.dart';
 import 'package:fixiez/presentation/pages/login/login_screen.dart';
@@ -19,6 +20,7 @@ class AppRoutes {
   static const otpScreen = '/OtpScreen';
   static const successful = '/successful';
   static const resetPassword = '/ResetPassword';
+  static const adminpage = '/AdminPage';
 }
 
 class RouteGenerator {
@@ -42,6 +44,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const Successful());
       case AppRoutes.resetPassword:
         return MaterialPageRoute(builder: (_) => Resetpassword());
+      case AppRoutes.adminpage:
+        return MaterialPageRoute(builder: (_) => const AdminPage());
       default:
         return MaterialPageRoute(builder: (_) => const OnBoarding());
     }

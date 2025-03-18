@@ -1,33 +1,29 @@
-// import '../../domain/entities/user.dart';
+import 'package:fixiez/domain/entities/user.dart';
 
-// class UserModel extends User {
-//   const UserModel({
-//     required String id,
-//     required String name,
-//     required String email,
-//     String? profileImage,
-//   }) : super(
-//           id: id,
-//           name: name,
-//           email: email,
-//         );
+class UserModel extends User {
+  const UserModel({
+    required super.id,
+    required super.name,
+    required super.phoneNumber,
+    required super.role,
+    required super.isActive,
+    required super.balance,
+    required super.cashBack,
+    required super.accessToken,
+    required super.refreshToken,
+  });
 
-//   // Convert JSON to Model
-//   factory UserModel.fromJson(Map<String, dynamic> json) {
-//     return UserModel(
-//       id: json['id'] as String,
-//       name: json['name'] as String,
-//       email: json['email'] as String,
-//       profileImage: json['profileImage'] as String?,
-//     );
-//   }
-
-//   // Convert Model to JSON
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'id': id,
-//       'name': name,
-//       'email': email,
-//     };
-//   }
-// }
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['data']['user']['_id'],
+      name: json['data']['user']['name'],
+      phoneNumber: json['data']['user']['phoneNumber'],
+      role: json['data']['user']['role'],
+      isActive: json['data']['user']['isActive'],
+      balance: (json['data']['user']['balance'] as num).toDouble(),
+      cashBack: (json['data']['user']['cashBack'] as num).toDouble(),
+      accessToken: json['data']['accessToken'],
+      refreshToken: json['data']['refreshToken'],
+    );
+  }
+}

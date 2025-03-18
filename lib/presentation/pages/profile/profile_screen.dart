@@ -6,6 +6,7 @@ import 'package:fixiez/presentation/pages/profile/widgets/customer_review_text.d
 import 'package:fixiez/presentation/pages/profile/widgets/maintenance_widget.dart';
 import 'package:fixiez/presentation/pages/profile/widgets/price_list_widget.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
+import 'package:fixiez/presentation/widgets/name_header.dart';
 import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,36 +49,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(height: 25.h),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.arrow_back_ios_outlined,
-                                color: Colors.white,
-                                size: 28,
-                              ),
-                            ),
-                            SizedBox(width: 18.w),
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(text: 'اهلا', style: AppText.bold24),
-                                  TextSpan(
-                                    text: ' عمرو عادل ',
-                                    style: AppText.med24,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(width: 70.w),
-                            InkWell(
-                              onTap: () {},
-                              child: SvgPicture.asset(ImageAssets.settings),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.start,
+                        //   children: [
+                        //     IconButton(
+                        //       onPressed: () {},
+                        //       icon: const Icon(
+                        //         Icons.arrow_back_ios_outlined,
+                        //         color: Colors.white,
+                        //         size: 28,
+                        //       ),
+                        //     ),
+                        //     SizedBox(width: 18.w),
+                        //     RichText(
+                        //       text: TextSpan(
+                        //         children: [
+                        //           TextSpan(text: 'اهلا', style: AppText.bold24),
+                        //           TextSpan(
+                        //             text: ' عمرو عادل ',
+                        //             style: AppText.med24,
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     ),
+                        //     SizedBox(width: 70.w),
+                        //     InkWell(
+                        //       onTap: () {},
+                        //       child: SvgPicture.asset(ImageAssets.settings),
+                        //     ),
+                        //   ],
+                        // ),
+                        NameHeader(onBackPressed: () {},onSettingsPressed: (){},),
                         SizedBox(height: 48.h),
                         Row(
                           children: [
