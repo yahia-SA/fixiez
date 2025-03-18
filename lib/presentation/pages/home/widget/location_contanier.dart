@@ -15,7 +15,7 @@ class LocationContainer extends StatefulWidget {
 class _LocationContainerState extends State<LocationContainer> {
   String? selectedAddress;
   final TextEditingController _textController = TextEditingController();
-  final List<String> addresses = ['yahia', 'aa'];
+  final List<String> addresses = ['بادية ', '800 فدان'];
 
   @override
   void dispose() {
