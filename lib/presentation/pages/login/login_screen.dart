@@ -31,7 +31,7 @@ class Login extends StatelessWidget {
             (route) => false,
           );
         } else if (state is LoginFailure) {
-          UiHelper.showNotification('Login failed');
+          UiHelper.showNotification(state.message);
         }
       },
       builder: (context, state) {

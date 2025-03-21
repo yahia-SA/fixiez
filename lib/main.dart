@@ -5,7 +5,9 @@ import 'package:fixiez/core/theme/app_theme.dart';
 import 'package:fixiez/data/datasources/auth_remote_data_source.dart';
 import 'package:fixiez/data/repositories/auth_repository_impl.dart';
 import 'package:fixiez/domain/usecases/login_usecase.dart';
+import 'package:fixiez/domain/usecases/signup_usecase.dart';
 import 'package:fixiez/presentation/blocs/login/login_bloc.dart';
+import 'package:fixiez/presentation/blocs/signup/signup_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,21 +30,22 @@ Future<void> main() async {
     DioHelper.instance,
   ); 
   final authRepository = AuthRepositoryImpl(remoteDataSource: remoteDataSource);
-  final loginUseCase = LoginUseCase(
-    authRepository,
-  ); 
+  
 
   runApp(
     MultiRepositoryProvider(
       providers: [
         RepositoryProvider(create: (context) => authRepository),
-        RepositoryProvider(create: (context) => loginUseCase),
+        RepositoryProvider(create: (context) => LoginUseCase(authRepository)),
+        RepositoryProvider(create: (context)=>SignupUseCase(authRepository)),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) => LoginBloc(context.read<LoginUseCase>()),
           ),
+          BlocProvider(
+            create: (context) => SignupBloc(context.read<SignupUseCase>()),          )
         ],
         child: MyApp(startRoute: startRoute),
       ),

@@ -15,7 +15,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<ToggleConfirmPasswordVisibility>(_ontoggleConfirmPasswordVisibility);
   }
 
-  final SignupUsecase signupUseCase;
+  final SignupUseCase signupUseCase;
 
   Future<void> _onsignupSubmitted(
       SignupSubmitted event, Emitter<SignupState> emit) async {
