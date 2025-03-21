@@ -26,4 +26,22 @@ class UserModel extends User {
       refreshToken: json['data']['refreshToken'],
     );
   }
+
+    Map<String, dynamic> toJson() {
+    return {
+      'data': {
+        'user': {
+          '_id': id,
+          'name': name,
+          'phoneNumber': phoneNumber,
+          'role': role,
+          'isActive': isActive,
+          'balance': balance,
+          'cashBack': cashBack,
+        },
+        'accessToken': accessToken,
+        'refreshToken': refreshToken,
+      }
+    };
+  }
 }

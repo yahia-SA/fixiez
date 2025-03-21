@@ -1,19 +1,32 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:fixiez/domain/entities/user.dart';
+import 'package:fixiez/domain/usecases/signup_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'signup_event.dart';
 part 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  SignupBloc() : super(SignupInitial()) {
+  SignupBloc(this.signupUseCase) : super(SignupInitial()) {
     on<SignupSubmitted>(_onsignupSubmitted);
     on<TogglePasswordVisibility>(_ontogglePasswordVisibility);
     on<ToggleConfirmPasswordVisibility>(_ontoggleConfirmPasswordVisibility);
   }
 
-  FutureOr<void> _onsignupSubmitted(SignupSubmitted event, Emitter<SignupState> emit) {
+  final SignupUsecase signupUseCase;
+
+  Future<void> _onsignupSubmitted(
+      SignupSubmitted event, Emitter<SignupState> emit) async {
+    emit(SignupLoading());
+    try{
+    final user = await signupUseCase(event.name,event.phone,event.password);
+
+    emit(SignupSuccess(user));
+    } catch (e) {
+      emit(SignupFailure(e.toString()));
+    }
   }
 
   FutureOr<void> _ontogglePasswordVisibility(TogglePasswordVisibility event, Emitter<SignupState> emit) {

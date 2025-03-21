@@ -2,7 +2,7 @@ part of 'signup_bloc.dart';
 
 sealed class SignupState extends Equatable {
   const SignupState();
-  
+
   @override
   List<Object> get props => [];
 }
@@ -11,10 +11,15 @@ final class SignupInitial extends SignupState {}
 
 final class SignupLoading extends SignupState {}
 
-final class SignupSuccess extends SignupState {}
+final class SignupSuccess extends SignupState {
+  const SignupSuccess(this.user);
+  final User user;
+
+  @override
+  List<Object> get props => [user];
+}
 
 final class SignupFailure extends SignupState {
-
   const SignupFailure(this.message);
   final String message;
 
@@ -23,7 +28,6 @@ final class SignupFailure extends SignupState {
 }
 
 final class ChangePasswordVisibility extends SignupState {
-
   const ChangePasswordVisibility(this.isVisible);
   final bool isVisible;
 
@@ -32,7 +36,6 @@ final class ChangePasswordVisibility extends SignupState {
 }
 
 final class ChangeConfirmPasswordVisibility extends SignupState {
-
   const ChangeConfirmPasswordVisibility(this.isVisible);
   final bool isVisible;
 

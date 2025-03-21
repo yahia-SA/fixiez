@@ -8,13 +8,12 @@ sealed class SignupEvent extends Equatable {
 }
 
 class SignupSubmitted extends SignupEvent {
-  const SignupSubmitted(this.name, this.email, this.password, this.confirmPassword);
+  const SignupSubmitted({required this.name, required this.phone, required this.password});
   final String name;
-  final String email;
+  final String phone;
   final String password;
-  final String confirmPassword;
   @override
-  List<Object> get props => [name, email, password, confirmPassword];
+  List<Object> get props => [name, phone, password,];
 }
 
 class TogglePasswordVisibility extends SignupEvent {}
