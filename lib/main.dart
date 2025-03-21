@@ -14,22 +14,23 @@ import 'package:overlay_support/overlay_support.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  DioHelper.instance;
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  await DioHelper.instance.loadTokens();
   await CacheHelper.init();
-  final onBoarding = CacheHelper.getData(key: 'onBoarding');
-  final token = CacheHelper.getData(key: 'token');
+  final bool onBoarding = CacheHelper.getData(key: 'onBoarding') ?? false;
+  final bool isLoggedIn = CacheHelper.getData(key: 'token') != null;
 
-  String startRoute;
-  if (onBoarding != null) {
-    startRoute = token != null ? AppRoutes.home : AppRoutes.login;
-  } else {
-    startRoute = AppRoutes.initial;
-  }
-  final dio = DioHelper();
-  final remoteDataSource = AuthRemoteDataSourceImpl(dio); // Ensure RemoteDataSource is implemented
+  final String startRoute =
+      onBoarding
+          ? (isLoggedIn ? AppRoutes.home : AppRoutes.login)
+          : AppRoutes.initial;
+  final remoteDataSource = AuthRemoteDataSourceImpl(
+    DioHelper.instance,
+  ); 
   final authRepository = AuthRepositoryImpl(remoteDataSource: remoteDataSource);
-  final loginUseCase = LoginUseCase(authRepository); // Pass the correct argument
+  final loginUseCase = LoginUseCase(
+    authRepository,
+  ); 
 
   runApp(
     MultiRepositoryProvider(
@@ -37,8 +38,12 @@ Future<void> main() async {
         RepositoryProvider(create: (context) => authRepository),
         RepositoryProvider(create: (context) => loginUseCase),
       ],
-      child: BlocProvider(
-        create: (context) => LoginBloc(context.read<LoginUseCase>()),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => LoginBloc(context.read<LoginUseCase>()),
+          ),
+        ],
         child: MyApp(startRoute: startRoute),
       ),
     ),
