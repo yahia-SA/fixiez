@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:fixiez/core/network/remote/endpoints.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DioHelper {
   DioHelper._internal() {
@@ -14,7 +15,7 @@ class DioHelper {
         headers: {ApiHeaders.contentType: ApiHeaders.applicationJson},
       ),
     );
-
+    loadTokens();
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
@@ -69,7 +70,7 @@ class DioHelper {
         data: {'refresh_token': refreshToken},
       );
 
-      accessToken = response.data['access_token'];
+      saveTokens(response.data['access_token'], refreshToken);
       if (kDebugMode) print('✅ Access Token refreshed successfully.');
 
       // Complete the refresh process
@@ -145,4 +146,17 @@ class DioHelper {
   }) async {
     return await dio.delete(url, queryParameters: query);
   }
+Future<void> saveTokens(String? access, String? refresh) async {
+  final prefs = await SharedPreferences.getInstance();
+  if (access != null) await prefs.setString('accessToken', access);
+  if (refresh != null) await prefs.setString('refreshToken', refresh);
+}
+
+Future<void> loadTokens() async {
+  final prefs = await SharedPreferences.getInstance();
+  accessToken = prefs.getString('accessToken');
+  refreshToken = prefs.getString('refreshToken');
+}
+
+
 }
