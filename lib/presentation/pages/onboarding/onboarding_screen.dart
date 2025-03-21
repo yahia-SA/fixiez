@@ -1,4 +1,5 @@
 import 'package:fixiez/core/constants/image_assets.dart';
+import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
@@ -44,14 +45,16 @@ class OnBoarding extends StatelessWidget {
             CustomButton(
               text: 'تسجيل الدخول',
               onpressed: () {
-                Navigator.pushNamed(context, AppRoutes.login);
+                Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (route) => false);
+                CacheHelper.saveData(key: 'onBoarding', value: true);
               },
             ),
             SizedBox(height: 24.h),
             CustomButton(
               text: 'انشاء حساب',
               onpressed: () {
-                Navigator.pushNamed(context, AppRoutes.signup);
+                Navigator.pushNamedAndRemoveUntil(context, AppRoutes.signup, (route) => false);
+                CacheHelper.saveData(key: 'onBoarding', value: true);
               },
               backgroundColor: AppColors.white,
               foregroundColor: AppColors.primary,
