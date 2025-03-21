@@ -10,11 +10,12 @@ class ApiEndpoints {
   static const String resetPassword = '/auth/reset-password';
   static const String balanceCashBack = '/auth/balance-cash-back';
 
-  }
+  // repair
+  static const String repairRequest = '/repair-requests';
+}
 
 class ApiHeaders {
   static const String contentType = 'Content-Type';
   static const String applicationJson = 'application/json';
   static const String authorization = 'Authorization';
-  
 }
