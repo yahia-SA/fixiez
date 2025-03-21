@@ -5,7 +5,7 @@ import 'package:fixiez/presentation/blocs/resetPassword/reset_password_bloc.dart
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
 import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
-import 'package:fixiez/utils/ui_helper.dart';
+import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

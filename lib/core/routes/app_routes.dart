@@ -39,7 +39,10 @@ class RouteGenerator {
       case AppRoutes.profile:
          return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case AppRoutes.otpScreen:
-        return MaterialPageRoute(builder: (_) => OtpScreen());
+        return MaterialPageRoute(builder: (_) {
+      final String phone = settings.arguments as String? ?? '';
+      return OtpScreen(phone: phone); // تمرير رقم الهاتف إلى `OtpScreen`
+    },);
       case AppRoutes.successful:
         return MaterialPageRoute(builder: (_) => const Successful());
       case AppRoutes.resetPassword:

@@ -2,10 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/network/remote/endpoints.dart';
 import 'package:fixiez/data/models/user_model.dart';
+import 'package:fixiez/domain/entities/user.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<UserModel> login(String phone, String password);
-  Future<UserModel> signup(String name, String phone, String password);
+  Future<User> login(String phone, String password);
+  Future<User> signup(String name, String phone, String password);
+  Future<void> sendOtp(String phone);
+  Future<bool> verifyOtp(String phone, String otp);
+
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -13,11 +17,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final DioHelper dioHelper;
 
   @override
-  Future<UserModel> login(String phone, String password) async {
+  Future<User> login(String phone, String password) async {
     try {
       final response = await dioHelper.postData(
         url: ApiEndpoints.login,
-        data: {'phone': phone, 'password': password},
+        data: {'phoneNumber': phone, 'password': password},
       );
 
       if (response.data['status'] == 'success') {
@@ -25,8 +29,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           response.data['accessToken'],
           response.data['refreshToken'],
         );
-
-        return UserModel.fromJson(response.data);
+            final userModel = UserModel.fromJson(response.data['data']);
+        return userModel.toEntity();
       } else {
         throw response.data['message'] ?? 'Login failed';
       }
@@ -36,7 +40,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserModel> signup(String name, String phone, String password) async {
+  Future<User> signup(String name, String phone, String password) async {
     try {
       final response = await dioHelper.postData(
         url: ApiEndpoints.register,
@@ -44,16 +48,51 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.data['status'] == 'success') {
-        DioHelper.instance.saveTokens(
-          response.data['accessToken'],
-          response.data['refreshToken'],
-        );
-        return UserModel.fromJson(response.data);
-      } else {
+        final userModel=UserModel.fromJson(response.data);
+        return userModel.toEntity();
+      } else  {
         throw response.data['message'] ?? 'Signup failed';
       }
     } on DioException catch (e) {
       throw e.response?.data['message'] ?? 'Something went wrong';
+    }
+  }
+  
+  @override
+  Future<void> sendOtp(String phone) async {
+    try {
+      final response = await dioHelper.postData(
+        url: ApiEndpoints.sendActiveCode,
+        data: {'phoneNumber': phone},
+      );
+      if(response.data['status'] != 'success'){
+            throw response.data['message'] ?? 'فشل إرسال رمز التحقق';
+
+      }
+    } catch (e) {
+            throw 'حدث خطأ أثناء إرسال رمز التحقق';
+
+    }
+    }
+  
+  @override
+  Future<bool> verifyOtp(String phone, String otp) async {
+    try {
+      final response = await dioHelper.postData(
+        url: ApiEndpoints.validateActiveCode,
+        data: {'phoneNumber': phone, 'otp': otp},
+      );
+
+      if (response.data['status'] == 'success') {
+
+            return true;
+
+        
+      } else {
+        return false;
+      }
+    } on DioException catch (e) {
+      throw e.response!.data['message'] ?? 'فشل إرسال رمز التحقق';
     }
   }
 }

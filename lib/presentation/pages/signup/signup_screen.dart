@@ -4,7 +4,7 @@ import 'package:fixiez/presentation/blocs/signup/signup_bloc.dart';
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
 import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
-import 'package:fixiez/utils/ui_helper.dart';
+import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,10 +33,11 @@ class Signup extends StatelessWidget {
               BlocConsumer<SignupBloc, SignupState>(
                 listener: (context, state) {
                   if (state is SignupSuccess) {
-                    Navigator.pushNamedAndRemoveUntil(
+                    Navigator.pushNamed(
                       context,
                       AppRoutes.otpScreen,
-                      (route) => false,
+                      arguments: _phoneController.text.trim(),
+
                     );
                   } else if (state is SignupFailure) {
                     UiHelper.showNotification(state.message);

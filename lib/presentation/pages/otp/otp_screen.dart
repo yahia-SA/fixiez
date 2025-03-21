@@ -1,24 +1,19 @@
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
+import 'package:fixiez/presentation/blocs/otp/otp_bloc.dart';
 import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
-import 'package:fixiez/utils/ui_helper.dart';
+import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatelessWidget {
-  OtpScreen({super.key});
+  OtpScreen({super.key, required this.phone});
   final TextEditingController _otpController = TextEditingController();
-  void __verifyOtp(BuildContext context) {
-    if (_otpController.text == '1234') {
-      Navigator.pushNamed(context, AppRoutes.resetPassword);
-    } else {
-      UiHelper.showNotification('الرمز المدخل غير صحيح ');
-    }
-  }
-
+final String phone;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,11 +75,28 @@ class OtpScreen extends StatelessWidget {
             ),
 
             SizedBox(height: 32.h),
-            CustomButton(
-              text: 'تحقق',
-              onpressed: () {
-                debugPrint('OTP Entered: ${_otpController.text}');
-                __verifyOtp(context);
+            BlocConsumer<OtpBloc, OtpState>(
+              listener: (context, state) {
+                if (state is OtpSuccess) {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    AppRoutes.home,
+                    (route) => false,
+                  );
+                } else if (state is OtpFailure) {
+                  UiHelper.showNotification(state.message);
+                  print(state.message);
+                }
+              },
+              builder: (context, state) {
+                return CustomButton(
+                  text: 'تحقق',
+                  onpressed: () {
+                    context.read<OtpBloc>().add(
+                      VerifyOtpEvent(otp: _otpController.text, phone: phone),
+                    );
+                  },
+                );
               },
             ),
           ],

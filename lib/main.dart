@@ -7,6 +7,7 @@ import 'package:fixiez/data/repositories/auth_repository_impl.dart';
 import 'package:fixiez/domain/usecases/login_usecase.dart';
 import 'package:fixiez/domain/usecases/signup_usecase.dart';
 import 'package:fixiez/presentation/blocs/login/login_bloc.dart';
+import 'package:fixiez/presentation/blocs/otp/otp_bloc.dart';
 import 'package:fixiez/presentation/blocs/signup/signup_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,7 +46,9 @@ Future<void> main() async {
             create: (context) => LoginBloc(context.read<LoginUseCase>()),
           ),
           BlocProvider(
-            create: (context) => SignupBloc(context.read<SignupUseCase>()),          )
+            create: (context) => SignupBloc(context.read<SignupUseCase>()),),
+            BlocProvider(create: (context) => OtpBloc(DioHelper.instance,authRepository),),
+            
         ],
         child: MyApp(startRoute: startRoute),
       ),

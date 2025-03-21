@@ -66,7 +66,7 @@ class DioHelper {
         );
       }
 
-      final response = await dio.post(
+      final response = await dio.get(
         ApiEndpoints.refresh,
         data: {'refresh_token': refreshToken},
       );

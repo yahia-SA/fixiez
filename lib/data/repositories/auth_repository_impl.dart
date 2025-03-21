@@ -15,4 +15,14 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<User> signup(String name, String phone, String password) async {
  return await remoteDataSource.signup(name, phone, password);
   }
+  
+  @override
+  Future<void> sendOtp(String phone) async {
+    return await remoteDataSource.sendOtp(phone);
+  }
+  
+  @override
+  Future<bool> verifyOtp(String phone, String otp) async {
+    return await remoteDataSource.verifyOtp(phone, otp);
+  }
 }
