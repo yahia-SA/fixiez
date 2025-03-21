@@ -60,10 +60,11 @@ class DioHelper {
 
     try {
       if (kDebugMode) print('🔄 Refreshing Access Token...');
-      if (kDebugMode)
+      if (kDebugMode) {
         print(
           '🌍 Refreshing at: ${dio.options.baseUrl}${ApiEndpoints.refresh}',
         );
+      }
 
       final response = await dio.post(
         ApiEndpoints.refresh,
