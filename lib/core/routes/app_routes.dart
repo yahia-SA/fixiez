@@ -6,6 +6,7 @@ import 'package:fixiez/presentation/pages/onboarding/onboarding_screen.dart';
 import 'package:fixiez/presentation/pages/otp/otp_screen.dart';
 import 'package:fixiez/presentation/pages/profile/profile_screen.dart';
 import 'package:fixiez/presentation/pages/resetPassword/reset_password_screen.dart';
+import 'package:fixiez/presentation/pages/settings/setting_page.dart';
 import 'package:fixiez/presentation/pages/signup/signup_screen.dart';
 import 'package:fixiez/presentation/pages/sucessful/sucessful_screen.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class AppRoutes {
   static const successful = '/successful';
   static const resetPassword = '/ResetPassword';
   static const adminpage = '/AdminPage';
+  static const settings = '/Settings';
 }
 
 class RouteGenerator {
@@ -49,6 +51,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Resetpassword());
       case AppRoutes.adminpage:
         return MaterialPageRoute(builder: (_) => const AdminPage());
+      case AppRoutes.settings:
+        return MaterialPageRoute(builder: (_) => const SettingPage());
       default:
         return MaterialPageRoute(builder: (_) => const OnBoarding());
     }
