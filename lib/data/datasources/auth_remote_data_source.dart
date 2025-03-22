@@ -9,7 +9,6 @@ abstract class AuthRemoteDataSource {
   Future<User> signup(String name, String phone, String password);
   Future<void> sendOtp(String phone);
   Future<bool> verifyOtp(String phone, String otp);
-
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -29,7 +28,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           response.data['accessToken'],
           response.data['refreshToken'],
         );
-            final userModel = UserModel.fromJson(response.data['data']);
+        final userModel = UserModel.fromJson(response.data['data']);
         return userModel.toEntity();
       } else {
         throw response.data['message'] ?? 'Login failed';
@@ -48,16 +47,16 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.data['status'] == 'success') {
-        final userModel=UserModel.fromJson(response.data);
+        final userModel = UserModel.fromJson(response.data);
         return userModel.toEntity();
-      } else  {
+      } else {
         throw response.data['message'] ?? 'Signup failed';
       }
     } on DioException catch (e) {
       throw e.response?.data['message'] ?? 'Something went wrong';
     }
   }
-  
+
   @override
   Future<void> sendOtp(String phone) async {
     try {
@@ -65,16 +64,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         url: ApiEndpoints.sendActiveCode,
         data: {'phoneNumber': phone},
       );
-      if(response.data['status'] != 'success'){
-            throw response.data['message'] ?? 'فشل إرسال رمز التحقق';
-
+      if (response.data['status'] != 'success') {
+        throw response.data['message'] ?? 'فشل إرسال رمز التحقق';
       }
     } catch (e) {
-            throw 'حدث خطأ أثناء إرسال رمز التحقق';
+      throw 'حدث خطأ أثناء إرسال رمز التحقق';
+    }
+  }
 
-    }
-    }
-  
   @override
   Future<bool> verifyOtp(String phone, String otp) async {
     try {
@@ -84,10 +81,12 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.data['status'] == 'success') {
+        DioHelper.instance.saveTokens(
+          response.data['accessToken'],
+          response.data['refreshToken'],
+        );
 
-            return true;
-
-        
+        return true;
       } else {
         return false;
       }

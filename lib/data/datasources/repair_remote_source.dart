@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/network/remote/endpoints.dart';
@@ -26,14 +27,15 @@ class RepairRemoteDataSourceImpl implements RepairRemoteDataSource {
     required ServiceType serviceType,
     required String date,
   }) async {
+    try{
     final response = await dioHelper.postData(
       url: ApiEndpoints.repairRequest,
       data: {
         'location': location,
         'unitNumber': unitNumber,
         'description': description,
-        'serviceName': serviceName.toString(),
-        'serviceType': serviceType.toString(),
+        'serviceName': serviceName.name,
+        'serviceType': serviceType.name,
         'date': date,
       },
     );
@@ -42,5 +44,8 @@ class RepairRemoteDataSourceImpl implements RepairRemoteDataSource {
     } else {
       throw Exception(response.data['message'] ?? '');
     }
+  } on DioException catch (e){
+    throw (e.response?.data['message'] ?? 'حدث خطأ أثناء معالجة الطلب');
+  }
   }
 }

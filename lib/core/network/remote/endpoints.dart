@@ -1,4 +1,5 @@
 class ApiEndpoints {
+  // auth
   static const String baseUrl = 'http://93.127.202.37:5510/api';
   static const String login = '/auth/login';
   static const String refresh = '/auth/refresh';
@@ -12,6 +13,10 @@ class ApiEndpoints {
 
   // repair
   static const String repairRequest = '/repair-requests';
+  
+
+  // Banners
+  static const String banners = '/banners';
 }
 
 class ApiHeaders {

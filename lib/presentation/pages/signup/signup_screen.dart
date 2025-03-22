@@ -81,7 +81,7 @@ class Signup extends StatelessWidget {
                             if (value.length != 11) {
                               return 'Phone number must be 11 digits';
                             }
-                            if (!RegExp(r'^01[0-9]{9}$').hasMatch(value)) {
+                            if (!RegExp(r'^01[0125][0-9]{8}$').hasMatch(value)) {
                               return 'Enter a valid Egyptian phone number';
                             }
                             return null;
