@@ -11,6 +11,8 @@ class ImageAssets {
   static const String settings = '$imagePath/settings_icon.svg';
   static const String call = '$imagePath/call_icon.svg';
   static const String alert = '$imagePath/alert_circle.svg';
+  static const String delete = '$imagePath/delete.svg';
+  static const String logout = '$imagePath/logout.svg';
 }
 
 const String imagePath = 'assets/images';
