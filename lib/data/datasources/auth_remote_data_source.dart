@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/network/remote/endpoints.dart';
 import 'package:fixiez/data/models/user_model.dart';
@@ -28,7 +29,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           response.data['accessToken'],
           response.data['refreshToken'],
         );
-        final userModel = UserModel.fromJson(response.data['data']);
+        final userModel = UserModel.fromJson(response.data);
+        await CacheHelper.saveUser(userModel.toEntity());
         return userModel.toEntity();
       } else {
         throw response.data['message'] ?? 'Login failed';
@@ -48,6 +50,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
       if (response.data['status'] == 'success') {
         final userModel = UserModel.fromJson(response.data);
+        await CacheHelper.saveUser(userModel.toEntity());
         return userModel.toEntity();
       } else {
         throw response.data['message'] ?? 'Signup failed';
