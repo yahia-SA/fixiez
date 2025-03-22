@@ -10,7 +10,9 @@ class CustomTable extends StatelessWidget {
     required this.title,
     required this.headers,
     required this.data,
-    this.onpressed, required this.headingRowHeight, required this.dataRowHeight,
+    this.onpressed,
+    required this.headingRowHeight,
+    required this.dataRowHeight,
   });
 
   final String title;
@@ -22,7 +24,7 @@ class CustomTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.w),
+      padding: EdgeInsets.symmetric(horizontal: 20.w),
       child: Column(
         children: [
           Row(
@@ -55,11 +57,14 @@ class CustomTable extends StatelessWidget {
                 headingRowHeight: headingRowHeight.h,
                 dataRowMinHeight: 36.h,
                 dataRowMaxHeight: dataRowHeight.h,
+
                 headingTextStyle: AppText.bold12.copyWith(
                   color: AppColors.white,
                 ),
-                dataTextStyle: AppText.reg10.copyWith(color: AppColors.black,),
-                headingRowColor: WidgetStateProperty.all(AppColors.primary),
+                dataTextStyle: AppText.reg10.copyWith(color: AppColors.black),
+                headingRowColor: WidgetStateProperty.all(
+                  const Color(0xffE6F1FF),
+                ),
                 border: TableBorder.all(
                   color: const Color(0xFFB9B9B9),
                   width: 1.w,
@@ -69,7 +74,20 @@ class CustomTable extends StatelessWidget {
                     headers
                         .map(
                           (e) => DataColumn(
-                            label: Center(child: Text(e,overflow: TextOverflow.ellipsis,maxLines: 2,textAlign: TextAlign.center,)),
+                            label: SizedBox(
+                              width: 57.w,
+                              child: Center(
+                                child: Text(
+                                  e,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  style: AppText.bold12.copyWith(
+                                    color: AppColors.primary,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         )
                         .toList(),
@@ -80,9 +98,7 @@ class CustomTable extends StatelessWidget {
                             cells:
                                 e
                                     .map(
-                                      (e) => DataCell(
-                                        Center(child: Text(e)),
-                                      ),
+                                      (e) => DataCell(Center(child: Text(e))),
                                     )
                                     .toList(),
                           ),
