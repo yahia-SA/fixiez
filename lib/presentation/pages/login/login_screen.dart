@@ -1,9 +1,9 @@
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
-import 'package:fixiez/presentation/blocs/login/login_bloc.dart';
-import 'package:fixiez/presentation/blocs/login/login_event.dart';
-import 'package:fixiez/presentation/blocs/login/login_state.dart';
+import 'package:fixiez/presentation/state/bloc/login/login_bloc.dart';
+import 'package:fixiez/presentation/state/bloc/login/login_event.dart';
+import 'package:fixiez/presentation/state/bloc/login/login_state.dart';
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
 import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';

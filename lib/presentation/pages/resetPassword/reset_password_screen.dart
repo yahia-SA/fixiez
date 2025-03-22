@@ -1,7 +1,7 @@
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
-import 'package:fixiez/presentation/blocs/resetPassword/reset_password_bloc.dart';
+import 'package:fixiez/presentation/state/bloc/resetPassword/reset_password_bloc.dart';
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
 import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:fixiez/domain/usecases/login_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fixiez/presentation/blocs/login/login_event.dart';
-import 'package:fixiez/presentation/blocs/login/login_state.dart';
+import 'package:fixiez/presentation/state/bloc/login/login_event.dart';
+import 'package:fixiez/presentation/state/bloc/login/login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc(this.loginUseCase) : super(LoginInitial()) {

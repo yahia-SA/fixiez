@@ -1,7 +1,7 @@
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
-import 'package:fixiez/presentation/blocs/otp/otp_bloc.dart';
+import 'package:fixiez/presentation/state/bloc/otp/otp_bloc.dart';
 import 'package:fixiez/presentation/widgets/cutom_bulidlogo.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
 import 'package:fixiez/core/utils/ui_helper.dart';

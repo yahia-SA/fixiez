@@ -48,6 +48,7 @@ dependencies:
   overlay_notification: ^23.5.12
   overlay_support: ^2.1.0
   fl_chart: ^0.70.2
+  get_it: ^8.0.3
 
 dev_dependencies:
   flutter_test:
