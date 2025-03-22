@@ -19,10 +19,10 @@ Future<void> main() async {
   await CacheHelper.init();
   await init();
   final bool onBoarding = CacheHelper.getData(key: 'onBoarding') ?? false;
-  final bool isLoggedIn = CacheHelper.getData(key: 'token') != null;
+  final bool rememberMe = CacheHelper.getData(key: 'RememberMe') != null;
   final String startRoute =
       onBoarding
-          ? (isLoggedIn ? AppRoutes.home : AppRoutes.login)
+          ? (rememberMe ? AppRoutes.home : AppRoutes.login)
           : AppRoutes.initial;
 
   runApp(MyApp(startRoute: startRoute));
@@ -34,11 +34,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MultiBlocProvider(
+    return MultiBlocProvider(
       providers: [
-        BlocProvider(create:(_) => sl<LoginBloc>()),
-        BlocProvider(create:(_) => sl<SignupBloc>()),
-        BlocProvider(create:(_) => sl<OtpBloc>()),
+        BlocProvider(create: (_) => sl<LoginBloc>()),
+        BlocProvider(create: (_) => sl<SignupBloc>()),
+        BlocProvider(create: (_) => sl<OtpBloc>()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

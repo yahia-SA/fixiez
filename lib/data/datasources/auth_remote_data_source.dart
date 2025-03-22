@@ -29,7 +29,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
           response.data['accessToken'],
           response.data['refreshToken'],
         );
-        final userModel = UserModel.fromJson(response.data);
+        final userModel = UserModel.fromLoginJson(response.data);
         await CacheHelper.saveUser(userModel.toEntity());
         return userModel.toEntity();
       } else {
@@ -49,7 +49,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.data['status'] == 'success') {
-        final userModel = UserModel.fromJson(response.data);
+        final userModel = UserModel.fromSignUpJson(response.data);
         await CacheHelper.saveUser(userModel.toEntity());
         return userModel.toEntity();
       } else {

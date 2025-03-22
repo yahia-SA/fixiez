@@ -85,7 +85,6 @@ final String phone;
                   );
                 } else if (state is OtpFailure) {
                   UiHelper.showNotification(state.message);
-                  print(state.message);
                 }
               },
               builder: (context, state) {

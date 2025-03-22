@@ -1,3 +1,4 @@
+import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
@@ -120,22 +121,18 @@ class Login extends StatelessWidget {
                                     AppRoutes.forgetPassword,
                                   );
                                 },
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      AppRoutes.forgetPassword,
-                                    );
-                                  },
-                                  child: Text(
-                                    'هل نسيت كلمة المرور؟',
-                                    style: context.med14Black,
-                                  ),
+                                child: Text(
+                                  'هل نسيت كلمة المرور؟',
+                                  style: context.med14Black,
                                 ),
                               ),
                               TextButton.icon(
                                 onPressed: () {
                                   bloc.add(ToggleRememberMe());
+                                  CacheHelper.saveData(
+                                    key: 'RememberMe',
+                                    value: true,
+                                  );
                                 },
                                 label: Text(
                                   'تذكرني',
