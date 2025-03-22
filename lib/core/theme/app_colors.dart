@@ -10,4 +10,5 @@ class AppColors {
   static const Color error = Color(0xFFDC1C1C);
   static const Color suffixIconColor = Color(0xFFC4C4C4);
   static const Color feedbackColor = Color(0xFF455A64);
+  static const Color backgroundColor =  Color(0xffF4F7FF);
 }
