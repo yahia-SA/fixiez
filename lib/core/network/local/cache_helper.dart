@@ -1,3 +1,4 @@
+import 'package:fixiez/domain/entities/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
@@ -38,5 +39,66 @@ class CacheHelper {
   /// Clear all cached data
   static Future<bool> clearAll() async {
     return await _sharedPreferences?.clear() ?? false;
+  }
+
+  /// Save user data to cache
+  static Future<bool> saveUser(
+    User user) async {
+   try{   await Future.wait([
+       saveData(key: 'Id', value: user.id),
+       saveData(key: 'Name', value: user.name),
+       saveData(key: 'PhoneNumber', value: user.phoneNumber),
+       saveData(key: 'Role', value: user.role),
+       saveData(key: 'IsActive', value: user.isActive),
+       saveData(key: 'Balance', value: user.balance),
+       saveData(key: 'CashBack', value: user.cashBack),
+       saveData(key: 'AccessToken', value: user.accessToken),
+       saveData(key: 'RefreshToken', value: user.refreshToken),
+
+   ]);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
+/// Get user data from cache
+  static User? getUser() {
+    try {
+      final id = getData(key: 'Id');
+      final name = getData(key: 'Name');
+      final phoneNumber = getData(key: 'PhoneNumber');
+      final role = getData(key: 'Role');
+      final isActive = getData(key: 'IsActive');
+      final balance = getData(key: 'Balance');
+      final cashBack = getData(key: 'CashBack');
+      final accessToken = getData(key: 'AccessToken');
+      final refreshToken = getData(key: 'RefreshToken');
+
+      if (id != null &&
+          name != null &&
+          phoneNumber != null &&
+          role != null &&
+          isActive != null &&
+          balance != null &&
+          cashBack != null &&
+          accessToken != null &&
+          refreshToken != null) {
+        return User(
+          id: id,
+          name: name,
+          phoneNumber: phoneNumber,
+          role: role,
+          isActive: isActive,
+          balance: balance,
+          cashBack: cashBack,
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        );
+      }
+    } catch (e) {
+      print('Error retrieving user data: $e');
+    }
+    return null;
   }
 }
