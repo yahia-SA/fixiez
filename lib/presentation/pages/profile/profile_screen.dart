@@ -49,37 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(height: 25.h),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.start,
-                        //   children: [
-                        //     IconButton(
-                        //       onPressed: () {},
-                        //       icon: const Icon(
-                        //         Icons.arrow_back_ios_outlined,
-                        //         color: Colors.white,
-                        //         size: 28,
-                        //       ),
-                        //     ),
-                        //     SizedBox(width: 18.w),
-                        //     RichText(
-                        //       text: TextSpan(
-                        //         children: [
-                        //           TextSpan(text: 'اهلا', style: AppText.bold24),
-                        //           TextSpan(
-                        //             text: ' عمرو عادل ',
-                        //             style: AppText.med24,
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ),
-                        //     SizedBox(width: 70.w),
-                        //     InkWell(
-                        //       onTap: () {},
-                        //       child: SvgPicture.asset(ImageAssets.settings),
-                        //     ),
-                        //   ],
-                        // ),
-                        NameHeader(onBackPressed: () {},onSettingsPressed: (){},),
+                        NameHeader(onBackPressed: () {}, isThereSettings: true),
                         SizedBox(height: 48.h),
                         Row(
                           children: [

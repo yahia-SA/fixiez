@@ -34,7 +34,7 @@ class AdminPage extends StatelessWidget {
                       59.w,
                       0,
                     ),
-                  child: NameHeader(onSettingsPressed: () {},isblue: true,),
+                  child: const NameHeader(isThereSettings: true,isblue: true,),
                 ),
                 SizedBox(height: 48.h,),
                 CustomTable(title: 'المستخدمين ', headers: usersHeaders, data: usersData, headingRowHeight: 40, dataRowHeight: 36,),
