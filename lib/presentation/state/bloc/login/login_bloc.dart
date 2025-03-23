@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:fixiez/domain/usecases/login_usecase.dart';
+import 'package:fixiez/domain/usecases/auth/login_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fixiez/presentation/state/bloc/login/login_event.dart';
 import 'package:fixiez/presentation/state/bloc/login/login_state.dart';

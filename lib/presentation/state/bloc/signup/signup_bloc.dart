@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:fixiez/domain/entities/user.dart';
-import 'package:fixiez/domain/usecases/signup_usecase.dart';
+import 'package:fixiez/domain/usecases/auth/signup_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'signup_event.dart';

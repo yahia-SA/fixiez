@@ -1,13 +1,14 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
+import 'package:fixiez/domain/usecases/auth/reset_password_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'reset_password_event.dart';
 part 'reset_password_state.dart';
 
 class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
-  ResetPasswordBloc() : super(ResetPasswordInitial()) {
+  ResetPasswordBloc(this._resetPasswordUseCase) : super(ResetPasswordInitial()) {
     on<ResetpasswordSubmitted>(_onresetpasswordSubmitted);
     on<TogglePasswordVisibility>(_ontogglePasswordVisibility);
     on<ToggleConfirmPasswordVisibility>(_ontoggleConfirmPasswordVisibility);
@@ -41,8 +42,13 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
     } else if (event.password != event.confirmPassword) {
       emit(const ResetPasswordFailure('كلمات المرور غير متطابقة'));
     } else {
+      try {
+         await _resetPasswordUseCase(event.otp, event.password, event.confirmPassword);
       emit(ResetPasswordSuccess());
+      } catch (e) {
+        emit(ResetPasswordFailure(e.toString()));
+      }
     }
   }
-
+final ResetPasswordUsecase _resetPasswordUseCase;
 }
