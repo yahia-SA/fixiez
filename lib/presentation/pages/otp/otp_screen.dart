@@ -1,3 +1,4 @@
+import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
@@ -11,9 +12,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatelessWidget {
-  OtpScreen({super.key, required this.phone});
+  OtpScreen({super.key, required this.phone, required this.origin});
   final TextEditingController _otpController = TextEditingController();
-final String phone;
+  final String phone;
+  final OtpPages origin;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,6 +85,12 @@ final String phone;
                     AppRoutes.home,
                     (route) => false,
                   );
+                } else if (state is OtpResetPasswordSuccess) {
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.resetPassword,
+                    arguments: _otpController.text,
+                  );
                 } else if (state is OtpFailure) {
                   UiHelper.showNotification(state.message);
                 }
@@ -92,7 +100,11 @@ final String phone;
                   text: 'تحقق',
                   onpressed: () {
                     context.read<OtpBloc>().add(
-                      VerifyOtpEvent(otp: _otpController.text, phone: phone),
+                      VerifyOtpEvent(
+                        otp: _otpController.text,
+                        phone: phone,
+                        origin: origin,
+                      ),
                     );
                   },
                 );

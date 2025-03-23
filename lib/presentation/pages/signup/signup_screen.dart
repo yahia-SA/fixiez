@@ -36,8 +36,10 @@ class Signup extends StatelessWidget {
                     Navigator.pushNamed(
                       context,
                       AppRoutes.otpScreen,
-                      arguments: _phoneController.text.trim(),
-
+                      arguments: {
+                        'phone': _phoneController.text.trim(),
+                        'origin': 'signup',
+                      },
                     );
                   } else if (state is SignupFailure) {
                     UiHelper.showNotification(state.message);
@@ -81,7 +83,9 @@ class Signup extends StatelessWidget {
                             if (value.length != 11) {
                               return 'Phone number must be 11 digits';
                             }
-                            if (!RegExp(r'^01[0125][0-9]{8}$').hasMatch(value)) {
+                            if (!RegExp(
+                              r'^01[0125][0-9]{8}$',
+                            ).hasMatch(value)) {
                               return 'Enter a valid Egyptian phone number';
                             }
                             return null;
@@ -129,7 +133,7 @@ class Signup extends StatelessWidget {
                               controller: _confirmPasswordController,
                               hint: 'قم بانشاء كلمه مرور الخاصه بك ',
                               type: TextInputType.visiblePassword,
-                              isPassword: true,
+                              isPassword: !isPasswordVisible,
                               suffix:
                                   isPasswordVisible
                                       ? Icons.visibility_outlined

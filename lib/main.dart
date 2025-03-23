@@ -2,13 +2,10 @@ import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_theme.dart';
+import 'package:fixiez/presentation/service/bloc_providers.dart';
 import 'package:fixiez/presentation/service/injection_container.dart';
-import 'package:fixiez/presentation/state/bloc/login/login_bloc.dart';
-import 'package:fixiez/presentation/state/bloc/otp/otp_bloc.dart';
-import 'package:fixiez/presentation/state/bloc/signup/signup_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -34,12 +31,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => sl<LoginBloc>()),
-        BlocProvider(create: (_) => sl<SignupBloc>()),
-        BlocProvider(create: (_) => sl<OtpBloc>()),
-      ],
+    return BlocProvidersList(
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
         minTextAdapt: true,
