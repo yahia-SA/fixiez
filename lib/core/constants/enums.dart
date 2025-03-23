@@ -3,3 +3,5 @@
 enum ServiceName { plumbing, carpentry, electricity, painting }
 
 enum ServiceType { urgent_request, normal_request }
+
+enum OtpPages {signup,forgetPassword}
