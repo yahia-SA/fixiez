@@ -1,4 +1,5 @@
 import 'package:fixiez/domain/entities/user.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
@@ -97,7 +98,9 @@ class CacheHelper {
         );
       }
     } catch (e) {
-      print('Error retrieving user data: $e');
+      if (kDebugMode) {
+        print('Error retrieving user data: $e');
+      }
     }
     return null;
   }

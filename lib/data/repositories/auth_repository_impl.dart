@@ -17,12 +17,17 @@ class AuthRepositoryImpl implements AuthRepository {
   }
   
   @override
-  Future<void> sendOtp(String phone) async {
-    return await remoteDataSource.sendOtp(phone);
+  Future<void> sendResetOtp(String phone) async {
+    return await remoteDataSource.sendResetOtp(phone);
   }
   
   @override
-  Future<bool> verifyOtp(String phone, String otp) async {
-    return await remoteDataSource.verifyOtp(phone, otp);
+  Future<Object> verifyOtp(String phone, String otp,String api) async {
+    return await remoteDataSource.verifyOtp(phone, otp,api);
+  }
+  
+  @override
+  Future<void> resetPassword(String otp, String password, String confirmPassword) async {
+    return await remoteDataSource.resetPassword(otp,password,confirmPassword);
   }
 }

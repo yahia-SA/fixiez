@@ -8,8 +8,9 @@ import 'package:fixiez/domain/entities/user.dart';
 abstract class AuthRemoteDataSource {
   Future<User> login(String phone, String password);
   Future<User> signup(String name, String phone, String password);
-  Future<void> sendOtp(String phone);
-  Future<bool> verifyOtp(String phone, String otp);
+  Future<void> sendResetOtp(String phone);
+  Future<Object> verifyOtp(String phone, String otp,String api);
+  Future<void> resetPassword(String otp, String password,String confirmPassword);
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -61,10 +62,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> sendOtp(String phone) async {
+  Future<void> sendResetOtp(String phone) async {
     try {
       final response = await dioHelper.postData(
-        url: ApiEndpoints.sendActiveCode,
+        url: ApiEndpoints.sendResetCode,
         data: {'phoneNumber': phone},
       );
       if (response.data['status'] != 'success') {
@@ -76,25 +77,45 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<bool> verifyOtp(String phone, String otp) async {
+  Future<Object> verifyOtp(String phone, String otp,String api) async {
     try {
       final response = await dioHelper.postData(
-        url: ApiEndpoints.validateActiveCode,
+        url: api,
         data: {'phoneNumber': phone, 'otp': otp},
       );
 
       if (response.data['status'] == 'success') {
+        if (api == ApiEndpoints.validateResetPassword) {
+          return response.data['message'];
+        }
         DioHelper.instance.saveTokens(
           response.data['accessToken'],
           response.data['refreshToken'],
         );
-
-        return true;
+        final userModel = UserModel.fromLoginJson(response.data);
+        await CacheHelper.saveUser(userModel.toEntity());
+        return userModel.toEntity();
       } else {
-        return false;
+        throw response.data['message'] ?? 'Login failed';
       }
     } on DioException catch (e) {
       throw e.response!.data['message'] ?? 'فشل إرسال رمز التحقق';
+    }
+  }
+  
+  @override
+  Future<void> resetPassword(String otp, String password, String confirmPassword) async {
+    try {
+      final response = await dioHelper.postData(
+        url: ApiEndpoints.resetPassword,
+        data: {'otp': otp, 'newPassword': password, 'confirmPassword': confirmPassword},
+      );
+      if (response.data['status'] == 'success') {
+        return response.data['message'] ?? 'تم تغيير كلمة المرور بنجاح';
+      }
+    } catch (e) {
+    // طباعة الخطأ عند الفشل
+      throw 'حدث خطأ أثناء تغيير كلمة المرور';
     }
   }
 }

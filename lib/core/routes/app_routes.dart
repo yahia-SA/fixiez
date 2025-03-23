@@ -1,3 +1,4 @@
+import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/presentation/pages/admin/admin_page.dart';
 import 'package:fixiez/presentation/pages/home/home_page.dart';
 import 'package:fixiez/presentation/pages/forgetPassword/forget_password_screen.dart';
@@ -43,14 +44,22 @@ class RouteGenerator {
       case AppRoutes.otpScreen:
         return MaterialPageRoute(
           builder: (_) {
-            final String phone = settings.arguments as String? ?? '';
-            return OtpScreen(phone: phone);
+            final args = settings.arguments as Map<String, dynamic>? ?? {};
+            final String phone = args['phone'] ?? '';
+            final OtpPages origin =
+                args['origin'] ?? 'signup'; // القيمة الافتراضية
+            return OtpScreen(phone: phone, origin: origin);
           },
         );
       case AppRoutes.successful:
         return MaterialPageRoute(builder: (_) => const Successful());
       case AppRoutes.resetPassword:
-        return MaterialPageRoute(builder: (_) => Resetpassword());
+        return MaterialPageRoute(
+          builder: (_) {
+            final otp = settings.arguments as String? ?? '';
+            return Resetpassword(otp: otp);
+          },
+        );
       case AppRoutes.adminpage:
         return MaterialPageRoute(builder: (_) => const AdminPage());
       case AppRoutes.settings:

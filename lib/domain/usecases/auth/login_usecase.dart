@@ -3,10 +3,10 @@ import 'package:fixiez/domain/entities/user.dart';
 
 class LoginUseCase {
 
-  LoginUseCase(this.repository);
-  final AuthRepository repository;
+  LoginUseCase(this.authRepository);
+  final AuthRepository authRepository;
 
   Future<User> call(String email, String password) {
-    return repository.login(email, password);
+    return authRepository.login(email, password);
   }
 }

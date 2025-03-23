@@ -9,6 +9,7 @@ class ApiEndpoints {
   static const String updatePass = '/auth/update-pass';
   static const String sendResetCode = '/auth/send-reset-code';
   static const String resetPassword = '/auth/reset-password';
+  static const String validateResetPassword = '/auth/validate-reset-password';
   static const String balanceCashBack = '/auth/balance-cash-back';
 
   // repair
