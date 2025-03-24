@@ -26,18 +26,23 @@ class NameHeader extends StatelessWidget {
           onPressed: onBackPressed,
           icon: Icon(Icons.arrow_back_ios, color: iconColor),
         ),
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: 'اهلا',
-                style: AppText.bold24.copyWith(color: textColor),
-              ),
-              TextSpan(
-                text: ' عمرو عادل ',
-                style: AppText.med24.copyWith(color: textColor),
-              ),
-            ],
+        InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, AppRoutes.profile);
+          },
+          child: RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: 'اهلا',
+                  style: AppText.bold24.copyWith(color: textColor),
+                ),
+                TextSpan(
+                  text: ' عمرو عادل ',
+                  style: AppText.med24.copyWith(color: textColor),
+                ),
+              ],
+            ),
           ),
         ),
         const Spacer(),
