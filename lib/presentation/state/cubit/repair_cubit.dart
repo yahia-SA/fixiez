@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/domain/repositories/reapir_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,30 +8,66 @@ import 'package:equatable/equatable.dart';
 part 'repair_state.dart';
 
 class RepairCubit extends Cubit<RepairState> {
-  RepairCubit(this._repairRepository) : super(RepairInitial());
+  RepairCubit(this._repairRepository)
+    : super(const RepairInitial(RepairFormData()));
   final RepairRepository _repairRepository;
 
-  Future<void> reapirRequest({
-    required String location,
-    required String unitNumber,
-    required String description,
-    required ServiceName serviceName,
-    required ServiceType serviceType,
-    required String date,
-  }) async {
-    emit(RepairLoading());
+  // Form update methods should NOT emit loading state
+  void updateLocation(String location) =>
+      _updateForm(state.formData.copyWith(location: location));
+  void updateUnitNumber(String unitNumber) =>
+      _updateForm(state.formData.copyWith(unitNumber: unitNumber));
+  void updateDescription(String description) =>
+      _updateForm(state.formData.copyWith(description: description));
+  void updateServiceName(ServiceName serviceName) =>
+      _updateForm(state.formData.copyWith(serviceName: serviceName));
+  void updateServiceType(ServiceType serviceType) =>
+      _updateForm(state.formData.copyWith(serviceType: serviceType));
+  void updateDate(String date) =>
+      _updateForm(state.formData.copyWith(date: date));
+
+  void _updateForm(RepairFormData newFormData) {
+    // Preserve current state type while updating form data
+    if (state is RepairLoading) return;
+    emit(switch (state) {
+      RepairInitial() => RepairInitial(newFormData),
+      RepairLoading() => RepairLoading(newFormData),
+      RepairSuccess() => RepairSuccess(newFormData),
+      RepairFailure() => RepairFailure(
+        newFormData,
+        (state as RepairFailure).message,
+      ),
+    });
+    log('state: $state');
+  }
+
+  Future<void> submitRepairRequest() async {
+    final formData = state.formData;
+
+    // Validate required fields
+    if (formData.location == null || formData.location!.isEmpty) {
+      emit(RepairFailure(formData, 'Location is required'));
+      return;
+    }
+    if (formData.serviceName == null) {
+      emit(RepairFailure(formData, 'Service name is required'));
+      return;
+    }
+
+    emit(RepairLoading(formData));
+
     try {
       await _repairRepository.reapirRequest(
-        location: location,
-        unitNumber: unitNumber,
-        description: description,
-        serviceName: serviceName,
-        serviceType: serviceType,
-        date: date,
+        location: formData.location!,
+        unitNumber: formData.unitNumber ?? '',
+        description: formData.description ?? '',
+        serviceName: formData.serviceName!,
+        serviceType: formData.serviceType ?? ServiceType.normal_request,
+        date: formData.date ?? DateTime.now().toIso8601String(),
       );
-      emit(Repairsuccess());
-} catch (e) {
-      emit(RepairFailure(e.toString()));
+      emit(RepairSuccess(formData));
+    } catch (e) {
+      emit(RepairFailure(formData, e.toString()));
     }
   }
 }
