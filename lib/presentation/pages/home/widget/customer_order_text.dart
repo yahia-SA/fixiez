@@ -1,10 +1,13 @@
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
+import 'package:fixiez/presentation/state/cubit/repair_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomerOrderText extends StatelessWidget {
-  const CustomerOrderText({super.key});
+  CustomerOrderText({super.key});
+  final TextEditingController _textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +22,36 @@ class CustomerOrderText extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.r),
-          child: TextField(
-            expands: true,
-            maxLines: null,
-            minLines: null,
-            textAlign: TextAlign.center,
-            textAlignVertical: TextAlignVertical.center,
-            style: context.reg16Hint80,
-            decoration: const InputDecoration(
-              hintText: 'اوصف العمل المطلوب',
-              border: InputBorder.none,
-              fillColor: AppColors.white,
-              // Remove any internal padding if necessary
-              contentPadding: EdgeInsets.all(0),
-            ),
+          child: BlocBuilder<RepairCubit, RepairState>(
+            builder: (context, state) {
+              return TextField(
+                controller: _textController,
+                expands: true,
+                maxLines: null,
+                minLines: null,
+                textAlign: TextAlign.center,
+                textAlignVertical: TextAlignVertical.center,
+                style: context.reg16Hint80,
+                decoration: const InputDecoration(
+                  hintText: 'اوصف العمل المطلوب',
+                  border: InputBorder.none,
+                  fillColor: AppColors.white,
+
+                  contentPadding: EdgeInsets.all(0),
+                ),
+                onChanged: (value) {},
+                onSubmitted: (value) {
+                  context.read<RepairCubit>().updateDescription(
+                    _textController.text,
+                  );
+                },
+                onTapOutside: (event) {
+                  context.read<RepairCubit>().updateDescription(
+                    _textController.text,
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
