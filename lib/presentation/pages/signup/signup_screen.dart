@@ -1,3 +1,4 @@
+import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/state/bloc/signup/signup_bloc.dart';
@@ -38,11 +39,24 @@ class Signup extends StatelessWidget {
                       AppRoutes.otpScreen,
                       arguments: {
                         'phone': _phoneController.text.trim(),
-                        'origin': 'signup',
+                        'origin': OtpPages.signup,
                       },
                     );
                   } else if (state is SignupFailure) {
-                    UiHelper.showNotification(state.message);
+                    if (state.message ==
+                        'your acount not actived check your mobile sms') {
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.otpScreen,
+                        arguments: {
+                          'phone': _phoneController.text.trim(),
+                          'origin': OtpPages.signup,
+                        },
+                      );
+                      UiHelper.showNotification('حسابك غير مفعل تحقق من رسالة الجوال الخاصة بك',backgroundColor: Colors.yellow);
+                    } else {
+                      UiHelper.showNotification(state.message);
+                    }
                   }
                 },
                 builder: (context, state) {
