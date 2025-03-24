@@ -1,6 +1,4 @@
-import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
-import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/state/bloc/login/login_bloc.dart';
 import 'package:fixiez/presentation/state/bloc/login/login_event.dart';
@@ -105,51 +103,22 @@ class Login extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 20.h),
-                      BlocBuilder<LoginBloc, LoginState>(
-                        builder: (context, state) {
-                          final isRememberMe =
-                              (state is RememberMe)
-                                  ? state.isRememberMe
-                                  : false;
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    AppRoutes.forgetPassword,
-                                  );
-                                },
-                                child: Text(
-                                  'هل نسيت كلمة المرور؟',
-                                  style: context.med14Black,
-                                ),
-                              ),
-                              TextButton.icon(
-                                onPressed: () {
-                                  bloc.add(ToggleRememberMe());
-                                  CacheHelper.saveData(
-                                    key: 'RememberMe',
-                                    value: true,
-                                  );
-                                },
-                                label: Text(
-                                  'تذكرني',
-                                  style: context.med14Black,
-                                ),
-                                icon: Icon(
-                                  Icons.check_circle,
-                                  color:
-                                      isRememberMe
-                                          ? AppColors.primary
-                                          : AppColors.suffixIconColor,
-                                  size: 22.h,
-                                ),
-                              ),
-                            ],
-                          );
-                        },
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.forgetPassword,
+                              );
+                            },
+                            child: Text(
+                              'هل نسيت كلمة المرور؟',
+                              style: context.med14Black,
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 42.h),
                       state is LoginLoading

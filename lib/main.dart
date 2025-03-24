@@ -16,7 +16,7 @@ Future<void> main() async {
   await CacheHelper.init();
   await init();
   final bool onBoarding = CacheHelper.getData(key: 'onBoarding') ?? false;
-  final bool rememberMe = CacheHelper.getData(key: 'RememberMe') != null;
+  final bool rememberMe = CacheHelper.getUserField(key: 'AccessToken') != null;
   final String startRoute =
       onBoarding
           ? (rememberMe ? AppRoutes.home : AppRoutes.login)

@@ -34,11 +34,3 @@ class ChangePasswordVisibility extends LoginState {
   List<Object?> get props => [isVisible];
   
 }
-
-class RememberMe extends LoginState {
-  const RememberMe(this.isRememberMe);
-  final bool isRememberMe;
-  @override
-  List<Object?> get props => [isRememberMe];
-
-}

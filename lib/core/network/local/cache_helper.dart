@@ -45,18 +45,21 @@ class CacheHelper {
   /// Save user data to cache
   static Future<bool> saveUser(
     User user) async {
-   try{   await Future.wait([
-       saveData(key: 'Id', value: user.id),
-       saveData(key: 'Name', value: user.name),
-       saveData(key: 'PhoneNumber', value: user.phoneNumber),
-       saveData(key: 'Role', value: user.role),
-       saveData(key: 'IsActive', value: user.isActive),
-       saveData(key: 'Balance', value: user.balance),
-       saveData(key: 'CashBack', value: user.cashBack),
-       saveData(key: 'AccessToken', value: user.accessToken),
-       saveData(key: 'RefreshToken', value: user.refreshToken),
+   try{
+          final Map<String, dynamic> userData = {
+        'Id': user.id,
+        'Name': user.name,
+        'PhoneNumber': user.phoneNumber,
+        'Role': user.role,
+        'IsActive': user.isActive,
+        'Balance': user.balance,
+        'CashBack': user.cashBack,
+        'AccessToken': user.accessToken,
+        'RefreshToken': user.refreshToken,
+      };
 
-   ]);
+    
+       await Future.wait(userData.entries.map((entry) => saveData(key: entry.key, value: entry.value)));
     } catch (e) {
       return false;
     }
@@ -66,35 +69,29 @@ class CacheHelper {
 /// Get user data from cache
   static User? getUser() {
     try {
-      final id = getData(key: 'Id');
-      final name = getData(key: 'Name');
-      final phoneNumber = getData(key: 'PhoneNumber');
-      final role = getData(key: 'Role');
-      final isActive = getData(key: 'IsActive');
-      final balance = getData(key: 'Balance');
-      final cashBack = getData(key: 'CashBack');
-      final accessToken = getData(key: 'AccessToken');
-      final refreshToken = getData(key: 'RefreshToken');
+      final userData = {
+        'id': getData(key: 'Id'),
+        'name': getData(key: 'Name'),
+        'phoneNumber': getData(key: 'PhoneNumber'),
+        'role': getData(key: 'Role'),
+        'isActive': getData(key: 'IsActive'),
+        'balance': getData(key: 'Balance'),
+        'cashBack': getData(key: 'CashBack'),
+        'accessToken': getData(key: 'AccessToken'),
+        'refreshToken': getData(key: 'RefreshToken'),
+      };
 
-      if (id != null &&
-          name != null &&
-          phoneNumber != null &&
-          role != null &&
-          isActive != null &&
-          balance != null &&
-          cashBack != null &&
-          accessToken != null &&
-          refreshToken != null) {
+      if (userData.values.every((value) => value != null)) {
         return User(
-          id: id,
-          name: name,
-          phoneNumber: phoneNumber,
-          role: role,
-          isActive: isActive,
-          balance: balance,
-          cashBack: cashBack,
-          accessToken: accessToken,
-          refreshToken: refreshToken,
+          id: userData['id'],
+          name: userData['name'],
+          phoneNumber: userData['phoneNumber'],
+          role: userData['role'],
+          isActive: userData['isActive'],
+          balance: userData['balance'],
+          cashBack: userData['cashBack'],
+          accessToken: userData['accessToken'],
+          refreshToken: userData['refreshToken'],
         );
       }
     } catch (e) {
@@ -104,4 +101,15 @@ class CacheHelper {
     }
     return null;
   }
+
+    // استرجاع قيمة معينة من بيانات المستخدم باستخدام المفتاح
+  static dynamic getUserField({ required String key}) {
+    try {
+      return getData(key: key);
+    } catch (e, stackTrace) {
+      debugPrint('❌ خطأ في استرجاع قيمة [$key]: $e\n$stackTrace');
+      return null;
+    }
+  }
+
 }

@@ -9,7 +9,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc(this.loginUseCase) : super(LoginInitial()) {
     on<LoginSubmitted>(_onLoginSubmitted);
     on<TogglePasswordVisibility>(_togglePasswordVisibility);
-    on<ToggleRememberMe>(_toggleRememberMe);
   }
   final LoginUseCase loginUseCase;
 
@@ -34,12 +33,4 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(const ChangePasswordVisibility(true));}
   }
 
-  FutureOr<void> _toggleRememberMe(ToggleRememberMe event, Emitter<LoginState> emit) {
-    if (state is RememberMe) {
-      final currentState = state as RememberMe;
-      emit(RememberMe(!currentState.isRememberMe)); 
-    }
-    else{
-      emit(const RememberMe(true));}
-  }
 }
