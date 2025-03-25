@@ -1,5 +1,4 @@
 import 'package:fixiez/core/constants/image_assets.dart';
-import 'package:fixiez/core/constants/strings.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/core/utils/ui_helper.dart';
@@ -147,9 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               right: 20,
               child: CustomButton(
                 onpressed: () {
-                  UiHelper.launchWhatsApp(
-                  
-                  );
+                  UiHelper.launchWhatsApp();
                 },
                 widget: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
