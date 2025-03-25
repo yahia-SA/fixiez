@@ -1,6 +1,8 @@
 import 'package:fixiez/core/constants/image_assets.dart';
+import 'package:fixiez/core/constants/strings.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
+import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:fixiez/presentation/pages/home/widget/silder_poster_widget.dart';
 import 'package:fixiez/presentation/pages/profile/widgets/customer_review_text.dart';
 import 'package:fixiez/presentation/pages/profile/widgets/maintenance_widget.dart';
@@ -144,7 +146,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               left: 20,
               right: 20,
               child: CustomButton(
-                onpressed: () {},
+                onpressed: () {
+                  UiHelper.launchWhatsApp(
+                  
+                  );
+                },
                 widget: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
