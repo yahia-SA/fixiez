@@ -1,6 +1,9 @@
 import 'package:fixiez/core/constants/image_assets.dart';
+import 'package:fixiez/core/network/local/cache_helper.dart';
+import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
+import 'package:fixiez/presentation/widgets/delete.dart';
 import 'package:fixiez/presentation/widgets/name_header.dart';
 import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +21,7 @@ class SettingPage extends StatelessWidget {
         body: Column(
           children: [
             SizedBox(height: 46.h),
-            const NameHeader(isblue: true),
+            NameHeader(isblue: true,onBackPressed: () => Navigator.pop(context),),
             SizedBox(height: 12.h),
             Container(width: 327.w, color: AppColors.primary, height: 0.5.h),
             SizedBox(height: 41.h),
@@ -27,7 +30,9 @@ class SettingPage extends StatelessWidget {
               child: Column(
                 children: [
                   InkWell(
-                    onTap: () {},
+                    onTap: ()=>deleteDialog(context: context, title:'هل انت متاكد من حذف حسابك؟',deleteAction: () {
+                      
+                    },),
                     child: Row(
                       children: [
                         SvgPicture.asset(ImageAssets.delete),
@@ -38,7 +43,10 @@ class SettingPage extends StatelessWidget {
                   ),
                   SizedBox(height: 41.h),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      CacheHelper.clearAll();
+                      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.initial, (route) => false);
+                    },
                     child: Row(
                       children: [
                         SvgPicture.asset(ImageAssets.logout),

@@ -20,4 +20,21 @@ class User {
   final double cashBack;
   final String accessToken;
   final String refreshToken;
+
+  User copyWith({
+    double? balance,
+    double? cashBack,
+  }) {
+    return User(
+      id: id,
+      name: name,
+      phoneNumber: phoneNumber,
+      role: role,
+      isActive: isActive,
+      balance: balance ?? this.balance,
+      cashBack: cashBack ?? this.cashBack,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    );
+  }
 }

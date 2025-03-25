@@ -12,13 +12,14 @@ class DioHelper {
         receiveDataWhenStatusError: true,
         connectTimeout: const Duration(seconds: 10),
         receiveTimeout: const Duration(seconds: 10),
-        headers: {ApiHeaders.contentType: ApiHeaders.applicationJson},
+        sendTimeout: const Duration(seconds: 10),
+        headers: {'accept': '*/*',ApiHeaders.contentType: ApiHeaders.applicationJson},
       ),
     );
-    loadTokens();
     dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) {
+        onRequest: (options, handler) async {
+             await loadTokens();
           options.headers[ApiHeaders.authorization] = 'Bearer $accessToken';
           return handler.next(options);
         },
@@ -28,6 +29,13 @@ class DioHelper {
           }
           return handler.next(e);
         },
+      ),
+    );
+    dio.interceptors.add(
+      LogInterceptor(
+      request: true,
+      responseBody: true,
+      error: true,
       ),
     );
   }
@@ -120,6 +128,7 @@ class DioHelper {
   Future<Response> getData({
     required String url,
     Map<String, dynamic>? query,
+
   }) async {
     return await dio.get(url, queryParameters: query);
   }
@@ -161,5 +170,13 @@ Future<void> loadTokens() async {
   refreshToken = CacheHelper.getUserField(key: 'RefreshToken');
 }
 
+  Future<void> clearTokens() async {
+    await Future.wait([
+      CacheHelper.removeData(key: 'AccessToken'),
+      CacheHelper.removeData(key: 'RefreshToken'),
+    ]);
+    accessToken = null;
+    refreshToken = null;
+  }
 
 }

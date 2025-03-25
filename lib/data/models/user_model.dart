@@ -27,15 +27,15 @@ class UserModel {
   }
   factory UserModel.fromLoginJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['data']['user']['_id'],
-      name: json['data']['user']['name'],
-      phoneNumber: json['data']['user']['phoneNumber'],
-      role: json['data']['user']['role'],
-      isActive: json['data']['user']['isActive'],
-      balance: (json['data']['user']['balance'] as num).toDouble(),
-      cashBack: (json['data']['user']['cashBack'] as num).toDouble(),
-      accessToken: json['data']['accessToken'],
-      refreshToken: json['data']['refreshToken'],
+      id: json['user']['_id'],
+      name: json['user']['name'],
+      phoneNumber: json['user']['phoneNumber'],
+      role: json['user']['role'],
+      isActive: json['user']['isActive'],
+      balance: (json['user']['balance'] as num).toDouble(),
+      cashBack: (json['user']['cashBack'] as num).toDouble(),
+      accessToken: json['accessToken'],
+      refreshToken: json['refreshToken'],
     );
   }
   final String id;

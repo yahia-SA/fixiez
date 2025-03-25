@@ -6,10 +6,13 @@ import 'package:fixiez/presentation/pages/home/widget/silder_poster_widget.dart'
 import 'package:fixiez/presentation/pages/profile/widgets/customer_review_text.dart';
 import 'package:fixiez/presentation/pages/profile/widgets/maintenance_widget.dart';
 import 'package:fixiez/presentation/pages/profile/widgets/price_list_widget.dart';
+import 'package:fixiez/presentation/state/bloc/profile/profile_bloc.dart';
+import 'package:fixiez/presentation/widgets/custom_table.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
 import 'package:fixiez/presentation/widgets/name_header.dart';
 import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -21,6 +24,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProfileBloc>().add(GetBalance());
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -50,7 +58,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(height: 25.h),
-                        NameHeader(onBackPressed: () {}, isThereSettings: true),
+                        NameHeader(
+                          onBackPressed: () => Navigator.pop(context),
+                          isThereSettings: true,
+                        ),
                         SizedBox(height: 48.h),
                         Row(
                           children: [
@@ -85,11 +96,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   top: 11.h,
                                   right: 10.w,
                                 ),
-                                child: TextWidget(
-                                  '5000',
-                                  style: AppText.medium20.copyWith(
-                                    color: Colors.black,
-                                  ),
+                                child: BlocBuilder<ProfileBloc, ProfileState>(
+                                  builder: (context, state) {
+                                     if (state is ProfileSuccess) {
+                                      return TextWidget(
+                                        state.user.balance.toString(),
+                                        style: AppText.medium20.copyWith(
+                                          color: Colors.black,
+                                        ),
+                                      );
+                                    } else if(state is ProfileFailure){
+                                      return TextWidget(
+                                        state.message,
+                                        style: AppText.medium20.copyWith(
+                                          color: Colors.black,
+                                        ),
+                                      );
+                                    }
+                                      else {
+                                      return TextWidget(
+                                        'Loading',
+                                        style: AppText.medium20.copyWith(
+                                          color: Colors.black,
+                                        ),
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
                             ),
@@ -123,6 +155,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   SizedBox(height: 20.h),
                   const MaintenanceWidget(),
+                  SizedBox(height: 26.h),
+                  CustomTable(
+                    title: 'طلبات الصيانه ',
+                    headers: ['رقم الطلب', 'نوع الخدمة', 'تاكيد الطلب'],
+                    data: [],
+                    headingRowHeight: 46.h,
+                    dataRowHeight: 46.h,
+                    headersColor: AppColors.primary,
+                    headingTextStyle: context.med14Black!.copyWith(
+                      color: AppColors.white,
+                    ),
+                    titleheight: 16.h,
+                  ),
                   Padding(
                     padding: EdgeInsets.only(right: 24.w),
                     child: TextWidget(

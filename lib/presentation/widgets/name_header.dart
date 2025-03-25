@@ -1,4 +1,5 @@
 import 'package:fixiez/core/constants/image_assets.dart';
+import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
@@ -34,11 +35,11 @@ class NameHeader extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: 'اهلا',
+                  text: 'اهلا  ',
                   style: AppText.bold24.copyWith(color: textColor),
                 ),
                 TextSpan(
-                  text: ' عمرو عادل ',
+                  text: CacheHelper.getUserField(key: 'Name') ?? '',
                   style: AppText.med24.copyWith(color: textColor),
                 ),
               ],

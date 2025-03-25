@@ -1,3 +1,4 @@
+
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,9 @@ class CustomTable extends StatelessWidget {
     this.onpressed,
     required this.headingRowHeight,
     required this.dataRowHeight,
+    this.headingTextStyle ,
+    this.headersColor,
+    this.titleheight
   });
 
   final String title;
@@ -21,6 +25,9 @@ class CustomTable extends StatelessWidget {
   final void Function()? onpressed;
   final double headingRowHeight;
   final double dataRowHeight;
+  final TextStyle? headingTextStyle;
+  final Color? headersColor;
+  final double? titleheight;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,7 +54,7 @@ class CustomTable extends StatelessWidget {
                   : const SizedBox(),
             ],
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height:titleheight?? 8.h),
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
             child: SingleChildScrollView(
@@ -63,7 +70,7 @@ class CustomTable extends StatelessWidget {
                 ),
                 dataTextStyle: AppText.reg10.copyWith(color: AppColors.black),
                 headingRowColor: WidgetStateProperty.all(
-                  const Color(0xffE6F1FF),
+                 headersColor?? const Color(0xffE6F1FF),
                 ),
                 border: TableBorder.all(
                   color: const Color(0xFFB9B9B9),
@@ -82,8 +89,8 @@ class CustomTable extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   textAlign: TextAlign.center,
-                                  style: AppText.bold12.copyWith(
-                                    color: AppColors.primary,
+                                  style: headingTextStyle ?? AppText.bold12.copyWith(
+                                    color:  AppColors.primary,
                                   ),
                                 ),
                               ),
