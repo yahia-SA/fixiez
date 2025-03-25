@@ -1,8 +1,10 @@
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
+import 'package:fixiez/presentation/state/cubit/repair_cubit.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
 import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'dart:ui' as ui;
@@ -10,16 +12,23 @@ import 'dart:ui' as ui;
 class OrderRequestWidget extends StatelessWidget {
   const OrderRequestWidget({super.key});
 
+  DateTime getNextSaturday() {
+    final DateTime from = DateTime.now();
+    int daysUntilSaturday = (6 - from.weekday + 7) % 7;
+    if (daysUntilSaturday == 0) {
+      daysUntilSaturday = 7;
+    }
+    return from.add(Duration(days: daysUntilSaturday));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       textDirection: ui.TextDirection.rtl,
       children: [
-        // First Column
         Expanded(
           child: Column(
             children: [
-              // Dropdown Button for first column
               Container(
                 width: 154.w,
                 height: 30.h,
@@ -37,15 +46,11 @@ class OrderRequestWidget extends StatelessWidget {
 
                       value: 'السبت القادم',
                       style: AppText.reg16.copyWith(color: AppColors.primary),
-                      onChanged: (String? newValue) {
-                        // Handle selection changes for first column
-                      },
+                      onChanged: (String? newValue) {},
                       items:
-                          [
-                            'السبت القادم',
-                            'Option 2',
-                            'Option 3',
-                          ].map<DropdownMenuItem<String>>((String value) {
+                          ['السبت القادم'].map<DropdownMenuItem<String>>((
+                            String value,
+                          ) {
                             return DropdownMenuItem(
                               value: value,
                               child: Text(value),
@@ -60,32 +65,20 @@ class OrderRequestWidget extends StatelessWidget {
               SizedBox(
                 width: 154.w,
                 height: 48.h,
-                child: CustomButton(onpressed: () {}, text: 'طلب'),
-              ),
-            ],
-          ),
-        ),
-        // Second Column
-        Expanded(
-          child: Column(
-            children: [
-              // Dropdown Button for second column
-              const CalendarContainer(),
-              SizedBox(height: 8.h),
-
-              SizedBox(
-                width: 154.w,
-                height: 48.h,
                 child: CustomButton(
                   onpressed: () {
-                    // Handle button press for second column
+                    context.read<RepairCubit>().updateDate(
+                      getNextSaturday().toString(),
+                    );
+                    context.read<RepairCubit>().submitRepairRequest();
                   },
-                  text: 'طلب سريع ',
+                  text: 'طلب سريع',
                 ),
               ),
             ],
           ),
         ),
+        const CalendarContainer(),
       ],
     );
   }
@@ -100,49 +93,74 @@ class CalendarContainer extends StatefulWidget {
 
 class _CalendarContainerState extends State<CalendarContainer> {
   DateTime? selectedDate;
-  String displayText = '24 ينارير';
-
-  Future<void> _pickDate() async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != selectedDate) {
-      setState(() {
-        selectedDate = picked;
-        // Change the text display to your desired format (or keep the same text if needed)
-        displayText = DateFormat('dd MMM yyyy').format(picked);
-      });
-    }
-  }
+  // Default value: today's date in English (day and abbreviated month)
+  String displayText = DateFormat('dd MMM').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: _pickDate,
-      child: Container(
-        width: 154.w,
-        height: 30.h,
-        color: AppColors.white,
-        child: Directionality(
-          textDirection: ui.TextDirection.rtl,
-          child: Center(
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextWidget(
-                  displayText,
-                  style: AppText.reg16.copyWith(color: AppColors.primary),
+    return BlocBuilder<RepairCubit, RepairState>(
+      builder: (context, state) {
+        return Expanded(
+          child: Column(
+            children: [
+              InkWell(
+                onTap: () async {
+                  final DateTime? picked = await showDatePicker(
+                    context: context,
+                    initialDate: selectedDate ?? DateTime.now(),
+                    firstDate: DateTime(2025),
+                    lastDate: DateTime(2101),
+                  );
+                  if (picked != null && picked != selectedDate) {
+                    setState(() {
+                      selectedDate = picked;
+                      displayText = DateFormat('dd MMM').format(picked);
+                    });
+                  }
+                },
+                child: Container(
+                  width: 154.w,
+                  height: 30.h,
+                  color: AppColors.white,
+                  child: Center(
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        TextWidget(
+                          displayText,
+                          style: AppText.reg16.copyWith(
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                const SizedBox(width: 8),
-                const Icon(Icons.keyboard_arrow_down, color: AppColors.primary),
-              ],
-            ),
+              ),
+              SizedBox(height: 8.h),
+
+              SizedBox(
+                width: 154.w,
+                height: 48.h,
+                child: CustomButton(
+                  onpressed: () {
+                    context.read<RepairCubit>().updateDate(
+                      displayText.toString(),
+                    );
+                    context.read<RepairCubit>().submitRepairRequest();
+                  },
+                  text: 'طلب',
+                ),
+              ),
+            ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
