@@ -15,7 +15,8 @@ class ApiEndpoints {
   // repair
   static const String repairRequest = '/repair-requests';
   
-
+  // review 
+  static const String reviews = '/review';
   // Banners
   static const String banners = '/banners';
 }
