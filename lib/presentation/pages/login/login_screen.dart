@@ -30,7 +30,10 @@ class Login extends StatelessWidget {
             (route) => false,
           );
         } else if (state is LoginFailure) {
+          state.message == 'Invalid credentials'?
+          UiHelper.showNotification('رقم الهاتف او كلمة المرور غير صحيح'):
           UiHelper.showNotification(state.message);
+          
         }
       },
       builder: (context, state) {

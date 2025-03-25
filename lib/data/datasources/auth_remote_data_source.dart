@@ -72,7 +72,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw response.data['message'] ?? 'فشل إرسال رمز التحقق';
       }
     } catch (e) {
-      throw 'حدث خطأ أثناء إرسال رمز التحقق';
+      throw 'هذا الرقم غير صحيح';
     }
   }
 

@@ -54,12 +54,20 @@ class CacheHelper {
         'IsActive': user.isActive,
         'Balance': user.balance,
         'CashBack': user.cashBack,
-        'AccessToken': user.accessToken,
-        'RefreshToken': user.refreshToken,
       };
 
     
        await Future.wait(userData.entries.map((entry) => saveData(key: entry.key, value: entry.value)));
+      final String? oldAccessToken = getData(key: 'AccessToken');
+    final String? oldRefreshToken = getData(key: 'RefreshToken');
+
+    if (user.accessToken != oldAccessToken) {
+      await saveData(key: 'AccessToken', value: user.accessToken);
+    }
+    if (user.refreshToken != oldRefreshToken) {
+      await saveData(key: 'RefreshToken', value: user.refreshToken);
+    }
+
     } catch (e) {
       return false;
     }

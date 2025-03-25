@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/network/remote/endpoints.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class DioHelper {
   DioHelper._internal() {
@@ -71,7 +71,7 @@ class DioHelper {
         data: {'refresh_token': refreshToken},
       );
 
-      saveTokens(response.data['access_token'], refreshToken);
+      await saveTokens(response.data['access_token'], refreshToken);
       if (kDebugMode) print('✅ Access Token refreshed successfully.');
 
       // Complete the refresh process
@@ -98,7 +98,7 @@ class DioHelper {
       final retryResponse = await dio.fetch(err.requestOptions);
       return handler.resolve(retryResponse);
     }
-
+    _refreshCompleter = Completer();
     _isRefreshing = true;
     try {
       await _refreshAccessToken();
@@ -106,11 +106,13 @@ class DioHelper {
           'Bearer $accessToken';
 
       final retryResponse = await dio.fetch(err.requestOptions);
+      _refreshCompleter!.complete();
       return handler.resolve(retryResponse);
     } catch (refreshError) {
       return handler.next(err); // Logout user on failed refresh
     } finally {
       _isRefreshing = false;
+      _refreshCompleter = null;
     }
   }
 
@@ -148,15 +150,15 @@ class DioHelper {
     return await dio.delete(url, queryParameters: query);
   }
 Future<void> saveTokens(String? access, String? refresh) async {
-  final prefs = await SharedPreferences.getInstance();
-  if (access != null) await prefs.setString('accessToken', access);
-  if (refresh != null) await prefs.setString('refreshToken', refresh);
+  if (access != null) await CacheHelper.saveData(key:'accessToken',value: access);
+  if (refresh != null) await CacheHelper.saveData(key:'refreshToken',value: refresh);
+  accessToken = access;
+  refreshToken = refresh;
 }
 
 Future<void> loadTokens() async {
-  final prefs = await SharedPreferences.getInstance();
-  accessToken = prefs.getString('accessToken');
-  refreshToken = prefs.getString('refreshToken');
+  accessToken = CacheHelper.getUserField(key: 'AccessToken');
+  refreshToken = CacheHelper.getUserField(key: 'RefreshToken');
 }
 
 
