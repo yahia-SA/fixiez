@@ -29,6 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     context.read<ProfileBloc>().add(GetBalance());
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -98,22 +99,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 child: BlocBuilder<ProfileBloc, ProfileState>(
                                   builder: (context, state) {
-                                     if (state is ProfileSuccess) {
+                                    if (state is ProfileSuccess) {
                                       return TextWidget(
                                         state.user.balance.toString(),
                                         style: AppText.medium20.copyWith(
                                           color: Colors.black,
                                         ),
                                       );
-                                    } else if(state is ProfileFailure){
+                                    } else if (state is ProfileFailure) {
                                       return TextWidget(
                                         state.message,
                                         style: AppText.medium20.copyWith(
                                           color: Colors.black,
                                         ),
                                       );
-                                    }
-                                      else {
+                                    } else {
                                       return TextWidget(
                                         'Loading',
                                         style: AppText.medium20.copyWith(
@@ -159,15 +159,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CustomTable(
                     title: 'طلبات الصيانه ',
                     headers: ['رقم الطلب', 'نوع الخدمة', 'تاكيد الطلب'],
-                    data: [],
+                    data: [
+                      ['232435', 'كهربا', 'متنوح'],
+                      ['132987', 'دمان', 'تم'],
+                      ['345678', 'سيكك', 'تم'],
+                    ],
                     headingRowHeight: 46.h,
                     dataRowHeight: 46.h,
                     headersColor: AppColors.primary,
                     headingTextStyle: context.med14Black!.copyWith(
                       color: AppColors.white,
                     ),
+                    dataCellStyle: context.med14Black,
                     titleheight: 16.h,
                   ),
+                  SizedBox(height: 24.h),
                   Padding(
                     padding: EdgeInsets.only(right: 24.w),
                     child: TextWidget(
