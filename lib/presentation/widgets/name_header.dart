@@ -12,8 +12,10 @@ class NameHeader extends StatelessWidget {
     this.isThereSettings = false,
     this.onBackPressed,
     this.isblue = false,
+    this.isHome = false,
   });
   final bool isThereSettings;
+  final bool isHome;
   final VoidCallback? onBackPressed;
   final bool isblue;
 
@@ -28,9 +30,9 @@ class NameHeader extends StatelessWidget {
           icon: Icon(Icons.arrow_back_ios, color: iconColor),
         ),
         InkWell(
-          onTap: () {
+          onTap: isHome ? () {
             Navigator.pushNamed(context, AppRoutes.profile);
-          },
+          }: null,
           child: RichText(
             text: TextSpan(
               children: [

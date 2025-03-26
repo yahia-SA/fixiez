@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             SizedBox(height: 25.h),
-                            NameHeader(onBackPressed: () {}),
+                            NameHeader(onBackPressed: () {}, isHome: true),
                             SizedBox(height: 16.h),
                             const LocationContainer(),
                           ],
