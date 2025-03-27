@@ -93,8 +93,8 @@ class CalendarContainer extends StatefulWidget {
 
 class _CalendarContainerState extends State<CalendarContainer> {
   DateTime? selectedDate;
-  // Default value: today's date in English (day and abbreviated month)
   String displayText = DateFormat('dd MMM').format(DateTime.now());
+  DateTime dateIOS = DateTime.now().add(const Duration(days: 1));
 
   @override
   Widget build(BuildContext context) {
@@ -108,13 +108,14 @@ class _CalendarContainerState extends State<CalendarContainer> {
                   final DateTime? picked = await showDatePicker(
                     context: context,
                     initialDate: selectedDate ?? DateTime.now(),
-                    firstDate: DateTime(2025),
+                    firstDate: DateTime.now(),
                     lastDate: DateTime(2101),
                   );
                   if (picked != null && picked != selectedDate) {
                     setState(() {
                       selectedDate = picked;
                       displayText = DateFormat('dd MMM').format(picked);
+                      dateIOS = picked;
                     });
                   }
                 },
@@ -150,7 +151,7 @@ class _CalendarContainerState extends State<CalendarContainer> {
                 child: CustomButton(
                   onpressed: () {
                     context.read<RepairCubit>().updateDate(
-                      displayText.toString(),
+                      dateIOS.toUtc().toString(),
                     );
                     context.read<RepairCubit>().submitRepairRequest();
                   },

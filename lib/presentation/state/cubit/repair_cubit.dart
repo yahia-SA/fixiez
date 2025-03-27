@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:fixiez/core/constants/enums.dart';
+import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:fixiez/domain/repositories/reapir_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -67,6 +68,7 @@ class RepairCubit extends Cubit<RepairState> {
       );
       emit(RepairSuccess(formData));
     } catch (e) {
+      UiHelper.showNotification(e.toString());
       emit(RepairFailure(formData, e.toString()));
     }
   }

@@ -29,8 +29,6 @@ class HomePage extends StatelessWidget {
                 'Repair request sent successfully!',
                 backgroundColor: Colors.green,
               );
-            } else if (state is RepairFailure) {
-              UiHelper.showNotification(state.message);
             }
           },
           builder: (context, state) {
