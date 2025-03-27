@@ -36,8 +36,9 @@ class RepairRemoteDataSourceImpl implements ReviewRemoteDataSource {
     try {
       final response = await dioHelper.postData(
         url: ApiEndpoints.reviews,
-
-        data: {},
+        data: {
+          'comment': comment, 
+        },
       );
 
       if (response.data['status'] == 'success') {
