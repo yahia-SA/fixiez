@@ -1,16 +1,16 @@
 import 'package:fixiez/domain/entities/user.dart';
 
-class UserModel {
+class UserModel extends User {
   UserModel({
-    required this.id,
-    required this.name,
-    required this.phoneNumber,
-    required this.role,
-    required this.isActive,
-    required this.balance,
-    required this.cashBack,
-    required this.accessToken,
-    required this.refreshToken,
+    required super.id,
+    required super.name,
+    required super.phoneNumber,
+    required super.role,
+    required super.isActive,
+    required super.balance,
+    required super.cashBack,
+    required super.accessToken,
+    required super.refreshToken,
   });
   factory UserModel.fromSignUpJson(Map<String, dynamic> json) {
     return UserModel(
@@ -38,16 +38,6 @@ class UserModel {
       refreshToken: json['refreshToken'],
     );
   }
-  final String id;
-  final String name;
-  final String phoneNumber;
-  final String role;
-  final bool isActive;
-  final double balance;
-  final double cashBack;
-  final String accessToken;
-  final String refreshToken;
-
   Map<String, dynamic> toJson() {
     return {
       '_id': id,

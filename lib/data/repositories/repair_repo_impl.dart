@@ -1,13 +1,14 @@
 import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/data/datasources/repair_remote_source.dart';
-import 'package:fixiez/domain/repositories/reapir_repository.dart';
+import 'package:fixiez/domain/entities/repair_request.dart';
+import 'package:fixiez/domain/repositories/repair_repository.dart';
 
 class RepairRepositoryImpl implements RepairRepository {
   RepairRepositoryImpl({required this.remoteDataSource});
   final RepairRemoteDataSource remoteDataSource;
 
   @override
-  Future<void> reapirRequest({
+  Future<void> repairRequest({
     required String location,
     required String unitNumber,
     required String description,
@@ -23,5 +24,15 @@ class RepairRepositoryImpl implements RepairRepository {
       serviceType: serviceType,
       date: date,
     );
+  }
+
+  @override
+  Future<RepairData> getRepairRequests({
+    required int pageIndex,
+  }) async {
+    final model = await remoteDataSource.fetchRepairRequests(
+      pageIndex: pageIndex,
+    );
+    return model;
   }
 }

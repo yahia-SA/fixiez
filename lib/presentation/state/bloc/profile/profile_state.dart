@@ -26,3 +26,18 @@ final class ProfileFailure extends ProfileState {
   @override
   List<Object> get props => [message];
 }
+class RepairRequestsLoading extends ProfileState {}
+class RepairRequestsSuccess extends ProfileState {
+  const RepairRequestsSuccess(this.repairData);
+  final RepairData repairData;
+
+  @override
+  List<Object> get props => [repairData];
+}
+class RepairRequestsFailure extends ProfileState {
+  const RepairRequestsFailure(this.message);
+  final String message;
+
+  @override
+  List<Object> get props => [message];
+}

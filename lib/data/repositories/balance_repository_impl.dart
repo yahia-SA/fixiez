@@ -4,7 +4,7 @@ import 'package:fixiez/domain/repositories/balance_repository.dart';
 
 class BalanceRepositoryImpl implements BalanceRepository {
 
-  BalanceRepositoryImpl(this.remoteDataSource);
+  BalanceRepositoryImpl({required this.remoteDataSource});
   final BalanceRemoteDataSource remoteDataSource;
 
   @override

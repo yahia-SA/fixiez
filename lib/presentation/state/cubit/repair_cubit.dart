@@ -3,15 +3,16 @@ import 'dart:developer';
 import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:fixiez/domain/repositories/reapir_repository.dart';
+import 'package:fixiez/domain/usecases/Repair/repair_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 part 'repair_state.dart';
 
 class RepairCubit extends Cubit<RepairState> {
-  RepairCubit(this._repairRepository)
+  RepairCubit(this._repairRequestUseCase)
     : super(const RepairInitial(RepairFormData()));
-  final RepairRepository _repairRepository;
+  final RepairRequestUseCase _repairRequestUseCase;
 
   // Form update methods should NOT emit loading state
   void updateLocation(String location) =>
@@ -58,7 +59,7 @@ class RepairCubit extends Cubit<RepairState> {
     emit(RepairLoading(formData));
 
     try {
-      await _repairRepository.reapirRequest(
+      await _repairRequestUseCase(
         location: formData.location!,
         unitNumber: formData.unitNumber ?? '',
         description: formData.description ?? '',

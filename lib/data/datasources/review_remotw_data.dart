@@ -8,10 +8,10 @@ abstract class ReviewRemoteDataSource {
   Future<ReviewsModel> getReviews();
 }
 
-class RepairRemoteDataSourceImpl implements ReviewRemoteDataSource {
-  RepairRemoteDataSourceImpl(this.dioHelper);
-  final DioHelper dioHelper;
+class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
+  ReviewRemoteDataSourceImpl(this.dioHelper);
 
+  final DioHelper dioHelper;
   @override
   Future<ReviewsModel> getReviews() async {
     try {
