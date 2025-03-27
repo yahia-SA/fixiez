@@ -40,7 +40,7 @@ class RouteGenerator {
       case AppRoutes.forgetPassword:
         return MaterialPageRoute(builder: (_) => ForgetPassword());
       case AppRoutes.profile:
-        return MaterialPageRoute(builder: (_) => const ProfileScreen());
+        return MaterialPageRoute(builder: (_) =>  ProfileScreen());
       case AppRoutes.otpScreen:
         return MaterialPageRoute(
           builder: (_) {

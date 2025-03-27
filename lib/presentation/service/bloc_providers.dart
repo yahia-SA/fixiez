@@ -6,6 +6,7 @@ import 'package:fixiez/presentation/state/bloc/profile/profile_bloc.dart';
 import 'package:fixiez/presentation/state/bloc/resetPassword/reset_password_bloc.dart';
 import 'package:fixiez/presentation/state/bloc/signup/signup_bloc.dart';
 import 'package:fixiez/presentation/state/cubit/repair_cubit.dart';
+import 'package:fixiez/presentation/state/cubit/review/review_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,6 +26,7 @@ class BlocProvidersList extends StatelessWidget {
         BlocProvider(create: (_) => sl<ResetPasswordBloc>(),),
         BlocProvider(create: (_) => sl<ForgetpasswordBloc>(),),
         BlocProvider(create: (_) => sl<ProfileBloc>(),),
+        BlocProvider(create: (_) => sl<ReviewCubit>(),),
 
       ],
       child: child,

@@ -6,7 +6,11 @@ sealed class ProfileEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
-class GetBalance extends ProfileEvent {}
+class GetBalance extends ProfileEvent {
+    @override
+  List<Object> get props => [];
+
+}
 class GetRepairRequests extends ProfileEvent {
   const GetRepairRequests({required this.pageIndex});
   final int pageIndex;
@@ -15,4 +19,8 @@ class GetRepairRequests extends ProfileEvent {
   List<Object> get props => [pageIndex];
 
 }
-class InitializeProfile extends ProfileEvent {}
+class GetProfile extends ProfileEvent {
+  @override
+  List<Object> get props => [];
+}
+

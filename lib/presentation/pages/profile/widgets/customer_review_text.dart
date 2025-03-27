@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomerReviewText extends StatelessWidget {
-  const CustomerReviewText({super.key});
-
+   const CustomerReviewText({super.key,required this.textController});
+  final TextEditingController textController;
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -21,6 +21,7 @@ class CustomerReviewText extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.r),
           child: TextField(
+            controller: textController,
             expands: true,
             maxLines: null,
             minLines: null,

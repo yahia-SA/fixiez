@@ -1,4 +1,3 @@
-
 import 'package:fixiez/core/constants/image_assets.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
@@ -8,6 +7,7 @@ import 'package:fixiez/presentation/pages/profile/widgets/customer_review_text.d
 import 'package:fixiez/presentation/pages/profile/widgets/maintenance_widget.dart';
 import 'package:fixiez/presentation/pages/profile/widgets/price_list_widget.dart';
 import 'package:fixiez/presentation/state/bloc/profile/profile_bloc.dart';
+import 'package:fixiez/presentation/state/cubit/review/review_cubit.dart';
 import 'package:fixiez/presentation/widgets/custom_table.dart';
 import 'package:fixiez/presentation/widgets/cutom_button.dart';
 import 'package:fixiez/presentation/widgets/name_header.dart';
@@ -18,8 +18,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
+  ProfileScreen({super.key});
+  final TextEditingController _textController = TextEditingController();
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ProfileBloc>().add(InitializeProfile());
+    context.read<ProfileBloc>().add(GetProfile());
   }
 
   @override
@@ -39,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             RefreshIndicator(
               onRefresh: () async {
-               context.read<ProfileBloc>().add(InitializeProfile());
+                context.read<ProfileBloc>().add(GetProfile());
               },
               child: SingleChildScrollView(
                 child: Column(
@@ -78,17 +78,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ),
                               SizedBox(width: 48.w),
-              
+
                               Container(
                                 width: 208.w,
                                 height: 48.h,
-              
+
                                 constraints: const BoxConstraints(
                                   minHeight: 48.0,
                                 ),
                                 decoration: ShapeDecoration(
                                   color: AppColors.white,
-              
+
                                   shape: RoundedRectangleBorder(
                                     side: BorderSide(
                                       color: AppColors.white,
@@ -112,7 +112,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         );
                                       } else if (state is ProfileFailure) {
-                                        Future.microtask(() => UiHelper.showNotification(state.message));
+                                        Future.microtask(
+                                          () => UiHelper.showNotification(
+                                            state.message,
+                                          ),
+                                        );
                                         return TextWidget(
                                           state.message,
                                           style: AppText.medium20.copyWith(
@@ -164,37 +168,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(height: 26.h),
                     BlocBuilder<ProfileBloc, ProfileState>(
                       builder: (context, state) {
-                          print(state);
-                        if(state is RepairRequestsFailure){
-                          Future.microtask(() => UiHelper.showNotification(state.message));
-                            return Center(child: Text('فشل في تحميل البيانات',style: context.error,));
+                        debugPrint('Current state : $state');
+                        if (state is ProfileSuccess) {
+                          return CustomTable(
+                            title: 'طلبات الصيانه ',
+                            headers: ['رقم الطلب', 'نوع الخدمة', 'تاكيد الطلب'],
+                            data:
+                                state.repairData.requests.map((e) {
+                                  return [e.id, e.serviceName, e.status];
+                                }).toList(),
+                            headingRowHeight: 46.h,
+                            dataRowHeight: 46.h,
+                            headersColor: AppColors.primary,
+                            headingTextStyle: context.med14Black!.copyWith(
+                              color: AppColors.white,
+                            ),
+                            dataCellStyle: context.med14Black,
+                            titleheight: 16.h,
+                          );
+                        } else if (state is ProfileFailure) {
+                          Future.microtask(
+                            () => UiHelper.showNotification(state.message),
+                          );
+                          return Center(
+                            child: Text(
+                              'فشل في تحميل البيانات',
+                              style: context.error,
+                            ),
+                          );
+                        } else if (state is ProfileLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else {
+                          return CustomTable(
+                            title: 'طلبات الصيانه ',
+                            headers: ['رقم الطلب', 'نوع الخدمة', 'تاكيد الطلب'],
+                            data: [],
+                            headingRowHeight: 46.h,
+                            dataRowHeight: 46.h,
+                            headersColor: AppColors.primary,
+                            headingTextStyle: context.med14Black!.copyWith(
+                              color: AppColors.white,
+                            ),
+                            dataCellStyle: context.med14Black,
+                            titleheight: 16.h,
+                          );
                         }
-                        else if (state is RepairRequestsLoading) {
-                          return const Center(child: CircularProgressIndicator());
-                        }
-                        else if (state is RepairRequestsSuccess) {
-                        return CustomTable(
-                          title: 'طلبات الصيانه ',
-                          headers: ['رقم الطلب', 'نوع الخدمة', 'تاكيد الطلب'],
-                          data: state.repairData.requests.map((e){
-                            return [
-                            e.id,
-                            e.serviceName,
-                            e.status
-                          ];
-                          }
-                          ).toList(),
-                          headingRowHeight: 46.h,
-                          dataRowHeight: 46.h,
-                          headersColor: AppColors.primary,
-                          headingTextStyle: context.med14Black!.copyWith(
-                            color: AppColors.white,
-                          ),
-                          dataCellStyle: context.med14Black,
-                          titleheight: 16.h,
-                        );
-                      }
-                      else { return const SizedBox.shrink(); }
                       },
                     ),
                     SizedBox(height: 24.h),
@@ -202,15 +222,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: EdgeInsets.only(right: 24.w),
                       child: TextWidget(
                         'التقبيم',
-                        style: AppText.bold20.copyWith(color: AppColors.primary),
+                        style: AppText.bold20.copyWith(
+                          color: AppColors.primary,
+                        ),
                       ),
                     ),
                     SizedBox(height: 18.h),
-                    const CustomerReviewText(),
-                    SizedBox(height: 18.h),
-                    Center(
-                      child: CustomButton(onpressed: () {}, text: 'ارسل تقيمك'),
+                    Column(
+                      textDirection: TextDirection.rtl,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomerReviewText(
+                          textController: widget._textController,
+                        ),
+                        SizedBox(height: 18.h),
+                        Center(
+                          child: CustomButton(
+                            onpressed: () {
+                              if (widget._textController.text.isEmpty) {
+                                UiHelper.showNotification('يرجى كتابة تقيمك');
+                              } else {
+                                context.read<ReviewCubit>().sumbirReivew(
+                                  comment: widget._textController.text,
+                                );
+                                debugPrint(
+                                  'comment : ${widget._textController.text}',
+                                );
+                                UiHelper.showNotification(
+                                  ('شكرا للك علي التعليق\n comment : ${widget._textController.text}'),
+                                  backgroundColor: Colors.green,
+                                );
+                                widget._textController.clear();
+                              }
+                            },
+                            text: 'ارسل تقيمك',
+                          ),
+                        ),
+                      ],
                     ),
+
                     SizedBox(height: 116.h),
                   ],
                 ),
