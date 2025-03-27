@@ -9,8 +9,8 @@ sealed class ReviewState extends Equatable {
 
 final class ReviewInitial extends ReviewState {}
 final class ReviewLoading extends ReviewState {}
-final class Reviewsuccess extends ReviewState {
-  const Reviewsuccess({this.reviews});
+final class ReviewSuccess extends ReviewState {
+  const ReviewSuccess({this.reviews});
   final ReviewsModel? reviews;
   @override
   List<Object> get props => [reviews!];

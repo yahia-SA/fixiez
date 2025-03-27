@@ -9,11 +9,11 @@ class ReviewCubit extends Cubit<ReviewState> {
   ReviewCubit(this._reviewUsecase) : super(ReviewInitial());
   final ReviewUsecase _reviewUsecase;
 
-  Future<void> sumbirReivew({required String comment}) async {
+  Future<void> submitReview({required String comment}) async {
     emit(ReviewLoading());
     try {
       await _reviewUsecase.submitReview(comment: comment);
-      emit(const Reviewsuccess());
+      emit(const ReviewSuccess());
     } catch (e) {
       emit(ReviewFailure(e.toString()));
     }
@@ -24,7 +24,7 @@ class ReviewCubit extends Cubit<ReviewState> {
     try {
       final ReviewsModel reviewsModel = await _reviewUsecase.getReviews();
 
-      emit(Reviewsuccess(reviews: reviewsModel));
+      emit(ReviewSuccess(reviews: reviewsModel));
       return reviewsModel;
     } catch (e) {
       emit(ReviewFailure(e.toString()));

@@ -242,7 +242,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               if (widget._textController.text.isEmpty) {
                                 UiHelper.showNotification('يرجى كتابة تقيمك');
                               } else {
-                                context.read<ReviewCubit>().sumbirReivew(
+                                context.read<ReviewCubit>().submitReview(
                                   comment: widget._textController.text,
                                 );
                                 debugPrint(
