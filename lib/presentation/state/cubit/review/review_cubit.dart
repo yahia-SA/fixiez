@@ -19,7 +19,7 @@ class ReviewCubit extends Cubit<ReviewState> {
     }
   }
 
-  Future<ReviewsModel> getReviews() async {
+  Future<ReviewsModel> getReviews({required int page}) async {
     emit(ReviewLoading());
     try {
       final ReviewsModel reviewsModel = await _reviewUsecase.getReviews();
