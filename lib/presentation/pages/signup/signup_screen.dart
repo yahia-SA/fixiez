@@ -1,5 +1,6 @@
 import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
+import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/state/bloc/signup/signup_bloc.dart';
 import 'package:fixiez/presentation/widgets/custom_formfield.dart';
@@ -44,7 +45,7 @@ class Signup extends StatelessWidget {
                     );
                   } else if (state is SignupFailure) {
                     if (state.message ==
-                        'your acount not actived check your mobile sms') {
+                        'حسابك غير مفعل تحقق من رسالة الجوال الخاصة بك') {
                       Navigator.pushNamed(
                         context,
                         AppRoutes.otpScreen,
@@ -53,7 +54,7 @@ class Signup extends StatelessWidget {
                           'origin': OtpPages.signup,
                         },
                       );
-                      UiHelper.showNotification('حسابك غير مفعل تحقق من رسالة الجوال الخاصة بك',backgroundColor: Colors.yellow);
+                      UiHelper.showNotification('حسابك غير مفعل تحقق من رسالة الجوال الخاصة بك',backgroundColor: AppColors.yellow);
                     } else {
                       UiHelper.showNotification(state.message);
                     }
@@ -170,7 +171,7 @@ class Signup extends StatelessWidget {
                         ),
                         SizedBox(height: 24.h),
                         state is SignupLoading
-                            ? const Center(child: CircularProgressIndicator())
+                            ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
                             : CustomButton(
                               text: 'إنشاء حساب',
                               onpressed: () {

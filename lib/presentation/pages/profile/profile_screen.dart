@@ -31,6 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     Future.microtask(() {
+      if(!mounted) return;
     final state = context.read<ProfileBloc>().state;
     if (state is! ProfileSuccess) {
       _fetchProfile();
@@ -84,7 +85,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               RefreshIndicator(
                 onRefresh: () async => _fetchProfile(),
+                color: AppColors.primary,
                 child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
                   child: Column(
                     textDirection: TextDirection.rtl,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -288,7 +291,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             );
                           } else if (state is ProfileLoading) {
                             return const Center(
-                              child: CircularProgressIndicator(),
+                              child: CircularProgressIndicator(color: AppColors.primary),
                             );
                           } else {
                             return CustomTable(

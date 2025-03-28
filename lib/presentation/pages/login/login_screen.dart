@@ -1,4 +1,5 @@
 import 'package:fixiez/core/routes/app_routes.dart';
+import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/presentation/state/bloc/login/login_bloc.dart';
 import 'package:fixiez/presentation/state/bloc/login/login_event.dart';
@@ -125,7 +126,7 @@ class Login extends StatelessWidget {
                       ),
                       SizedBox(height: 42.h),
                       state is LoginLoading
-                          ? const CircularProgressIndicator()
+                          ? const CircularProgressIndicator(color: AppColors.primary)
                           : CustomButton(
                             text: 'تسجيل الدخول',
                             onpressed: () {

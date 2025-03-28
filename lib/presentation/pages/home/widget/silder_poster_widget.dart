@@ -43,7 +43,7 @@ class _SilderPosterWidgetStateState extends State<SilderPosterWidgetState> {
                       fit: BoxFit.cover,
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
-                        return const Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator(color: AppColors.primary));
                       },
                       errorBuilder:
                           (context, error, stackTrace) =>

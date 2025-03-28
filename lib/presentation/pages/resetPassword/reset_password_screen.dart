@@ -142,7 +142,7 @@ class Resetpassword extends StatelessWidget {
                   ),
                   SizedBox(height: 32.h),
                   state is ResetPasswordLoading
-                      ? const CircularProgressIndicator()
+                      ? const CircularProgressIndicator(color: AppColors.primary)
                       : CustomButton(
                         text: 'اعاده تعيين كلمة المرور',
                         onpressed: () {
