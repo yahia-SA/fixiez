@@ -21,7 +21,10 @@ class SettingPage extends StatelessWidget {
         body: Column(
           children: [
             SizedBox(height: 46.h),
-            NameHeader(isblue: true,onBackPressed: () => Navigator.pop(context),),
+            NameHeader(
+              isblue: true,
+              onBackPressed: () => Navigator.pop(context),
+            ),
             SizedBox(height: 12.h),
             Container(width: 327.w, color: AppColors.primary, height: 0.5.h),
             SizedBox(height: 41.h),
@@ -30,9 +33,12 @@ class SettingPage extends StatelessWidget {
               child: Column(
                 children: [
                   InkWell(
-                    onTap: ()=>deleteDialog(context: context, title:'هل انت متاكد من حذف حسابك؟',deleteAction: () {
-                      
-                    },),
+                    onTap:
+                        () => deleteDialog(
+                          context: context,
+                          title: 'هل انت متاكد من حذف حسابك؟',
+                          deleteAction: () {},
+                        ),
                     child: Row(
                       children: [
                         SvgPicture.asset(ImageAssets.delete),
@@ -44,8 +50,19 @@ class SettingPage extends StatelessWidget {
                   SizedBox(height: 41.h),
                   InkWell(
                     onTap: () {
-                      CacheHelper.clearAll();
-                      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.initial, (route) => false);
+                      deleteDialog(
+                        context: context,
+                        title: 'هل انت متاكد من تسجيل الخروج',
+                        deleteAction: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                            context,
+                            AppRoutes.initial,
+                            (route) => false,
+                          );
+                          CacheHelper.clearAll();
+                        },
+                        buttontext: 'خروج',
+                      );
                     },
                     child: Row(
                       children: [

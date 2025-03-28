@@ -3,7 +3,7 @@ import 'package:fixiez/core/theme/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Future<void> deleteDialog({required BuildContext context, required String title, required VoidCallback deleteAction}) {
+Future<void> deleteDialog({required BuildContext context, required String title, required VoidCallback deleteAction, String? buttontext}) {
   return showDialog(
     context: context,
     barrierDismissible: false,
@@ -37,9 +37,9 @@ Future<void> deleteDialog({required BuildContext context, required String title,
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                       child: TextButton(
-                        onPressed: () => deleteAction,
+                        onPressed: deleteAction,
                         child: Text(
-                          'حذف',
+                          buttontext??'حذف',
                           style: context.bold16Blue!.copyWith(
                             color: AppColors.white,
                           ),
