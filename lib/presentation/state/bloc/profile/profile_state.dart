@@ -12,12 +12,13 @@ final class ProfileInitial extends ProfileState {}
 final class ProfileLoading extends ProfileState {}
 
 final class ProfileSuccess extends ProfileState {
-  const ProfileSuccess(this.user,this.repairData);
+  const ProfileSuccess(this.user, this.repairData, this.currentPage, this.totalPages);
   final User user;
-  final RepairData repairData;
-
+  final List<RepairRequest> repairData;
+  final int currentPage;
+  final int totalPages;
   @override
-  List<Object> get props => [user,repairData];
+  List<Object> get props => [user,repairData,currentPage,totalPages];
 }
 
 final class ProfileFailure extends ProfileState {

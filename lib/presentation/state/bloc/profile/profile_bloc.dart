@@ -12,29 +12,40 @@ part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc(this.getBalanceUseCase, this.repairRequestsUseCase)
-    : super(ProfileInitial()) {
+      : super(ProfileInitial()) {
     on<GetProfile>(_onGetProfile);
-
   }
+
   final GetBalanceUseCase getBalanceUseCase;
   final RepairRequestsUseCase repairRequestsUseCase;
+
+  int _currentPage = 1;
+  int _totalPages = 1;
+  bool _isLoading = false;
+  List<RepairRequest> _repairRequests = [];
 
   Future<void> _onGetProfile(
     GetProfile event,
     Emitter<ProfileState> emit,
   ) async {
-    emit(ProfileLoading());
+    if (_isLoading || event.pageIndex < 1 || event.pageIndex > _totalPages) return;
+    _isLoading = true;
     try {
-      // Get both balance and repair requests
       final user = await getBalanceUseCase();
-      final repairRequests = await repairRequestsUseCase(pageIndex: 1);
-      
+      final repairRequests = await repairRequestsUseCase(pageIndex: event.pageIndex);
+
+      _currentPage = event.pageIndex;
+      _totalPages = repairRequests.totalPages;
+      _repairRequests = repairRequests.requests; // تحميل الصفحة الجديدة فقط
+
       await CacheHelper.saveData(key: 'Balance', value: user.balance);
       await CacheHelper.saveData(key: 'CashBack', value: user.cashBack);
-      
-      emit(ProfileSuccess(user, repairRequests));
+
+      emit(ProfileSuccess(user, _repairRequests, _currentPage, _totalPages));
     } catch (e) {
       emit(ProfileFailure(e.toString()));
     }
+
+    _isLoading = false;
   }
 }

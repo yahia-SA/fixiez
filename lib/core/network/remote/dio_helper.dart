@@ -67,12 +67,12 @@ class DioHelper {
     _isRefreshing = true;
 
     try {
-      if (kDebugMode) print('🔄 Refreshing Access Token...');
-      if (kDebugMode) {
-        print(
+       debugPrint('🔄 Refreshing Access Token...');
+       
+        debugPrint(
           '🌍 Refreshing at: ${dio.options.baseUrl}${ApiEndpoints.refresh}',
         );
-      }
+      
 
       final response = await dio.get(
         ApiEndpoints.refresh,
@@ -80,12 +80,12 @@ class DioHelper {
       );
 
       await saveTokens(response.data['access_token'], refreshToken);
-      if (kDebugMode) print('✅ Access Token refreshed successfully.');
+       debugPrint('✅ Access Token refreshed successfully.');
 
       // Complete the refresh process
       _refreshCompleter!.complete();
     } catch (e) {
-      if (kDebugMode) print('❌ Failed to refresh token.');
+       debugPrint('❌ Failed to refresh token.');
       _refreshCompleter!.completeError(e);
       throw Exception('Failed to refresh token');
     } finally {

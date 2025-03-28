@@ -103,10 +103,7 @@ class CacheHelper {
         );
       }
     } catch (e) {
-      if (kDebugMode) {
-        print('Error retrieving user data: $e');
-      }
-    }
+      debugPrint('❌ خطاء في استرجاع بيانات المستخدم: $e');}
     return null;
   }
 
