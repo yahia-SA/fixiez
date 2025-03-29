@@ -8,7 +8,10 @@ part 'review_state.dart';
 class ReviewCubit extends Cubit<ReviewState> {
   ReviewCubit(this._reviewUsecase) : super(ReviewInitial());
   final ReviewUsecase _reviewUsecase;
-
+  int _currentPage = 1;
+  int _totalPages = 1;
+  bool _isLoading = false;
+  ReviewsModel _reviews = ReviewsModel();
   Future<void> submitReview({required String comment}) async {
     emit(ReviewLoading());
     try {
@@ -19,16 +22,21 @@ class ReviewCubit extends Cubit<ReviewState> {
     }
   }
 
-  Future<ReviewsModel> getReviews({required int page}) async {
+  Future<void> getReviews({required int page}) async {
+    if (_isLoading || page < 1 || page > _totalPages) return;
+    _isLoading = true;
     emit(ReviewLoading());
     try {
-      final ReviewsModel reviewsModel = await _reviewUsecase.getReviews();
+      final ReviewsModel reviewsModel = await _reviewUsecase.getReviews(page: page);
 
-      emit(ReviewSuccess(reviews: reviewsModel));
-      return reviewsModel;
+      _currentPage = page;
+      _totalPages = reviewsModel.metadata!.totalPages!;
+      _reviews= reviewsModel;
+      emit(ReviewSuccess(reviews: _reviews,totalPages: _totalPages,currentPage: _currentPage));
     } catch (e) {
       emit(ReviewFailure(e.toString()));
-      return ReviewsModel();
     }
+        _isLoading = false;
+
   }
 }

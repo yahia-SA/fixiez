@@ -46,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  void _onSwapLeft() {
+  void _onClickNext() {
     if (!isLoading) {
       setState(() {
         _pageIndex++;
@@ -55,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  void _onSwapRight() {
+  void _onClickBack() {
     if (!isLoading) {
       setState(() {
         _pageIndex--;
@@ -253,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       TextButton(
                                         onPressed:
                                       (_pageIndex > 1 && !isLoading)
-                                                ? _onSwapRight
+                                                ? _onClickBack
                                                 : null,
                                         child: TextWidget(
                                           'السابق',
@@ -267,7 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         onPressed:
                                             (_pageIndex <
                                                     state.totalPages && !isLoading)
-                                                ? _onSwapLeft
+                                                ? _onClickNext
                                                 : null,
                                         child: TextWidget(
                                           'التالي',
