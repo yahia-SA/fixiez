@@ -48,10 +48,24 @@ class RepairCubit extends Cubit<RepairState> {
     // Validate required fields
     if (formData.location == null || formData.location!.isEmpty) {
       emit(RepairFailure(formData, 'Location is required'));
+      UiHelper.showNotification('ادخل الموقع');
       return;
     }
     if (formData.serviceName == null) {
       emit(RepairFailure(formData, 'Service name is required'));
+      UiHelper.showNotification('ادخل اسم الخدمة');
+      return;
+    }
+
+    if (formData.unitNumber == null || formData.unitNumber!.isEmpty) {
+      emit(RepairFailure(formData, 'Unit number is required'));
+      UiHelper.showNotification('ادخل رقم الوحدة');
+      return;
+    }
+
+    if (formData.description == null || formData.description!.isEmpty) {
+      emit(RepairFailure(formData, 'Description is required'));
+      UiHelper.showNotification('ادخل الوصف');
       return;
     }
 

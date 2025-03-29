@@ -49,6 +49,10 @@ class Login extends StatelessWidget {
                 'origin': OtpPages.signup,
               },
             );
+            return UiHelper.showNotification(
+              state.message,
+              backgroundColor: AppColors.yellow,
+            );
           }
           state.message == 'Invalid credentials'
               ? UiHelper.showNotification('رقم الهاتف او كلمة المرور غير صحيح')
