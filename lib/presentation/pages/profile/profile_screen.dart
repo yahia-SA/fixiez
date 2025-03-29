@@ -242,43 +242,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   dataCellStyle: context.med14Black,
                                   titleheight: 16.h,
                                 ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.symmetric(
-                                    vertical: 1.h,
-                                    horizontal: 28.w,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                state.repairData.isEmpty
+                                    ? Text(
+                                      'لا يوجد بيانات حاليا',
+                                      style: AppText.med14,
+                                    )
+                                    : Padding(
+                                      padding: EdgeInsetsDirectional.symmetric(
+                                        vertical: 1.h,
+                                        horizontal: 28.w,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
 
-                                    children: [
-                                      TextButton(
-                                        onPressed:
-                                            (_pageIndex > 1 && !isLoading)
-                                                ? _onClickBack
-                                                : null,
-                                        child: TextWidget(
-                                          'السابق',
-                                          style: context.med14Black,
-                                        ),
+                                        children: [
+                                          TextButton(
+                                            onPressed:
+                                                (_pageIndex > 1 && !isLoading)
+                                                    ? _onClickBack
+                                                    : null,
+                                            child: TextWidget(
+                                              'السابق',
+                                              style: context.med14Black,
+                                            ),
+                                          ),
+                                          TextWidget(
+                                            '$_pageIndex : ${state.totalPages}',
+                                          ),
+                                          TextButton(
+                                            onPressed:
+                                                (_pageIndex <
+                                                            state.totalPages &&
+                                                        !isLoading)
+                                                    ? _onClickNext
+                                                    : null,
+                                            child: TextWidget(
+                                              'التالي',
+                                              style: context.med14Black,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      TextWidget(
-                                        '$_pageIndex : ${state.totalPages}',
-                                      ),
-                                      TextButton(
-                                        onPressed:
-                                            (_pageIndex < state.totalPages &&
-                                                    !isLoading)
-                                                ? _onClickNext
-                                                : null,
-                                        child: TextWidget(
-                                          'التالي',
-                                          style: context.med14Black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                    ),
                               ],
                             );
                           } else if (state is ProfileFailure) {
