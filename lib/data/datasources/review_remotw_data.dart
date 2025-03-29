@@ -5,7 +5,7 @@ import 'package:fixiez/data/models/reviews_model.dart';
 
 abstract class ReviewRemoteDataSource {
   Future<bool> submitReview({required String comment});
-  Future<ReviewsModel> getReviews();
+  Future<ReviewsModel> getReviews({required int pageIndex});
 }
 
 class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
@@ -13,12 +13,12 @@ class ReviewRemoteDataSourceImpl implements ReviewRemoteDataSource {
 
   final DioHelper dioHelper;
   @override
-  Future<ReviewsModel> getReviews() async {
+  Future<ReviewsModel> getReviews({required int pageIndex}) async {
     try {
       final response = await dioHelper.getData(
         url: ApiEndpoints.reviews,
 
-        query: {'pageIndex': '0', 'pageSize': '10'},
+        query: {'pageIndex': pageIndex, 'pageSize': 4},
       );
 
       if (response.data['status'] == 'success') {

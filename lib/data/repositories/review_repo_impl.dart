@@ -7,8 +7,8 @@ class ReviewRepositoryImpl implements ReviewRepository {
   final ReviewRemoteDataSource remoteDataSource;
 
   @override
-  Future<ReviewsModel> getReviews({int page = 1}) async {
-    return await remoteDataSource.getReviews();
+  Future<ReviewsModel> getReviews({ required int page}) async {
+    return await remoteDataSource.getReviews(pageIndex: page);
   }
 
   @override

@@ -10,7 +10,7 @@ class ReviewUsecase {
     await reviewRepository.submitReview(comment: comment);
   }
 
-  Future<ReviewsModel> getReviews({int page = 1}) {
-    return reviewRepository.getReviews();
+  Future<ReviewsModel> getReviews({ required int page}) async {
+    return await reviewRepository.getReviews(page: page);
   }
 }
