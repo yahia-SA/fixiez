@@ -27,16 +27,23 @@ class ReviewCubit extends Cubit<ReviewState> {
     _isLoading = true;
     emit(ReviewLoading());
     try {
-      final ReviewsModel reviewsModel = await _reviewUsecase.getReviews(page: page);
+      final ReviewsModel reviewsModel = await _reviewUsecase.getReviews(
+        page: page,
+      );
 
       _currentPage = page;
       _totalPages = reviewsModel.metadata!.totalPages!;
-      _reviews= reviewsModel;
-      emit(ReviewSuccess(reviews: _reviews,totalPages: _totalPages,currentPage: _currentPage));
+      _reviews = reviewsModel;
+      emit(
+        ReviewSuccess(
+          reviews: _reviews,
+          totalPages: _totalPages,
+          currentPage: _currentPage,
+        ),
+      );
     } catch (e) {
       emit(ReviewFailure(e.toString()));
     }
-        _isLoading = false;
-
+    _isLoading = false;
   }
 }
