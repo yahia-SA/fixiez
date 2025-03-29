@@ -69,4 +69,82 @@ class UiHelper {
       await launchUrl(Uri.parse(webUrl), mode: LaunchMode.externalApplication);
     }
   }
+
+  static String getTransliteratedFirstLetter(String? name) {
+    if (name == null || name.isEmpty) return 'A';
+
+    final firstChar = name.trim().characters.first;
+    final arabicRegex = RegExp(r'[\u0600-\u06FF]');
+
+    // Check if the first character is Arabic
+    if (arabicRegex.hasMatch(firstChar)) {
+      // Map common Arabic letters to their English equivalents
+      switch (firstChar) {
+        case 'أ':
+        case 'ا':
+        case 'إ':
+          return 'A';
+        case 'ب':
+          return 'B';
+        case 'ت':
+          return 'T';
+        case 'ث':
+          return 'T';
+        case 'ج':
+          return 'J';
+        case 'ح':
+          return 'H';
+        case 'خ':
+          return 'K';
+        case 'د':
+          return 'D';
+        case 'ذ':
+          return 'D';
+        case 'ر':
+          return 'R';
+        case 'ز':
+          return 'Z';
+        case 'س':
+          return 'S';
+        case 'ش':
+          return 'S';
+        case 'ص':
+          return 'S';
+        case 'ض':
+          return 'D';
+        case 'ط':
+          return 'T';
+        case 'ظ':
+          return 'Z';
+        case 'ع':
+          return 'A';
+        case 'غ':
+          return 'G';
+        case 'ف':
+          return 'F';
+        case 'ق':
+          return 'Q';
+        case 'ك':
+          return 'K';
+        case 'ل':
+          return 'L';
+        case 'م':
+          return 'M';
+        case 'ن':
+          return 'N';
+        case 'ه':
+          return 'H';
+        case 'و':
+          return 'W';
+        case 'ي':
+        case 'ى':
+          return 'Y';
+        default:
+          return 'A';
+      }
+    }
+
+    // For non-Arabic characters
+    return firstChar.toUpperCase();
+  }
 }
