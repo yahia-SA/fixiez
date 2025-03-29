@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
-import 'package:fixiez/domain/entities/user.dart';
 import 'package:fixiez/domain/usecases/auth/signup_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,9 +20,9 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       SignupSubmitted event, Emitter<SignupState> emit) async {
     emit(SignupLoading());
     try{
-    final user = await signupUseCase(event.name,event.phone,event.password);
+     await signupUseCase(event.name,event.phone,event.password);
 
-    emit(SignupSuccess(user));
+    emit( const SignupSuccess());
     } catch (e) {
       emit(SignupFailure(e.toString()));
     }

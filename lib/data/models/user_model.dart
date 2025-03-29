@@ -12,19 +12,6 @@ class UserModel extends User {
     required super.accessToken,
     required super.refreshToken,
   });
-  factory UserModel.fromSignUpJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['_id'] ?? '',
-      name: json['name'] ?? '',
-      phoneNumber: json['phoneNumber'] ?? '',
-      role: json['role'] ?? '',
-      isActive: json['isActive'] ?? false,
-      balance: (json['balance'] ?? 0).toDouble(),
-      cashBack: (json['cashBack'] ?? 0).toDouble(),
-      accessToken: json['accessToken'] ?? '',
-      refreshToken: json['refreshToken'] ?? '',
-    );
-  }
   factory UserModel.fromLoginJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['user']['_id'],

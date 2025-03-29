@@ -54,7 +54,10 @@ class Signup extends StatelessWidget {
                           'origin': OtpPages.signup,
                         },
                       );
-                      UiHelper.showNotification('حسابك غير مفعل تحقق من رسالة الجوال الخاصة بك',backgroundColor: AppColors.yellow);
+                      UiHelper.showNotification(
+                        'حسابك غير مفعل تحقق من رسالة الجوال الخاصة بك',
+                        backgroundColor: AppColors.yellow,
+                      );
                     } else {
                       UiHelper.showNotification(state.message);
                     }
@@ -171,7 +174,11 @@ class Signup extends StatelessWidget {
                         ),
                         SizedBox(height: 24.h),
                         state is SignupLoading
-                            ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
+                            ? const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.primary,
+                              ),
+                            )
                             : CustomButton(
                               text: 'إنشاء حساب',
                               onpressed: () {

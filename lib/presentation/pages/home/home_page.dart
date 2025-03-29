@@ -33,7 +33,9 @@ class HomePage extends StatelessWidget {
           },
           builder: (context, state) {
             if (state is RepairLoading) {
-              return const Center(child: CircularProgressIndicator(color: AppColors.primary));
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.primary),
+              );
             }
             return Stack(
               children: [

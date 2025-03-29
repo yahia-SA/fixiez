@@ -1,3 +1,4 @@
+
 import 'package:dio/dio.dart';
 import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
@@ -7,7 +8,7 @@ import 'package:fixiez/domain/entities/user.dart';
 
 abstract class AuthRemoteDataSource {
   Future<User> login(String phone, String password);
-  Future<User> signup(String name, String phone, String password);
+  Future<void> signup(String name, String phone, String password);
   Future<void> sendResetOtp(String phone);
   Future<Object> verifyOtp(String phone, String otp,String api);
   Future<void> resetPassword(String otp, String password,String confirmPassword);
@@ -42,7 +43,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<User> signup(String name, String phone, String password) async {
+  Future<void> signup(String name, String phone, String password) async {
     try {
       final response = await dioHelper.postData(
         url: ApiEndpoints.register,
@@ -50,9 +51,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
 
       if (response.data['status'] == 'success') {
-        final userModel = UserModel.fromSignUpJson(response.data);
-        await CacheHelper.saveUser(userModel.toEntity());
-        return userModel.toEntity();
+        return response.data['message'];
       } else {
         throw response.data['message'] ?? 'Signup failed';
       }

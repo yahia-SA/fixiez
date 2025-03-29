@@ -1,3 +1,4 @@
+import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
@@ -25,16 +26,33 @@ class Login extends StatelessWidget {
     return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            AppRoutes.home,
-            (route) => false,
-          );
+          if (state.user.role == 'user') {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRoutes.home,
+              (route) => false,
+            );
+          } else {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRoutes.adminpage,
+              (route) => false,
+            );
+          }
         } else if (state is LoginFailure) {
-          state.message == 'Invalid credentials'?
-          UiHelper.showNotification('رقم الهاتف او كلمة المرور غير صحيح'):
-          UiHelper.showNotification(state.message);
-          
+          if (state.message == 'الحساب غير مفعل') {
+            Navigator.pushNamed(
+              context,
+              AppRoutes.otpScreen,
+              arguments: {
+                'phone': _phoneController.text.trim(),
+                'origin': OtpPages.signup,
+              },
+            );
+          }
+          state.message == 'Invalid credentials'
+              ? UiHelper.showNotification('رقم الهاتف او كلمة المرور غير صحيح')
+              : UiHelper.showNotification(state.message);
         }
       },
       builder: (context, state) {
@@ -126,7 +144,9 @@ class Login extends StatelessWidget {
                       ),
                       SizedBox(height: 42.h),
                       state is LoginLoading
-                          ? const CircularProgressIndicator(color: AppColors.primary)
+                          ? const CircularProgressIndicator(
+                            color: AppColors.primary,
+                          )
                           : CustomButton(
                             text: 'تسجيل الدخول',
                             onpressed: () {

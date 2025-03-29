@@ -12,11 +12,9 @@ final class SignupInitial extends SignupState {}
 final class SignupLoading extends SignupState {}
 
 final class SignupSuccess extends SignupState {
-  const SignupSuccess(this.user);
-  final User user;
-
+  const SignupSuccess();
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [];
 }
 
 final class SignupFailure extends SignupState {

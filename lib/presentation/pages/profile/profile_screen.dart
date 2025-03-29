@@ -31,12 +31,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     super.initState();
     Future.microtask(() {
-      if(!mounted) return;
-    final state = context.read<ProfileBloc>().state;
-    if (state is! ProfileSuccess) {
-      _fetchProfile();
-    }
-  });
+      if (!mounted) return;
+      final state = context.read<ProfileBloc>().state;
+      if (state is! ProfileSuccess) {
+        _fetchProfile();
+      }
+    });
   }
 
   void _fetchProfile() {
@@ -78,7 +78,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           setState(() => isLoading = false);
         }
       },
-      listenWhen: (previous, current) => current is ProfileSuccess || current is ProfileFailure,
+      listenWhen:
+          (previous, current) =>
+              current is ProfileSuccess || current is ProfileFailure,
       child: SafeArea(
         child: Scaffold(
           body: Stack(
@@ -252,7 +254,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     children: [
                                       TextButton(
                                         onPressed:
-                                      (_pageIndex > 1 && !isLoading)
+                                            (_pageIndex > 1 && !isLoading)
                                                 ? _onClickBack
                                                 : null,
                                         child: TextWidget(
@@ -265,8 +267,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       ),
                                       TextButton(
                                         onPressed:
-                                            (_pageIndex <
-                                                    state.totalPages && !isLoading)
+                                            (_pageIndex < state.totalPages &&
+                                                    !isLoading)
                                                 ? _onClickNext
                                                 : null,
                                         child: TextWidget(
@@ -291,7 +293,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             );
                           } else if (state is ProfileLoading) {
                             return const Center(
-                              child: CircularProgressIndicator(color: AppColors.primary),
+                              child: CircularProgressIndicator(
+                                color: AppColors.primary,
+                              ),
                             );
                           } else {
                             return CustomTable(
