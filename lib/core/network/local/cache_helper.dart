@@ -106,6 +106,30 @@ class CacheHelper {
       debugPrint('❌ خطاء في استرجاع بيانات المستخدم: $e');}
     return null;
   }
+// حذف بيانات المستخدم
+  static Future<bool> deleteUser() async {
+  try {
+    final List<String> keysToRemove = [
+      'Id',
+      'Name',
+      'PhoneNumber',
+      'Role',
+      'IsActive',
+      'Balance',
+      'CashBack',
+      'AccessToken',
+      'RefreshToken',
+    ];
+
+    await Future.wait(keysToRemove.map((key) => removeData(key: key)));
+    
+    return true;
+  } catch (e,stackTrace) {
+    debugPrint('❌ خطأ في حذف بيانات المستخدم: $e \n$stackTrace');
+    return false;
+  }
+}
+
 
     // استرجاع قيمة معينة من بيانات المستخدم باستخدام المفتاح
   static dynamic getUserField({ required String key}) {

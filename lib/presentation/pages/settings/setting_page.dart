@@ -53,13 +53,13 @@ class SettingPage extends StatelessWidget {
                       deleteDialog(
                         context: context,
                         title: 'هل انت متاكد من تسجيل الخروج',
-                        deleteAction: () {
+                        deleteAction: () async {
                           Navigator.pushNamedAndRemoveUntil(
                             context,
-                            AppRoutes.initial,
+                            AppRoutes.login,
                             (route) => false,
                           );
-                          CacheHelper.clearAll();
+                          await CacheHelper.deleteUser();
                         },
                         buttontext: 'خروج',
                       );
