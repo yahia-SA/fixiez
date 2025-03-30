@@ -2,6 +2,9 @@ import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_theme.dart';
+import 'package:fixiez/presentation/pages/home/home_page.dart';
+import 'package:fixiez/presentation/pages/login/login_screen.dart';
+import 'package:fixiez/presentation/pages/onboarding/onboarding_screen.dart';
 import 'package:fixiez/presentation/service/bloc_providers.dart';
 import 'package:fixiez/presentation/service/injection_container.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +34,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget startScreen;
+
+    switch (startRoute) {
+      case AppRoutes.home:
+        startScreen = const HomePage();
+        break;
+      case AppRoutes.login:
+        startScreen = Login();
+        break;
+      default:
+        startScreen = const OnBoarding();
+        break;
+    }
+
     return BlocProvidersList(
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -43,7 +60,7 @@ class MyApp extends StatelessWidget {
               title: 'Fixiez',
               theme: AppTheme.appTheme,
               onGenerateRoute: RouteGenerator.generateRoute,
-              initialRoute: startRoute,
+              home: startScreen,
               builder: (context, child) {
                 return Directionality(
                   textDirection: TextDirection.rtl,
