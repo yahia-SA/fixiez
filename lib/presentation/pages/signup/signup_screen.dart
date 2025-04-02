@@ -77,6 +77,7 @@ class Signup extends StatelessWidget {
                           controller: _usernameController,
                           hint: 'اسم المستخدم',
                           type: TextInputType.name,
+                          autofillHints: [AutofillHints.name],
                           validate: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your full name';
@@ -89,6 +90,7 @@ class Signup extends StatelessWidget {
                           label: 'رقم الهاتف',
                           controller: _phoneController,
                           hint: 'رقم الهاتف الخاص بك',
+                          autofillHints: [AutofillHints.telephoneNumber],
                           type: TextInputType.phone,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,

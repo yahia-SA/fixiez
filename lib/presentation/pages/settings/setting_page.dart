@@ -60,6 +60,7 @@ class SettingPage extends StatelessWidget {
                             (route) => false,
                           );
                           await CacheHelper.deleteUser();
+                          await CacheHelper.removeData(key: 'isAdmin');
                         },
                         buttontext: 'خروج',
                       );

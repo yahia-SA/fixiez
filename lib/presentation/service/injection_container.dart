@@ -1,10 +1,13 @@
+import 'package:fixiez/data/datasources/admin_remote_data_source.dart';
 import 'package:fixiez/data/datasources/balance_remote_data_source.dart';
 import 'package:fixiez/data/datasources/banner_remote_data_source.dart';
 import 'package:fixiez/data/datasources/review_remote_data_source.dart';
+import 'package:fixiez/data/repositories/admin_repository_impl.dart';
 import 'package:fixiez/data/repositories/balance_repository_impl.dart';
 import 'package:fixiez/data/repositories/banner_repository_impl.dart';
 import 'package:fixiez/data/repositories/repair_repo_impl.dart';
 import 'package:fixiez/data/repositories/review_repo_impl.dart';
+import 'package:fixiez/domain/repositories/admin_repository.dart';
 import 'package:fixiez/domain/repositories/auth_repository.dart';
 import 'package:fixiez/domain/repositories/balance_repository.dart';
 import 'package:fixiez/domain/repositories/banner_repository.dart';
@@ -12,6 +15,7 @@ import 'package:fixiez/domain/repositories/repair_repository.dart';
 import 'package:fixiez/domain/repositories/review_repo.dart';
 import 'package:fixiez/domain/usecases/Repair/repair_request.dart';
 import 'package:fixiez/domain/usecases/Repair/repair_requests.dart';
+import 'package:fixiez/domain/usecases/admin/admin_get_users_usecase.dart';
 import 'package:fixiez/domain/usecases/auth/get_balance.dart';
 import 'package:fixiez/domain/usecases/auth/reset_password_usecase.dart';
 import 'package:fixiez/domain/usecases/auth/send_reset_code_usecase.dart';
@@ -24,6 +28,7 @@ import 'package:fixiez/presentation/state/bloc/resetPassword/reset_password_bloc
 import 'package:fixiez/presentation/state/cubit/banner/banner_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/repair_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/review/review_cubit.dart';
+import 'package:fixiez/presentation/state/cubit/users/users_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/data/datasources/auth_remote_data_source.dart';
@@ -58,6 +63,9 @@ Future<void> init() async {
   sl.registerLazySingleton<BannerRemoteDataSource>(
     () => BannerRemoteDataSourceImpl(sl<DioHelper>()),
   );
+  sl.registerLazySingleton<AdminRemoteDataSource>(
+    () => AdminRemoteDataSourceImpl(sl<DioHelper>()),
+  );
 
   // Register Repositories
   sl.registerLazySingleton<AuthRepository>(
@@ -76,6 +84,9 @@ Future<void> init() async {
   sl.registerLazySingleton<BannerRepository>(
     () => BannerRepositoryImpl(remoteDataSource: sl<BannerRemoteDataSource>()),
   );
+  sl.registerLazySingleton<AdminRepository>(
+    () => AdminRepositoryImpl(remoteDataSource: sl<AdminRemoteDataSource>()),
+  );
 
   // Register Use Cases
   sl.registerLazySingleton(() => LoginUseCase(sl<AuthRepository>()));
@@ -88,6 +99,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => RepairRequestUseCase(sl<RepairRepository>()));
   sl.registerLazySingleton(() => ReviewUsecase(sl<ReviewRepository>()));
   sl.registerLazySingleton(() => BannerUsecase(sl<BannerRepository>()));
+  sl.registerLazySingleton(() => GetAdminUsersUseCase(sl<AdminRepository>()));
 
   // Register BLoCs
   sl.registerFactory(() => LoginBloc(sl<LoginUseCase>()));
@@ -101,4 +113,5 @@ Future<void> init() async {
   );
   sl.registerFactory(() => ReviewCubit(sl<ReviewUsecase>()));
   sl.registerFactory(() => BannerCubit(sl<BannerUsecase>()));
+  sl.registerFactory(() => UsersCubit(sl<GetAdminUsersUseCase>()));
 }

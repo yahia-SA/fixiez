@@ -20,6 +20,9 @@ class ApiEndpoints {
   static const String reviews = '/api/review';
   // Banners
   static const String banners = '/api/banners';
+
+  // Admin
+  static const String adminUsers = '/api/admin/get-all-users';
 }
 
 class ApiHeaders {

@@ -2,6 +2,7 @@ import 'package:fixiez/core/theme/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class CustomFormfield extends StatelessWidget {
   const CustomFormfield({
     super.key,
@@ -14,6 +15,8 @@ class CustomFormfield extends StatelessWidget {
     this.isPassword = false,
     this.inputFormatters,
     required this.label,
+    this.autofillHints,
+    this.onEditingComplete,
   });
   final TextEditingController controller;
   final TextInputType type;
@@ -24,7 +27,8 @@ class CustomFormfield extends StatelessWidget {
   final bool isPassword;
   final List<TextInputFormatter>? inputFormatters;
   final String label;
-
+  final List<String>? autofillHints;
+  final void Function()? onEditingComplete;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,24 +42,24 @@ class CustomFormfield extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             keyboardType: type,
+            onEditingComplete: onEditingComplete,
+            autofillHints: autofillHints,
             textAlign: TextAlign.right,
             obscureText: isPassword,
             style: context.med14Black,
             inputFormatters: inputFormatters,
-          textDirection: TextDirection.rtl,
+            textDirection: TextDirection.rtl,
             decoration: InputDecoration(
               hintText: hint,
-              suffixIcon: suffix != null
-                  ? IconButton(
-                      onPressed: suffixPressed,
-                      icon: Icon(suffix,size: 18.h,),
-              
-            )
-                  : null,
+              suffixIcon:
+                  suffix != null
+                      ? IconButton(
+                        onPressed: suffixPressed,
+                        icon: Icon(suffix, size: 18.h),
+                      )
+                      : null,
             ),
             validator: validate,
-            
-          
           ),
         ),
       ],

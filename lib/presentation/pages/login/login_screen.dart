@@ -1,4 +1,5 @@
 import 'package:fixiez/core/constants/enums.dart';
+import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
@@ -26,19 +27,13 @@ class Login extends StatelessWidget {
     return BlocConsumer<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          if (state.user.role == 'user') {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRoutes.home,
-              (route) => false,
-            );
-          } else {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              AppRoutes.adminpage,
-              (route) => false,
-            );
-          }
+          bool isAdmin = state.user.role == 'admin';
+          CacheHelper.saveData(key: 'isAdmin', value: isAdmin);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            isAdmin ? AppRoutes.adminpage : AppRoutes.home,
+            (route) => false,
+          );
         } else if (state is LoginFailure) {
           if (state.message == 'الحساب غير مفعل') {
             Navigator.pushNamed(
@@ -60,141 +55,154 @@ class Login extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        var bloc = BlocProvider.of<LoginBloc>(context);
+        var bloc = context.read<LoginBloc>();
+        void submitForm() {
+          if (_formKey.currentState!.validate()) {
+            TextInput.finishAutofillContext();
+            bloc.add(
+              LoginSubmitted(
+                phone: _phoneController.text,
+                password: _passwordController.text,
+              ),
+            );
+          }
+        }
+
         return Scaffold(
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const BuildLogo(),
-                SizedBox(height: 58.h),
-                Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('تسجيل الدخول', style: context.bold28Blue),
-                      SizedBox(height: 20.h),
-                      CustomFormfield(
-                        label: 'رقم الهاتف',
-                        controller: _phoneController,
-                        hint: 'رقم الهاتف الخاص بك',
-                        type: TextInputType.phone,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(11),
-                        ],
-                        validate: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your phone number';
-                          }
-                          if (value.length != 11) {
-                            return 'Phone number must be 11 digits';
-                          }
-                          if (!RegExp(r'^01[0-9]{9}$').hasMatch(value)) {
-                            return 'Enter a valid Egyptian phone number';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 20.h),
-                      BlocBuilder<LoginBloc, LoginState>(
-                        builder: (context, state) {
-                          final isPasswordVisible =
-                              (state is ChangePasswordVisibility)
-                                  ? state.isVisible
-                                  : false;
-                          return CustomFormfield(
-                            label: 'كلمة المرور',
-                            controller: _passwordController,
-                            hint: 'كلمة المرور',
-                            type: TextInputType.visiblePassword,
-                            suffix:
-                                isPasswordVisible
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                            isPassword: !isPasswordVisible,
-                            suffixPressed:
-                                () => bloc.add(TogglePasswordVisibility()),
-                            validate: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Password is required';
-                              } else if (value.length < 6) {
-                                return 'Password must be at least 6 characters';
-                              }
-                              return null;
-                            },
-                          );
-                        },
-                      ),
-                      SizedBox(height: 20.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                AppRoutes.forgetPassword,
-                              );
-                            },
-                            child: Text(
-                              'هل نسيت كلمة المرور؟',
-                              style: context.med14Black,
+            child: AutofillGroup(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const BuildLogo(),
+                  SizedBox(height: 58.h),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('تسجيل الدخول', style: context.bold28Blue),
+                        SizedBox(height: 20.h),
+                        CustomFormfield(
+                          label: 'رقم الهاتف',
+                          controller: _phoneController,
+                          autofillHints: [
+                            AutofillHints.telephoneNumber,
+                            AutofillHints.username,
+                          ],
+                          hint: 'رقم الهاتف الخاص بك',
+                          type: TextInputType.phone,
+                          onEditingComplete:
+                              () => FocusScope.of(context).nextFocus(),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(11),
+                          ],
+                          validate: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter your phone number';
+                            }
+                            if (value.length != 11) {
+                              return 'Phone number must be 11 digits';
+                            }
+                            if (!RegExp(r'^01[0-9]{9}$').hasMatch(value)) {
+                              return 'Enter a valid Egyptian phone number';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 20.h),
+                        BlocBuilder<LoginBloc, LoginState>(
+                          builder: (context, state) {
+                            final isPasswordVisible =
+                                (state is ChangePasswordVisibility)
+                                    ? state.isVisible
+                                    : false;
+                            return CustomFormfield(
+                              label: 'كلمة المرور',
+                              controller: _passwordController,
+                              autofillHints: [AutofillHints.password],
+                              hint: 'كلمة المرور',
+                              type: TextInputType.visiblePassword,
+                              onEditingComplete: submitForm,
+                              suffix:
+                                  isPasswordVisible
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                              isPassword: !isPasswordVisible,
+                              suffixPressed:
+                                  () => bloc.add(TogglePasswordVisibility()),
+                              validate: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Password is required';
+                                } else if (value.length < 6) {
+                                  return 'Password must be at least 6 characters';
+                                }
+                                return null;
+                              },
+                            );
+                          },
+                        ),
+                        SizedBox(height: 20.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.forgetPassword,
+                                );
+                              },
+                              child: Text(
+                                'هل نسيت كلمة المرور؟',
+                                style: context.med14Black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 42.h),
+                        state is LoginLoading
+                            ? const CircularProgressIndicator(
+                              color: AppColors.primary,
+                            )
+                            : CustomButton(
+                              text: 'تسجيل الدخول',
+                              onpressed: submitForm,
+                            ),
+                        SizedBox(height: 142.h),
+                        Center(
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'ليس لديك حساب؟ ',
+                                  style: context.reg16Hint80,
+                                ),
+                                TextSpan(
+                                  text: 'سجل الآن',
+                                  style: context.med14Black!.copyWith(
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer:
+                                      TapGestureRecognizer()
+                                        ..onTap = () {
+                                          Navigator.pushReplacementNamed(
+                                            context,
+                                            AppRoutes.signup,
+                                          );
+                                        },
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 42.h),
-                      state is LoginLoading
-                          ? const CircularProgressIndicator(
-                            color: AppColors.primary,
-                          )
-                          : CustomButton(
-                            text: 'تسجيل الدخول',
-                            onpressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                bloc.add(
-                                  LoginSubmitted(
-                                    phone: _phoneController.text,
-                                    password: _passwordController.text,
-                                  ),
-                                );
-                              }
-                            },
-                          ),
-                      SizedBox(height: 142.h),
-                      Center(
-                        child: RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: 'ليس لديك حساب؟ ',
-                                style: context.reg16Hint80,
-                              ),
-                              TextSpan(
-                                text: 'سجل الآن',
-                                style: context.med14Black!.copyWith(
-                                  decoration: TextDecoration.underline,
-                                ),
-                                recognizer:
-                                    TapGestureRecognizer()
-                                      ..onTap = () {
-                                        Navigator.pushReplacementNamed(
-                                          context,
-                                          AppRoutes.signup,
-                                        );
-                                      },
-                              ),
-                            ],
-                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

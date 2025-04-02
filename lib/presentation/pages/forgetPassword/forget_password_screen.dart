@@ -51,6 +51,7 @@ class ForgetPassword extends StatelessWidget {
             CustomFormfield(
               label: 'رقم الهاتف',
               controller: _phoneController,
+              autofillHints: [AutofillHints.telephoneNumber],
               hint: 'رقم الهاتف الخاص بك',
               type: TextInputType.phone,
               inputFormatters: [

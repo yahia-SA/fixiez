@@ -45,7 +45,8 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-
+	<key>com.apple.developer.authentication-services.autofill-credential-provider</key>
+	<true/>
 	<!-- NSAppTransportSecurity Configuration -->
 	<key>NSAppTransportSecurity</key>
 	<dict>

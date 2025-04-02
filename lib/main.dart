@@ -2,6 +2,7 @@ import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_theme.dart';
+import 'package:fixiez/presentation/pages/admin/admin_page.dart';
 import 'package:fixiez/presentation/pages/home/home_page.dart';
 import 'package:fixiez/presentation/pages/login/login_screen.dart';
 import 'package:fixiez/presentation/pages/onboarding/onboarding_screen.dart';
@@ -19,10 +20,13 @@ Future<void> main() async {
   await CacheHelper.init();
   await init();
   final bool onBoarding = CacheHelper.getData(key: 'onBoarding') ?? false;
+  final bool isAdmin = CacheHelper.getData(key: 'isAdmin') ?? false;
   final bool rememberMe = CacheHelper.getUserField(key: 'AccessToken') != null;
   final String startRoute =
       onBoarding
-          ? (rememberMe ? AppRoutes.home : AppRoutes.login)
+          ? (rememberMe
+              ? (isAdmin ? AppRoutes.adminpage : AppRoutes.home)
+              : AppRoutes.login)
           : AppRoutes.initial;
 
   runApp(MyApp(startRoute: startRoute));
@@ -42,6 +46,9 @@ class MyApp extends StatelessWidget {
         break;
       case AppRoutes.login:
         startScreen = Login();
+        break;
+      case AppRoutes.adminpage:
+        startScreen = const AdminPage();
         break;
       default:
         startScreen = const OnBoarding();
