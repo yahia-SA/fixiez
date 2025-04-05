@@ -3,6 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppText {
+  // Med 16 g/L
+  static TextStyle get med16 => GoogleFonts.cairo(
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w500, // Medium
+    height: 1.0.h,
+  );
   // Med 14 g/L
   static TextStyle get med14 => GoogleFonts.cairo(
     fontSize: 14.sp,
@@ -135,5 +141,7 @@ extension AppTextTheme on BuildContext {
   TextStyle? get feedback => Theme.of(this).textTheme.bodyMedium;
 
   TextStyle? get reg16Hint92 => Theme.of(this).textTheme.labelLarge;
+
+  TextStyle? get med16Blue => Theme.of(this).textTheme.labelSmall;
 
 }

@@ -36,7 +36,7 @@ class AppTheme {
         
         // labelMedium: AppText.reg14.copyWith(color: AppColors.texthint80),
         
-        // labelSmall: AppText.reg12.copyWith(color: AppColors.texthint80),
+        labelSmall: AppText.med16.copyWith(color: AppColors.primary),
         ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
