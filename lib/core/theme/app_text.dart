@@ -54,6 +54,12 @@ class AppText {
     fontWeight: FontWeight.w600, // SemiBold
     height: 1.0.h,
   );
+  // Semi 12 g/L
+  static TextStyle get semi12 => GoogleFonts.cairo(
+    fontSize: 12.sp,
+    fontWeight: FontWeight.w600, // SemiBold
+    height: 1.0.h,
+  );
 
   // Bold 16 g/L
   static TextStyle get bold16 => GoogleFonts.cairo(
@@ -115,6 +121,12 @@ class AppText {
     fontSize: 28.sp,
     fontWeight: FontWeight.w700, // Bold
     height: 1.0.h,
+  );
+  // reg13 g/L
+  static TextStyle get reg13 => GoogleFonts.cairo(
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w400, // Regular
+    height: 1.h,
   );
 }
 

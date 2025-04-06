@@ -9,20 +9,29 @@ class ApiEndpoints {
   static const String updatePass = '/api/auth/update-pass';
   static const String sendResetCode = '/api/auth/send-reset-code';
   static const String resetPassword = '/api/auth/reset-password';
-  static const String validateResetPassword = '/api/auth/validate-reset-password';
+  static const String validateResetPassword =
+      '/api/auth/validate-reset-password';
   static const String balanceCashBack = '/api/auth/balance-cash-back';
 
   // repair
   static const String repairRequest = '/api/repair-requests';
   static const String repairRequestsUser = '/api/repair-requests/user';
-  
-  // review 
+
+  // review
   static const String reviews = '/api/review';
   // Banners
   static const String banners = '/api/banners';
 
   // Admin
   static const String adminUsers = '/api/admin/get-all-users';
+  static const String adminServices = '/api/admin/get-all-repair-services';
+  static const String adminUpdateService = '/api/admin/update-repair-service';
+  static const String adminUpdateUser = '/api/admin/update-user-role';
+  // Admin Banners
+  static const String adminBanners = '/api/admin/get-all-banner';
+  static const String adminDeleteBanner = '/api/admin/delete-banner';
+  static const String adminCreateBanner = '/api/admin/create-banner';
+  static const String adminUpdateBanner = '/api/admin/update-banner';
 }
 
 class ApiHeaders {

@@ -137,9 +137,10 @@ class DioHelper {
   Future<Response> postData({
     required String url,
     required dynamic data,
+    Options? options,
     Map<String, dynamic>? query,
   }) async {
-    return await dio.post(url, queryParameters: query, data: data);
+    return await dio.post(url, queryParameters: query, data: data,options: options);
   }
 
   /// PATCH Request
