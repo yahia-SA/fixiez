@@ -2,17 +2,19 @@ import 'package:fixiez/domain/entities/banner.dart';
 
 class BannerResponseModel {
 
-  BannerResponseModel({required this.status, required this.data});
+  BannerResponseModel( {required this.message,required this.status, required this.data});
 
   factory BannerResponseModel.fromJson(Map<String, dynamic> json) {
     return BannerResponseModel(
       status: json['status'],
+      message: json['message'],
       data: (json['data'] as List)
           .map((item) => BannerModel.fromJson(item))
           .toList(),
     );
   }
   final String status;
+  final String message;
   final List<BannerModel> data;
 }
 
@@ -27,11 +29,21 @@ class BannerModel {
     required this.version,
   });
 
-  factory BannerModel.fromJson(Map<String, dynamic> json) {
+  factory BannerModel.fromJson2(Map<String, dynamic> json) {
     return BannerModel(
-      id: json['_id'],
       image: json['image'],
       isActive: json['isActive'],
+      id: json['_id'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
+      version: json['__v'],
+    );
+  }
+  factory BannerModel.fromJson(Map<String, dynamic> json) {
+    return BannerModel(
+      image: json['image'],
+      isActive: json['isActive'],
+      id: json['_id'],
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']),
       version: json['__v'],
@@ -44,8 +56,8 @@ class BannerModel {
   final DateTime updatedAt;
   final int version;
 
-  Banner toEntity() {
-    return Banner(
+  Banners toEntity() {
+    return Banners(
       id: id,
       image: image, 
       isActive: isActive,

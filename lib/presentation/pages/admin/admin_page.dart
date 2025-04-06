@@ -1,11 +1,15 @@
 import 'package:fixiez/core/constants/image_assets.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/utils/ui_helper.dart';
+import 'package:fixiez/presentation/pages/admin/widgets/banners_table.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/bar_chart_widget.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/custom_banner.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/custom_chart.dart';
+import 'package:fixiez/presentation/pages/admin/widgets/service_table.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/users_tabel.dart';
 import 'package:fixiez/presentation/service/injection_container.dart';
+import 'package:fixiez/presentation/state/cubit/Services/service_cubit.dart';
+import 'package:fixiez/presentation/state/cubit/banner/banner_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/users/users_cubit.dart';
 import 'package:fixiez/presentation/widgets/name_header.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -20,6 +24,8 @@ class AdminPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => sl<UsersCubit>()),
+        BlocProvider(create: (_) => sl<BannerCubit>()),
+        BlocProvider(create: (_) => sl<ServiceCubit>()),
       ],
       child: SafeArea(
         child: Scaffold(
@@ -90,6 +96,10 @@ class AdminPage extends StatelessWidget {
                     ),
                     SizedBox(height: 28.h),
                     const BarChartWidget(),
+                    SizedBox(height: 28.h),
+                    const BannersTable(),
+                    SizedBox(height: 28.h),
+                    const ServiceTable(),
                     SizedBox(height: 28.h),
                     const UsersTable(),
                   ],

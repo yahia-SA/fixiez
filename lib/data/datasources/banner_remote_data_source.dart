@@ -1,3 +1,4 @@
+import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/network/remote/endpoints.dart';
 import 'package:fixiez/data/models/banner_model.dart';
@@ -13,7 +14,7 @@ class BannerRemoteDataSourceImpl implements BannerRemoteDataSource {
   Future<BannerResponseModel> getBanners() async {
     try {
       final response = await dioHelper.getData(
-        url: ApiEndpoints.banners,
+        url: CacheHelper.getData(key:'isAdmin') ? ApiEndpoints.adminBanners : ApiEndpoints.banners,
       );
       if (response.data['status'] == 'success') {
 

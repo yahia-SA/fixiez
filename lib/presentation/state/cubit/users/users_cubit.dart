@@ -1,13 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:fixiez/data/models/users_model.dart';
-import 'package:fixiez/domain/usecases/admin/admin_get_users_usecase.dart';
+import 'package:fixiez/domain/usecases/admin/users_admin/admin_get_users_usecase.dart';
+import 'package:fixiez/domain/usecases/admin/users_admin/admin_update_users_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'users_state.dart';
 
 class UsersCubit extends Cubit<UsersState> {
-  UsersCubit(this.getAdminUsersUseCase) : super(UsersInitial());
+  UsersCubit( {required this.adminUpdateUsersUseCase,required this.getAdminUsersUseCase}) : super(UsersInitial());
   final GetAdminUsersUseCase getAdminUsersUseCase;
+  final UpdateAdminUserUseCase adminUpdateUsersUseCase;
   int _currentPage = 1;
   int _totalPages = 1;
   int _totalItems = 1;
@@ -38,5 +40,19 @@ class UsersCubit extends Cubit<UsersState> {
       emit(UsersFailure(e.toString()));
     }
     _isLoading = false;
+  }
+
+  Future<void> updateAdminUser({required String id, required String role}) async {
+    emit(UsersUpdating());
+    try {
+      final success = await adminUpdateUsersUseCase(id: id, role: role);
+      if (success) {
+        emit(UsersUpdated());
+      } else {
+        emit(const UsersFailure('Failed to update user.'));
+      }
+    } catch (e) {
+      emit(UsersFailure(e.toString()));
+    }
   }
 }

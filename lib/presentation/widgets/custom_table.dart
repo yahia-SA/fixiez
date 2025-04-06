@@ -9,7 +9,8 @@ class CustomTable extends StatelessWidget {
     required this.title,
     required this.headers,
     required this.data,
-    this.onpressed,
+    this.titleButtonAction,
+    this.titleButton,
     required this.headingRowHeight,
     required this.dataRowHeight,
     this.headingTextStyle,
@@ -20,9 +21,10 @@ class CustomTable extends StatelessWidget {
   });
 
   final String title;
+  final String? titleButton;
   final List<String> headers;
-  final List<List<String>> data;
-  final void Function()? onpressed;
+  final List<List<Object>> data;
+  final void Function()? titleButtonAction;
   final double headingRowHeight;
   final double dataRowHeight;
   final TextStyle? headingTextStyle;
@@ -34,8 +36,7 @@ class CustomTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Default column widths if not provided
-    final defaultColumnWidth =
-        (327.w - (headers.length - 1) * 12.w) / headers.length;
+    final defaultColumnWidth = (327.w) / headers.length;
     final effectiveColumnWidths =
         columnWidths ?? List<double>.filled(headers.length, defaultColumnWidth);
 
@@ -49,17 +50,36 @@ class CustomTable extends StatelessWidget {
               children: [
                 Text(title, style: context.bold24Blue),
                 const Spacer(),
-                onpressed != null
+                titleButton != null
                     ? SizedBox(
-                      width: 65.w,
-                      height: 32.h,
-                      child: ElevatedButton(
-                        onPressed: onpressed,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: AppColors.white,
-                        ),
-                        child: Text('اضافه باقه', style: AppText.med12),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            titleButton!,
+                            style: AppText.med16.copyWith(
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2.r),
+                              border: Border.all(
+                                color: AppColors.primary,
+                                width: 2.w,
+                              ),
+                            ),
+                            child: InkWell(
+                              onTap: titleButtonAction,
+                              child: Icon(
+                                Icons.add,
+                                color: AppColors.primary,
+                                size: 18.sp,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     )
                     : const SizedBox(),
@@ -127,16 +147,26 @@ class CustomTable extends StatelessWidget {
                                           SizedBox(
                                             width: effectiveColumnWidths[index],
                                             child: Center(
-                                              child: Text(
-                                                entry.value,
-                                                overflow: TextOverflow.ellipsis,
-                                                style:
-                                                    dataCellStyle ??
-                                                    AppText.reg12.copyWith(
-                                                      color: AppColors.black,
-                                                      height: 1.3.h,
-                                                    ),
-                                              ),
+                                              child:
+                                                  entry.value is String
+                                                      ? Text(
+                                                        entry.value.toString(),
+                                                        overflow:
+                                                            TextOverflow
+                                                                .ellipsis,
+                                                        style:
+                                                            dataCellStyle ??
+                                                            AppText.reg12
+                                                                .copyWith(
+                                                                  color:
+                                                                      AppColors
+                                                                          .black,
+                                                                  height: 1.3.h,
+                                                                ),
+                                                      )
+                                                      : entry.value is Widget
+                                                      ? entry.value as Widget
+                                                      : const SizedBox(),
                                             ),
                                           ),
                                         );

@@ -1,6 +1,7 @@
 import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
+import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_theme.dart';
 import 'package:fixiez/presentation/pages/admin/admin_page.dart';
 import 'package:fixiez/presentation/pages/home/home_page.dart';
@@ -19,6 +20,19 @@ Future<void> main() async {
   await DioHelper.instance.loadTokens();
   await CacheHelper.init();
   await init();
+  ErrorWidget.builder = (FlutterErrorDetails errorDetails) =>  MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: Scaffold(
+      body: Center(child: Column(
+        children: [
+          Icon(Icons.error,color: AppColors.error, size: 100.sp),
+          Text(errorDetails.summary.toString()),
+          Text(errorDetails.exception.toString()),
+          const Text('Oops something went wrong'),
+        ],
+      )),
+    ),
+  );
   final bool onBoarding = CacheHelper.getData(key: 'onBoarding') ?? false;
   final bool isAdmin = CacheHelper.getData(key: 'isAdmin') ?? false;
   final bool rememberMe = CacheHelper.getUserField(key: 'AccessToken') != null;

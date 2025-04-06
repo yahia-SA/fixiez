@@ -13,7 +13,8 @@ final class BannerLoading extends BannerState {}
 
 final class BannerSuccess extends BannerState {
   const BannerSuccess(this.banner);
-  final List<Banner> banner;
+  final List<Banners> banner;
+  
   @override
   List<Object> get props => [banner];
 }
@@ -24,3 +25,14 @@ final class BannerFailure extends BannerState {
   @override
   List<Object> get props => [message];
 }
+final class BannerDeleting extends BannerState {}
+
+final class BannerDeleted extends BannerState {}
+
+final class BannerCreating extends BannerState {}
+
+final class BannerCreated extends BannerState {}
+final class BannerUpdating extends BannerState {}
+
+final class BannerUpdated extends BannerState {}
+

@@ -1,3 +1,4 @@
+import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/constants/image_assets.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
@@ -232,7 +233,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ],
                                   data:
                                       state.repairData.map((e) {
-                                        return [e.id, e.serviceName, e.status];
+                                        return [e.id, serviceNameFromString(e.serviceName)?.arabicName ?? e.serviceName, e.status];
                                       }).toList(),
                                   headingRowHeight: 46.h,
                                   dataRowHeight: 46.h,

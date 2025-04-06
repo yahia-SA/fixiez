@@ -1,5 +1,7 @@
+import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/data/models/users_model.dart';
+import 'package:fixiez/presentation/pages/admin/widgets/edit_widget.dart';
 import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +48,7 @@ class _UsersTableState extends State<UsersTable> {
   }
 
   void _onClickNext() {
-    if (!isLoading ) {
+    if (!isLoading) {
       setState(() => _pageIndex++);
       _fetchData();
     }
@@ -94,16 +96,65 @@ class _UsersTableState extends State<UsersTable> {
                   'نوع المستخدم',
                   'تعديل',
                 ],
+                dataCellStyle: AppText.reg10.copyWith(
+                  color: AppColors.black,
+                  height: 1.3.h,
+                ),
                 data:
                     (state is UsersSuccess
                             ? state.users!.data!
                             : cachedUsers!.data!)
                         .map((e) {
-                          return [e.name!, e.phoneNumber!, e.role!, '✅️'];
+                          return [
+                            e.name,
+                            e.phoneNumber,
+                            e.role.toArabicRole,
+                            InkWell(
+                              onTap:
+                                  () => showDialog(
+                                    context: context,
+                                    builder:
+                                        (context) => EditWidget(
+                                          title: 'تعديل نوع المستخدم',
+                                          saveAction: (newrole) {
+                                            context
+                                                .read<UsersCubit>()
+                                                .updateAdminUser(
+                                                  id: e.id.toString(),
+                                                  role: newrole,
+                                                );
+                                            setState(() {
+                                              final index = cachedUsers!.data
+                                                  ?.indexWhere(
+                                                    (item) => item.id == e.id,
+                                                  );
+                                              if (index != null &&
+                                                  index != -1) {
+                                                cachedUsers!.data![index] = e
+                                                    .copyWith(role: newrole);
+                                              }
+                                            });
+                                            Navigator.pop(context);
+                                          },
+                                          tabletitle1: 'اسم المستخدم',
+                                          tabletitle2: 'نوعه',
+                                          userData1: e.name.toString(),
+                                          userData2:
+                                              e.role.toArabicRole.toString(),
+                                        ),
+                                  ),
+                              child: Icon(
+                                Icons.edit,
+                                color: AppColors.primary,
+                                size: 20.sp,
+                              ),
+                            ),
+                          ];
                         })
                         .toList(),
-                headingRowHeight: 40,
-                dataRowHeight: 36,
+                headingRowHeight: 52,
+                dataRowHeight: 38,
+                columnWidths: [81.75, 81.75, 81.75, 81.75],
               ),
             Padding(
               padding: EdgeInsetsDirectional.symmetric(

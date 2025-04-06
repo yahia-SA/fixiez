@@ -6,5 +6,5 @@ class BannerUsecase {
 
   final BannerRepository bannerRepository;
 
-  Future<List<Banner>> call() => bannerRepository.getBanners();
+  Future<List<Banners>> call() => bannerRepository.getBanners();
 }

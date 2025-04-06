@@ -6,7 +6,7 @@ class BannerRepositoryImpl implements BannerRepository {
   BannerRepositoryImpl({required this.remoteDataSource});
   final BannerRemoteDataSource remoteDataSource;
   @override
-  Future<List<Banner>> getBanners() async {
+  Future<List<Banners>> getBanners() async {
     final response =  await remoteDataSource.getBanners();
     return response.data.map((e) => e.toEntity()).toList();
   }

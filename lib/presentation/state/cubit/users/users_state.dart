@@ -30,3 +30,6 @@ final class UsersFailure extends UsersState {
   @override
   List<Object> get props => [message];
 }
+final class UsersUpdating extends UsersState {}
+final class UsersUpdated extends UsersState {}
+final class UsersDeleted extends UsersState {}

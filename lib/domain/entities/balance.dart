@@ -10,4 +10,13 @@ class BalanceResponse {
   }
   final double balance;
   final double cashBack;
+  BalanceResponse copyWith({
+    double? balance,
+    double? cashBack,
+  }) {
+    return BalanceResponse(
+      balance: balance ?? this.balance,
+      cashBack: cashBack ?? this.cashBack,
+    );
+  }
 }

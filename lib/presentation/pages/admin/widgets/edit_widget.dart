@@ -13,14 +13,14 @@ class EditWidget extends StatefulWidget {
     required this.tabletitle2,
     required this.userData1,
     required this.userData2,
-    this.userTypes =  const ['مستخدم', 'ادمن'],
+    this.userTypes = const ['مستخدم', 'ادمن'],
     this.isEditUser = true,
     this.onChanged,
   });
 
   final String title;
   final String? buttontext;
-  final VoidCallback saveAction;
+  final void Function(String newdata) saveAction;
   final String tabletitle1;
   final String tabletitle2;
   final String userData1;
@@ -40,7 +40,7 @@ class _EditWidgetState extends State<EditWidget> {
   void initState() {
     super.initState();
     userData2 = widget.userData2;
-    value = int.tryParse(userData2) ?? 20;
+    value = int.tryParse(userData2)??0;
   }
 
   void increaseValue() {
@@ -126,7 +126,7 @@ class _EditWidgetState extends State<EditWidget> {
                         ),
 
                         Container(
-                                                    height: 42.h,
+                          height: 42.h,
                           alignment: Alignment.center,
                           margin: EdgeInsets.symmetric(
                             horizontal: 5.w,
@@ -138,15 +138,18 @@ class _EditWidgetState extends State<EditWidget> {
                                     child: DropdownButton<String>(
                                       value: userData2,
                                       icon: DecoratedBox(
-                                        decoration: const BoxDecoration(color:  Color(0xFFE0E0E0)),
-                                        child:  Icon(
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xFFE0E0E0),
+                                        ),
+                                        child: Icon(
                                           Icons.keyboard_arrow_down_outlined,
                                           color: const Color(0xFF929292),
                                           size: 18.sp,
-                                          
                                         ),
                                       ),
-                                      onChanged: (String? newValue) {
+                                      
+                                      onChanged: 
+                                       (String? newValue) {
                                         setState(() {
                                           userData2 = newValue!;
                                         });
@@ -186,21 +189,19 @@ class _EditWidgetState extends State<EditWidget> {
                                           InkWell(
                                             onTap: increaseValue,
                                             child: Icon(
-                                                Icons.arrow_drop_up_outlined,
-                                                size: 20.sp,
-                                                color: AppColors.black,
-                                                
-                                              ),
-                                              
-                                          ),
-                                            InkWell(
-                                              onTap: decreaseValue,
-                                              child: Icon(
-                                                Icons.arrow_drop_down_outlined,
-                                                size: 20.sp,
-                                                color: AppColors.black,
-                                              ),
+                                              Icons.arrow_drop_up_outlined,
+                                              size: 20.sp,
+                                              color: AppColors.black,
                                             ),
+                                          ),
+                                          InkWell(
+                                            onTap: decreaseValue,
+                                            child: Icon(
+                                              Icons.arrow_drop_down_outlined,
+                                              size: 20.sp,
+                                              color: AppColors.black,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ],
@@ -223,7 +224,16 @@ class _EditWidgetState extends State<EditWidget> {
                       borderRadius: BorderRadius.circular(4.r),
                     ),
                     child: TextButton(
-                      onPressed: widget.saveAction,
+                      onPressed: () {
+                        if (userData2.toString() == 'ادمن') {
+                          widget.saveAction('admin');
+                        }
+                        else if (userData2.toString() == 'مستخدم') {
+                          widget.saveAction('user');
+                        }else{
+                      widget.saveAction(value.toString());
+                        }
+                      },
                       child: Text(
                         widget.buttontext ?? 'حفظ',
                         style: context.bold16Blue!.copyWith(

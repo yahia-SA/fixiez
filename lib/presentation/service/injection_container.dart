@@ -15,7 +15,13 @@ import 'package:fixiez/domain/repositories/repair_repository.dart';
 import 'package:fixiez/domain/repositories/review_repo.dart';
 import 'package:fixiez/domain/usecases/Repair/repair_request.dart';
 import 'package:fixiez/domain/usecases/Repair/repair_requests.dart';
-import 'package:fixiez/domain/usecases/admin/admin_get_users_usecase.dart';
+import 'package:fixiez/domain/usecases/admin/banner/create_banner.dart';
+import 'package:fixiez/domain/usecases/admin/banner/delete_banner.dart';
+import 'package:fixiez/domain/usecases/admin/banner/update_banner.dart';
+import 'package:fixiez/domain/usecases/admin/services_admin/admin_get_services_use_case.dart';
+import 'package:fixiez/domain/usecases/admin/users_admin/admin_get_users_usecase.dart';
+import 'package:fixiez/domain/usecases/admin/services_admin/admin_update_service_use_case.dart';
+import 'package:fixiez/domain/usecases/admin/users_admin/admin_update_users_usecase.dart';
 import 'package:fixiez/domain/usecases/auth/get_balance.dart';
 import 'package:fixiez/domain/usecases/auth/reset_password_usecase.dart';
 import 'package:fixiez/domain/usecases/auth/send_reset_code_usecase.dart';
@@ -25,6 +31,7 @@ import 'package:fixiez/domain/usecases/review/review_usecase.dart';
 import 'package:fixiez/presentation/state/bloc/forget_password/forget_password_bloc.dart';
 import 'package:fixiez/presentation/state/bloc/profile/profile_bloc.dart';
 import 'package:fixiez/presentation/state/bloc/resetPassword/reset_password_bloc.dart';
+import 'package:fixiez/presentation/state/cubit/Services/service_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/banner/banner_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/repair_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/review/review_cubit.dart';
@@ -100,6 +107,23 @@ Future<void> init() async {
   sl.registerLazySingleton(() => ReviewUsecase(sl<ReviewRepository>()));
   sl.registerLazySingleton(() => BannerUsecase(sl<BannerRepository>()));
   sl.registerLazySingleton(() => GetAdminUsersUseCase(sl<AdminRepository>()));
+  sl.registerLazySingleton(
+    () => GetAdminServicesUseCase(sl<AdminRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => UpdateAdminServiceUseCase(sl<AdminRepository>()),
+  );
+  sl.registerLazySingleton(() => UpdateAdminUserUseCase(sl<AdminRepository>()));
+  sl.registerLazySingleton(
+    () => DeleteBannerAdminUseCase(sl<AdminRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => CreateBannerAdminUseCase(sl<AdminRepository>()),
+  );
+  sl.registerLazySingleton(
+    () => UpdateBannerAdminUseCase(sl<AdminRepository>()),
+  );
+  
 
   // Register BLoCs
   sl.registerFactory(() => LoginBloc(sl<LoginUseCase>()));
@@ -112,6 +136,24 @@ Future<void> init() async {
     () => ProfileBloc(sl<GetBalanceUseCase>(), sl<RepairRequestsUseCase>()),
   );
   sl.registerFactory(() => ReviewCubit(sl<ReviewUsecase>()));
-  sl.registerFactory(() => BannerCubit(sl<BannerUsecase>()));
-  sl.registerFactory(() => UsersCubit(sl<GetAdminUsersUseCase>()));
+  sl.registerFactory(
+    () => BannerCubit(
+      bannerUsecase: sl<BannerUsecase>(),
+      deleteBannerAdminUseCase: sl<DeleteBannerAdminUseCase>(),
+      createBannerAdminUseCase: sl<CreateBannerAdminUseCase>(),
+      updateBannerAdminUseCase: sl<UpdateBannerAdminUseCase>(),
+    ),
+  );
+  sl.registerFactory(
+    () => UsersCubit(
+      getAdminUsersUseCase: sl<GetAdminUsersUseCase>(),
+      adminUpdateUsersUseCase: sl<UpdateAdminUserUseCase>(),
+    ),
+  );
+  sl.registerFactory(
+    () => ServiceCubit(
+      serviceUsecase: sl<GetAdminServicesUseCase>(),
+      updateServiceUsecase: sl<UpdateAdminServiceUseCase>(),
+    ),
+  );
 }

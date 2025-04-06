@@ -21,20 +21,26 @@ class User {
   final String accessToken;
   final String refreshToken;
 
-  User copyWith({
+User copyWith({
+    String? id,
+    String? name,
+    String? phoneNumber,
+    String? role,
+    bool? isActive,
     double? balance,
     double? cashBack,
+    String? accessToken,
+    String? refreshToken,
   }) {
     return User(
-      id: id,
-      name: name,
-      phoneNumber: phoneNumber,
-      role: role,
-      isActive: isActive,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      role: role ?? this.role,
+      isActive: isActive ?? this.isActive,
       balance: balance ?? this.balance,
       cashBack: cashBack ?? this.cashBack,
-      accessToken: accessToken,
-      refreshToken: refreshToken,
+      accessToken: accessToken ?? this.accessToken,
+      refreshToken: refreshToken ?? this.refreshToken,
     );
-  }
-}
+  }}
