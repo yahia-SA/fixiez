@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:fixiez/data/models/users_model.dart';
+import 'package:fixiez/domain/usecases/admin/users_admin/admin_delete_users_usecase.dart';
 import 'package:fixiez/domain/usecases/admin/users_admin/admin_get_users_usecase.dart';
 import 'package:fixiez/domain/usecases/admin/users_admin/admin_update_users_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,9 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'users_state.dart';
 
 class UsersCubit extends Cubit<UsersState> {
-  UsersCubit( {required this.adminUpdateUsersUseCase,required this.getAdminUsersUseCase}) : super(UsersInitial());
+  UsersCubit( {required this.adminUpdateUsersUseCase,required this.getAdminUsersUseCase,required this.adminDeleteUsersUsecase}) : super(UsersInitial());
   final GetAdminUsersUseCase getAdminUsersUseCase;
   final UpdateAdminUserUseCase adminUpdateUsersUseCase;
+  final AdminDeleteUsersUsecase adminDeleteUsersUsecase;
   int _currentPage = 1;
   int _totalPages = 1;
   int _totalItems = 1;
@@ -53,6 +55,17 @@ class UsersCubit extends Cubit<UsersState> {
       }
     } catch (e) {
       emit(UsersFailure(e.toString()));
+    }
+  }
+  Future<bool> deleteAdminUser({required String id}) async {
+    emit(UsersDeleting());
+    try {
+      await adminDeleteUsersUsecase(id: id);
+      emit(UsersDeleted());
+      return true;
+    } catch (e) {
+      emit(UsersFailure(e.toString()));
+      return false;
     }
   }
 }

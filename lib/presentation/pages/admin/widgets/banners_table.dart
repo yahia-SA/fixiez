@@ -103,7 +103,9 @@ class _BannersTableState extends State<BannersTable> {
                                   isLoading = false;
                                 });
                                 _fetchData();
-                                Navigator.pop(context);
+                                if (context.mounted) {
+                                  Navigator.pop(context);
+                                }
                                 UiHelper.showNotification(
                                   'تم إضافة البانر بنجاح',
                                   backgroundColor: Colors.green,
@@ -160,40 +162,48 @@ class _BannersTableState extends State<BannersTable> {
                               onTap:
                                   () => deleteDialog(
                                     context: context,
-                                    title: !e.isActive ? 'هل انت متاكد من تفعيل البانر؟' : 'هل انت متاكد من تعطيل البانر؟',
+                                    title:
+                                        !e.isActive
+                                            ? 'هل انت متاكد من تفعيل البانر؟'
+                                            : 'هل انت متاكد من تعطيل البانر؟',
                                     buttontext: !e.isActive ? 'تفعيل' : 'تعطيل',
                                     deleteAction: () async {
                                       try {
-                                                                             await context
-                                          .read<BannerCubit>()
-                                          .updateBanner(
-                                            id: e.id,
-                                            isActive: !e.isActive,
-                                          );
-                                      setState(() {
-                                        final index = cachedBanners?.indexWhere(
-                                          (item) => item.id == e.id,
-                                        );
-                                        if (index != null && index != -1) {
-                                          cachedBanners![index] = e.copyWith(
-                                            isActive: !e.isActive,
-                                          );
+                                        await context
+                                            .read<BannerCubit>()
+                                            .updateBanner(
+                                              id: e.id,
+                                              isActive: !e.isActive,
+                                            );
+
+                                        setState(() {
+                                          final index = cachedBanners
+                                              ?.indexWhere(
+                                                (item) => item.id == e.id,
+                                              );
+                                          if (index != null && index != -1) {
+                                            cachedBanners![index] = e.copyWith(
+                                              isActive: !e.isActive,
+                                            );
+                                          }
+                                        });
+                                        if (context.mounted) {
+                                          Navigator.pop(context);
                                         }
-                                      });
-                                      Navigator.pop(context);
-                                      UiHelper.showNotification(
-                                        !e.isActive
-                                        ? 'تم تفعيل البانر بنجاح':
-                                        'تم تعطيل البانر بنجاح',
-                                        backgroundColor: Colors.green,
-                                      );
+                                        UiHelper.showNotification(
+                                          !e.isActive
+                                              ? 'تم تفعيل البانر بنجاح'
+                                              : 'تم تعطيل البانر بنجاح',
+                                          backgroundColor: Colors.green,
+                                        );
                                       } catch (e) {
                                         UiHelper.showNotification(
                                           'حدث خطأ ما',
                                         );
-                                      Navigator.pop(context);
+                                        if (context.mounted) {
+                                          Navigator.pop(context);
+                                        }
                                       }
-                                      
                                     },
                                   ),
                               child: Container(

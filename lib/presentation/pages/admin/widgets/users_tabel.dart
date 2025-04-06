@@ -1,7 +1,9 @@
 import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/theme/app_text.dart';
+import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:fixiez/data/models/users_model.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/edit_widget.dart';
+import 'package:fixiez/presentation/widgets/delete.dart';
 import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,45 +111,73 @@ class _UsersTableState extends State<UsersTable> {
                             e.name,
                             e.phoneNumber,
                             e.role.toArabicRole,
-                            InkWell(
-                              onTap:
-                                  () => showDialog(
-                                    context: context,
-                                    builder:
-                                        (context) => EditWidget(
-                                          title: 'تعديل نوع المستخدم',
-                                          saveAction: (newrole) {
-                                            context
-                                                .read<UsersCubit>()
-                                                .updateAdminUser(
-                                                  id: e.id.toString(),
-                                                  role: newrole,
-                                                );
-                                            setState(() {
-                                              final index = cachedUsers!.data
-                                                  ?.indexWhere(
-                                                    (item) => item.id == e.id,
-                                                  );
-                                              if (index != null &&
-                                                  index != -1) {
-                                                cachedUsers!.data![index] = e
-                                                    .copyWith(role: newrole);
-                                              }
-                                            });
-                                            Navigator.pop(context);
-                                          },
-                                          tabletitle1: 'اسم المستخدم',
-                                          tabletitle2: 'نوعه',
-                                          userData1: e.name.toString(),
-                                          userData2:
-                                              e.role.toArabicRole.toString(),
-                                        ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                InkWell(
+                                  onTap:
+                                      () => showDialog(
+                                        context: context,
+                                        builder:
+                                            (context) => EditWidget(
+                                              title: 'تعديل نوع المستخدم',
+                                              saveAction: (newrole) {
+                                                context
+                                                    .read<UsersCubit>()
+                                                    .updateAdminUser(
+                                                      id: e.id.toString(),
+                                                      role: newrole,
+                                                    );
+                                                setState(() {
+                                                  final index = cachedUsers!.data
+                                                      ?.indexWhere(
+                                                        (item) => item.id == e.id,
+                                                      );
+                                                  if (index != null &&
+                                                      index != -1) {
+                                                    cachedUsers!.data![index] = e
+                                                        .copyWith(role: newrole);
+                                                  }
+                                                });
+                                                Navigator.pop(context);
+                                              },
+                                              tabletitle1: 'اسم المستخدم',
+                                              tabletitle2: 'نوعه',
+                                              userData1: e.name.toString(),
+                                              userData2:
+                                                  e.role.toArabicRole.toString(),
+                                            ),
+                                      ),
+                                  child: Icon(
+                                    Icons.edit,
+                                    color: AppColors.primary,
+                                    size: 20.sp,
                                   ),
-                              child: Icon(
-                                Icons.edit,
-                                color: AppColors.primary,
-                                size: 20.sp,
-                              ),
+                                ),
+                              InkWell(onTap: () => deleteDialog(context: context, title: 'هل انت متاكد من حذف المستخدم', deleteAction: () {
+                                      context
+                                          .read<UsersCubit>()
+                                          .deleteAdminUser(id: e.id)
+                                          .then((success) {
+                                            setState(() {
+                                              cachedUsers!.data!.removeWhere(
+                                                (element) => element.id == e.id,
+                                              );
+                                            });
+                                            UiHelper.showNotification(
+                                              'تم حذف المستخدم بنجاح',
+                                              backgroundColor: Colors.green,
+                                            );
+                                          })
+                                          .catchError((e) {
+                                            UiHelper.showNotification(
+                                              'حدث خطأ:$e',
+                                            );
+                                          });
+
+                                      Navigator.pop(context);
+                                    }),
+                                child: Icon(Icons.delete,color: AppColors.error,size: 20.sp,),),],
                             ),
                           ];
                         })

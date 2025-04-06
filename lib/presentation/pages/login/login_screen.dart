@@ -49,9 +49,7 @@ class Login extends StatelessWidget {
               backgroundColor: AppColors.yellow,
             );
           }
-          state.message == 'Invalid credentials'
-              ? UiHelper.showNotification('رقم الهاتف او كلمة المرور غير صحيح')
-              : UiHelper.showNotification(state.message);
+         UiHelper.showNotification(state.message);
         }
       },
       builder: (context, state) {

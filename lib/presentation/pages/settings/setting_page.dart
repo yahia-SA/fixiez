@@ -3,10 +3,12 @@ import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
+import 'package:fixiez/presentation/state/cubit/users/users_cubit.dart';
 import 'package:fixiez/presentation/widgets/delete.dart';
 import 'package:fixiez/presentation/widgets/name_header.dart';
 import 'package:fixiez/presentation/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -37,7 +39,27 @@ class SettingPage extends StatelessWidget {
                         () => deleteDialog(
                           context: context,
                           title: 'هل انت متاكد من حذف حسابك؟',
-                          deleteAction: () {},
+                          deleteAction: () async {
+                            final userId = await CacheHelper.getUserField(key: 'Id');
+                            final userRole = await CacheHelper.getUserField(key: 'Role');
+                            if (userRole == 'admin') {
+                              await context
+                                .read<UsersCubit>()
+                                .deleteAdminUser(
+                                  id: userId,
+                                )
+                                .then((e) {if (context.mounted){Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    AppRoutes.login,
+                                    (route) => false,
+                                  );}
+                                  
+                                   CacheHelper.deleteUser();
+                                   CacheHelper.removeData(key: 'isAdmin');
+                                });
+                            }
+                          
+                          },
                         ),
                     child: Row(
                       children: [

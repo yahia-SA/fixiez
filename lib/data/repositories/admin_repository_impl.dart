@@ -44,4 +44,8 @@ class AdminRepositoryImpl implements AdminRepository {
   @override
   Future<bool> updateBanner({required String id, required bool isActive}) async {
     return await remoteDataSource.updateBanner(id: id, isActive: isActive);}
+    
+      @override
+      Future<bool> deleteUser({required String id}) async {
+        return await remoteDataSource.deleteUser(id: id);}
 }

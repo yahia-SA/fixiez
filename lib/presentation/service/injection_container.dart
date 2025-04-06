@@ -19,6 +19,7 @@ import 'package:fixiez/domain/usecases/admin/banner/create_banner.dart';
 import 'package:fixiez/domain/usecases/admin/banner/delete_banner.dart';
 import 'package:fixiez/domain/usecases/admin/banner/update_banner.dart';
 import 'package:fixiez/domain/usecases/admin/services_admin/admin_get_services_use_case.dart';
+import 'package:fixiez/domain/usecases/admin/users_admin/admin_delete_users_usecase.dart';
 import 'package:fixiez/domain/usecases/admin/users_admin/admin_get_users_usecase.dart';
 import 'package:fixiez/domain/usecases/admin/services_admin/admin_update_service_use_case.dart';
 import 'package:fixiez/domain/usecases/admin/users_admin/admin_update_users_usecase.dart';
@@ -123,7 +124,8 @@ Future<void> init() async {
   sl.registerLazySingleton(
     () => UpdateBannerAdminUseCase(sl<AdminRepository>()),
   );
-  
+  sl.registerLazySingleton(
+    () => AdminDeleteUsersUsecase(sl<AdminRepository>()),);
 
   // Register BLoCs
   sl.registerFactory(() => LoginBloc(sl<LoginUseCase>()));
@@ -148,6 +150,7 @@ Future<void> init() async {
     () => UsersCubit(
       getAdminUsersUseCase: sl<GetAdminUsersUseCase>(),
       adminUpdateUsersUseCase: sl<UpdateAdminUserUseCase>(),
+      adminDeleteUsersUsecase: sl<AdminDeleteUsersUsecase>(),
     ),
   );
   sl.registerFactory(

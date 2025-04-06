@@ -32,4 +32,5 @@ final class UsersFailure extends UsersState {
 }
 final class UsersUpdating extends UsersState {}
 final class UsersUpdated extends UsersState {}
+final class UsersDeleting extends UsersState {}
 final class UsersDeleted extends UsersState {}

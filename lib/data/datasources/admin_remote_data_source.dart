@@ -14,6 +14,7 @@ abstract class AdminRemoteDataSource {
   Future<bool> updateService({required String id, required int cost});
   Future<bool> updateUser({required String id, required String role});
   Future<bool> deleteBanner({required String id});
+  Future<bool> deleteUser({required String id});
   Future<Banners> createBanner({required File image});
   Future<bool> updateBanner({required String id, required bool isActive});
 }
@@ -147,4 +148,18 @@ class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
       throw Exception('Failed to update banner: $e');
     }
   }
+  
+  @override
+  Future<bool> deleteUser({required String id}) async{
+      try {
+        final response = await dioHelper.deleteData(url: '${ApiEndpoints.adminDeleteUser}/$id');
+        if (response.data['status'] == 'success') {
+          return true;
+        } else {
+          throw Exception(response.data['message'] ?? '');
+        }
+      } catch (e) {
+        throw Exception('Failed to delete user: $e');
+      }
+    }
 }

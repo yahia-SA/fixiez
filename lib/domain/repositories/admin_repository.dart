@@ -8,6 +8,7 @@ abstract class AdminRepository {
   //users
   Future<UsersMdoel> getUsers({required int pageIndex});
   Future<bool> updateUser({required String id, required String role});
+  Future<bool> deleteUser({required String id});
 
   //services
   Future<List<Services>> getServices();

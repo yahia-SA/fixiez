@@ -108,7 +108,7 @@ class _ServiceTableState extends State<ServiceTable> {
                                           },
                                           tabletitle1: 'اسم الخدمه',
                                           tabletitle2: 'سعر الخدمه',
-                                          userData1: e.name.toString(),
+                                          userData1: serviceNameFromString(e.name)?.arabicName ?? e.name,
                                           userData2: e.cost.toString(),
                                         ),
                                   ),

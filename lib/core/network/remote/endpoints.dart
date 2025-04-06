@@ -22,11 +22,14 @@ class ApiEndpoints {
   // Banners
   static const String banners = '/api/banners';
 
-  // Admin
+  // Admin Users
   static const String adminUsers = '/api/admin/get-all-users';
+  static const String adminUpdateUser = '/api/admin/update-user-role';
+  static const String adminDeleteUser = '/api/admin/delete-user';
+
+  // Admin Services
   static const String adminServices = '/api/admin/get-all-repair-services';
   static const String adminUpdateService = '/api/admin/update-repair-service';
-  static const String adminUpdateUser = '/api/admin/update-user-role';
   // Admin Banners
   static const String adminBanners = '/api/admin/get-all-banner';
   static const String adminDeleteBanner = '/api/admin/delete-banner';
