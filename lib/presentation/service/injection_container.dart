@@ -13,8 +13,9 @@ import 'package:fixiez/domain/repositories/balance_repository.dart';
 import 'package:fixiez/domain/repositories/banner_repository.dart';
 import 'package:fixiez/domain/repositories/repair_repository.dart';
 import 'package:fixiez/domain/repositories/review_repo.dart';
-import 'package:fixiez/domain/usecases/Repair/repair_request.dart';
-import 'package:fixiez/domain/usecases/Repair/repair_requests.dart';
+import 'package:fixiez/domain/usecases/repair/repair_request.dart';
+import 'package:fixiez/domain/usecases/repair/repair_request_upated.dart';
+import 'package:fixiez/domain/usecases/repair/repair_requests.dart';
 import 'package:fixiez/domain/usecases/admin/banner/create_banner.dart';
 import 'package:fixiez/domain/usecases/admin/banner/delete_banner.dart';
 import 'package:fixiez/domain/usecases/admin/banner/update_banner.dart';
@@ -105,6 +106,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetBalanceUseCase(sl<BalanceRepository>()));
   sl.registerLazySingleton(() => RepairRequestsUseCase(sl<RepairRepository>()));
   sl.registerLazySingleton(() => RepairRequestUseCase(sl<RepairRepository>()));
+  sl.registerLazySingleton(
+    () => RepairRequestUpatedUseCase(sl<RepairRepository>()),
+  );
   sl.registerLazySingleton(() => ReviewUsecase(sl<ReviewRepository>()));
   sl.registerLazySingleton(() => BannerUsecase(sl<BannerRepository>()));
   sl.registerLazySingleton(() => GetAdminUsersUseCase(sl<AdminRepository>()));
@@ -125,7 +129,8 @@ Future<void> init() async {
     () => UpdateBannerAdminUseCase(sl<AdminRepository>()),
   );
   sl.registerLazySingleton(
-    () => AdminDeleteUsersUsecase(sl<AdminRepository>()),);
+    () => AdminDeleteUsersUsecase(sl<AdminRepository>()),
+  );
 
   // Register BLoCs
   sl.registerFactory(() => LoginBloc(sl<LoginUseCase>()));
@@ -135,7 +140,11 @@ Future<void> init() async {
   sl.registerFactory(() => ForgetpasswordBloc(sl<SendResetOtpUseCase>()));
   sl.registerFactory(() => RepairCubit(sl<RepairRequestUseCase>()));
   sl.registerFactory(
-    () => ProfileBloc(sl<GetBalanceUseCase>(), sl<RepairRequestsUseCase>()),
+    () => ProfileBloc(
+      sl<GetBalanceUseCase>(),
+      sl<RepairRequestsUseCase>(),
+      sl<RepairRequestUpatedUseCase>(),
+    ),
   );
   sl.registerFactory(() => ReviewCubit(sl<ReviewUsecase>()));
   sl.registerFactory(

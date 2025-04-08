@@ -4,7 +4,7 @@ enum ServiceName { plumbing, carpentry, electricity, painting }
 
 enum ServiceType { urgent_request, normal_request }
 
-enum OtpPages {signup,forgetPassword}
+enum OtpPages { signup, forgetPassword }
 
 extension ServiceNameE on ServiceName {
   String get arabicName {
@@ -20,12 +20,14 @@ extension ServiceNameE on ServiceName {
     }
   }
 }
+
 ServiceName? serviceNameFromString(String name) {
   return ServiceName.values.firstWhere(
     (e) => e.name == name,
     orElse: () => ServiceName.plumbing,
   );
 }
+
 extension UserTypeArabicExtension on String {
   String get toArabicRole {
     switch (this) {
@@ -33,6 +35,30 @@ extension UserTypeArabicExtension on String {
         return 'مستخدم';
       case 'admin':
         return 'ادمن';
+      default:
+        return this;
+    }
+  }
+}
+
+extension RepaiRstetusArabicExtension on String {
+  String get toArabicStatus {
+    switch (this) {
+      case 'pending':
+        return 'مفتوح';
+      case 'completed':
+        return 'تم';
+      default:
+        return this;
+    }
+  }
+
+  String get toEnglishStatus {
+    switch (this) {
+      case 'مفتوح':
+        return 'pending';
+      case 'تم':
+        return 'completed';
       default:
         return this;
     }

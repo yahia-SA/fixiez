@@ -1,27 +1,26 @@
 class User {
-
   const User({
-    required this.id,
-    required this.name,
-    required this.phoneNumber,
-    required this.role,
-    required this.isActive,
-    required this.balance,
-    required this.cashBack,
-    required this.accessToken,
-    required this.refreshToken,
+    this.id,
+    this.name,
+    this.phoneNumber,
+    this.role,
+    this.isActive,
+    this.balance,
+    this.cashBack,
+    this.accessToken,
+    this.refreshToken,
   });
-  final String id;
-  final String name;
-  final String phoneNumber;
-  final String role;
-  final bool isActive;
-  final double balance;
-  final double cashBack;
-  final String accessToken;
-  final String refreshToken;
+  final String? id;
+  final String? name;
+  final String? phoneNumber;
+  final String? role;
+  final bool? isActive;
+  final double? balance;
+  final double? cashBack;
+  final String? accessToken;
+  final String? refreshToken;
 
-User copyWith({
+  User copyWith({
     String? id,
     String? name,
     String? phoneNumber,
@@ -43,4 +42,5 @@ User copyWith({
       accessToken: accessToken ?? this.accessToken,
       refreshToken: refreshToken ?? this.refreshToken,
     );
-  }}
+  }
+}

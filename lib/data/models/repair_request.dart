@@ -1,17 +1,15 @@
-
+import 'package:fixiez/data/models/meta_data_model.dart';
+import 'package:fixiez/data/models/service_model.dart';
 import 'package:fixiez/domain/entities/repair_request.dart';
 
 class RepairRequestModel {
-
   factory RepairRequestModel.fromJson(Map<String, dynamic> json) {
     return RepairRequestModel(
       id: json['_id'],
       location: json['location'],
       unitNumber: json['unitNumber'],
       description: json['description'],
-      serviceId: json['repairServiceId']['_id'],
-      serviceName: json['repairServiceId']['name'],
-      serviceCost: (json['repairServiceId']['cost'] as num).toDouble(),
+      serviceModel: ServiceModel.fromJson(json['repairServiceId']),
       serviceType: json['serviceType'],
       date: DateTime.parse(json['date']),
       status: json['status'],
@@ -23,9 +21,7 @@ class RepairRequestModel {
     required this.location,
     required this.unitNumber,
     required this.description,
-    required this.serviceId,
-    required this.serviceName,
-    required this.serviceCost,
+    required this.serviceModel,
     required this.serviceType,
     required this.date,
     required this.status,
@@ -34,59 +30,70 @@ class RepairRequestModel {
   final String location;
   final String unitNumber;
   final String description;
-  final String serviceId;
-  final String serviceName;
-  final double serviceCost;
+  final ServiceModel serviceModel;
   final String serviceType;
   final DateTime date;
   final String status;
-    RepairRequest toEntity() {
+  RepairRequest toEntity() {
     return RepairRequest(
       id: id,
       location: location,
       unitNumber: unitNumber,
       description: description,
-      serviceId: serviceId,
-      serviceName: serviceName,
-      serviceCost: serviceCost,
+      services: serviceModel.toEntity(),
       serviceType: serviceType,
       date: date,
       status: status,
     );
   }
 
+  RepairRequestModel copyWith({
+    String? id,
+    String? location,
+    String? unitNumber,
+    String? description,
+    ServiceModel? serviceModel,
+    String? serviceType,
+    DateTime? date,
+    String? status,
+  }) {
+    return RepairRequestModel(
+      id: id ?? this.id,
+      location: location ?? this.location,
+      unitNumber: unitNumber ?? this.unitNumber,
+      description: description ?? this.description,
+      serviceModel: serviceModel ?? this.serviceModel,
+      serviceType: serviceType ?? this.serviceType,
+      date: date ?? this.date,
+      status: status ?? this.status,
+    );
+  }
 }
-class RepairDataModel  {
-  
+
+class RepairDataModel {
   factory RepairDataModel.fromJson(Map<String, dynamic> json) {
     return RepairDataModel(
       status: json['status'],
       message: json['message'],
-      requests: (json['data'] as List).map((e) => RepairRequestModel.fromJson(e)).toList(),
-      totalItems: json['metadata']['totalItems'],
-      totalPages: json['metadata']['totalPages'],
+      requests:
+          (json['data'] as List)
+              .map((e) => RepairRequestModel.fromJson(e))
+              .toList(),
+      metadata: Metadata.fromJson(json['metadata']),
     );
   }
-  const RepairDataModel({
-    required this.status,
-    required this.message,
-    required this.requests,
-    required this.totalItems,
-    required this.totalPages,
-  });
-  final String status;
-  final String message;
-  final List<RepairRequestModel> requests;
-  final int totalItems;
-  final int totalPages;
+  RepairDataModel({this.status, this.message, this.requests, this.metadata});
+  String? status;
+  String? message;
+  List<RepairRequestModel>? requests;
+  Metadata? metadata;
+
   RepairData toEntity() {
     return RepairData(
-      status: status,
-      message: message,
-      requests: requests.map((e) => e.toEntity()).toList(),
-      totalItems: totalItems,
-      totalPages: totalPages,
+      status: status!,
+      message: message!,
+      requests: requests!.map((e) => e.toEntity()).toList(),
+      metadata: metadata!.toEntity(),
     );
   }
-  
 }

@@ -3,7 +3,6 @@ import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/network/remote/endpoints.dart';
 import 'package:fixiez/data/models/repair_request.dart';
-import 'package:fixiez/domain/entities/repair_request.dart';
 
 abstract class RepairRemoteDataSource {
   Future<void> repairRequest({
@@ -15,7 +14,12 @@ abstract class RepairRemoteDataSource {
     required String date,
   });
 
-  Future<RepairData> fetchRepairRequests({required int pageIndex});
+  Future<RepairDataModel> fetchRepairRequests({required int pageIndex});
+
+  Future<bool> repairRequestUpated({
+    required String id,
+    required String status,
+  });
 }
 
 class RepairRemoteDataSourceImpl implements RepairRemoteDataSource {
@@ -54,17 +58,15 @@ class RepairRemoteDataSourceImpl implements RepairRemoteDataSource {
   }
 
   @override
-  Future<RepairData> fetchRepairRequests({
-    required int pageIndex,
-  }) async {
+  Future<RepairDataModel> fetchRepairRequests({required int pageIndex}) async {
     try {
       final response = await dioHelper.getData(
         url: ApiEndpoints.repairRequestsUser,
-        query: {'pageIndex': pageIndex, 'pageSize':3},
+        query: {'pageIndex': pageIndex, 'pageSize': 3},
       );
 
       if (response.data['status'] == 'success') {
-        return RepairDataModel.fromJson(response.data).toEntity();
+        return RepairDataModel.fromJson(response.data);
       } else {
         throw Exception(response.data['message'] ?? '');
       }
@@ -74,6 +76,26 @@ class RepairRemoteDataSourceImpl implements RepairRemoteDataSource {
       } else {
         throw (e.response?.data['message'] ?? 'حدث خطأ أثناء معالجة الطلب');
       }
-}
+    }
+  }
+
+  @override
+  Future<bool> repairRequestUpated({
+    required String id,
+    required String status,
+  }) async {
+    try {
+      final response = await dioHelper.patchData(
+        url: '${ApiEndpoints.repairRequestUpated}/$id',
+        data: {'status': status},
+      );
+      if (response.data['status'] == 'success') {
+        return true;
+      } else {
+        throw Exception(response.data['message'] ?? '');
+      }
+    } catch (e) {
+      throw Exception('Failed to update repair request: $e');
+    }
   }
 }

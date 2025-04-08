@@ -1,5 +1,5 @@
 import 'package:fixiez/core/constants/enums.dart';
-import 'package:fixiez/domain/entities/repair_request.dart';
+import 'package:fixiez/data/models/repair_request.dart';
 
 abstract class RepairRepository {
   Future<void> repairRequest({
@@ -10,7 +10,10 @@ abstract class RepairRepository {
     required ServiceType serviceType,
     required String date,
   });
-    Future<RepairData> getRepairRequests({
-    required int pageIndex,
+  Future<RepairDataModel> getRepairRequests({required int pageIndex});
+
+  Future<bool> repairRequestUpated({
+    required String id,
+    required String status,
   });
 }

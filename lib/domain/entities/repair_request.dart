@@ -1,14 +1,14 @@
-import 'package:equatable/equatable.dart';
+import 'package:fixiez/data/models/repair_request.dart';
+import 'package:fixiez/domain/entities/metadata.dart';
+import 'package:fixiez/domain/entities/services.dart';
 
-class RepairRequest extends Equatable {
+class RepairRequest {
   const RepairRequest({
     required this.id,
     required this.location,
     required this.unitNumber,
     required this.description,
-    required this.serviceId,
-    required this.serviceName,
-    required this.serviceCost,
+    required this.services,
     required this.serviceType,
     required this.date,
     required this.status,
@@ -17,37 +17,71 @@ class RepairRequest extends Equatable {
   final String location;
   final String unitNumber;
   final String description;
-  final String serviceId;
-  final String serviceName;
-  final double serviceCost;
+  final Services services;
   final String serviceType;
   final DateTime date;
   final String status;
+  RepairRequest copyWith({required String status}) {
+    return RepairRequest(
+      id: id,
+      location: location,
+      unitNumber: unitNumber,
+      description: description,
+      services: services,
+      serviceType: serviceType,
+      date: date,
+      status: status,
+    );
+  }
 
-  @override
-  List<Object?> get props => [
-    id,
-    location,
-    unitNumber,
-    description,
-    serviceId,
-    serviceName,
-    serviceCost,
-    serviceType,
-    date,
-    status,
-  ];
+  RepairRequestModel toModel() {
+    return RepairRequestModel(
+      id: id,
+      location: location,
+      unitNumber: unitNumber,
+      description: description,
+      serviceModel: services.toModel(),
+      serviceType: serviceType,
+      date: date,
+      status: status,
+    );
+  }
 }
-class RepairData extends Equatable {
-  const RepairData({required this.status, required this.message, required this.requests, required this.totalItems, required this.totalPages});
+
+class RepairData {
+  const RepairData({
+    required this.status,
+    required this.message,
+    required this.requests,
+    required this.metadata,
+  });
 
   final String status;
   final String message;
   final List<RepairRequest> requests;
-  final int totalItems;
-  final int totalPages;
+  final MetadataEntity metadata;
+  RepairData copyWith({
+    String? status,
+    String? message,
+    List<RepairRequest>? requests,
+    MetadataEntity? metadata,
+  }) {
+    {
+      return RepairData(
+        status: status ?? this.status,
+        message: message ?? this.message,
+        requests: requests ?? this.requests,
+        metadata: metadata ?? this.metadata,
+      );
+    }
+  }
 
-  @override
-  List<Object?> get props => [status, message, requests, totalItems, totalPages];
-
+  RepairDataModel toModel() {
+    return RepairDataModel(
+      status: status,
+      message: message,
+      requests: requests.map((e) => e.toModel()).toList(),
+      metadata: metadata.toModel(),
+    );
+  }
 }

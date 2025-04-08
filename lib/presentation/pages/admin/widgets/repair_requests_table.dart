@@ -8,6 +8,8 @@ class RepairRequestsTable extends StatefulWidget {
 }
 
 class _RepairRequestsTableState extends State<RepairRequestsTable> {
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return const Placeholder();

@@ -1,3 +1,5 @@
+import 'package:fixiez/domain/entities/metadata.dart';
+
 class Metadata {
   Metadata({
     this.totalItems,
@@ -28,5 +30,15 @@ class Metadata {
     data['pageIndex'] = pageIndex;
     data['pageSize'] = pageSize;
     return data;
+  }
+
+  MetadataEntity toEntity() {
+    return MetadataEntity(
+      totalItems: totalItems,
+      totalPages: totalPages,
+      skip: skip,
+      pageIndex: pageIndex,
+      pageSize: pageSize,
+    );
   }
 }

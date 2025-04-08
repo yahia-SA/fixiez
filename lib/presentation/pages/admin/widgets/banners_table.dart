@@ -1,4 +1,5 @@
 import 'package:fixiez/core/network/remote/endpoints.dart';
+import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/upload_widget.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/presentation/widgets/custom_table.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class BannersTable extends StatefulWidget {
   const BannersTable({super.key});
@@ -137,7 +137,15 @@ class _BannersTableState extends State<BannersTable> {
                               fit: BoxFit.cover,
                             ),
                             InkWell(
-                              onTap: () => _launchURL(e.image),
+                              onTap:
+                                  () => Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.webview,
+                                    arguments: {
+                                      'url':
+                                          '${ApiEndpoints.baseUrl}/${e.image}',
+                                    },
+                                  ),
                               child: Container(
                                 width: 59.w,
                                 height: 23.h,
@@ -327,12 +335,12 @@ class _BannersTableState extends State<BannersTable> {
   }
 }
 
-Future<void> _launchURL(String image) async {
-  final Uri url = Uri.parse('${ApiEndpoints.baseUrl}/$image');
+// Future<void> _launchURL(String image) async {
+//   final Uri url = Uri.parse('${ApiEndpoints.baseUrl}/$image');
 
-  if (await canLaunchUrl(url)) {
-    await launchUrl(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
+//   if (await canLaunchUrl(url)) {
+//     await launchUrl(url);
+//   } else {
+//     throw 'Could not launch $url';
+//   }
+// }

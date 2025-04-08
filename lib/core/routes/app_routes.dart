@@ -1,5 +1,6 @@
 import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/presentation/pages/admin/admin_page.dart';
+import 'package:fixiez/presentation/pages/admin/widgets/webview_page.dart';
 import 'package:fixiez/presentation/pages/home/home_page.dart';
 import 'package:fixiez/presentation/pages/forgetPassword/forget_password_screen.dart';
 import 'package:fixiez/presentation/pages/login/login_screen.dart';
@@ -24,6 +25,7 @@ class AppRoutes {
   static const resetPassword = '/ResetPassword';
   static const adminpage = '/AdminPage';
   static const settings = '/Settings';
+  static const webview = '/WebViewPage';
 }
 
 class RouteGenerator {
@@ -40,7 +42,7 @@ class RouteGenerator {
       case AppRoutes.forgetPassword:
         return MaterialPageRoute(builder: (_) => ForgetPassword());
       case AppRoutes.profile:
-        return MaterialPageRoute(builder: (_) =>  ProfileScreen());
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case AppRoutes.otpScreen:
         return MaterialPageRoute(
           builder: (_) {
@@ -64,6 +66,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const AdminPage());
       case AppRoutes.settings:
         return MaterialPageRoute(builder: (_) => const SettingPage());
+      case AppRoutes.webview:
+        final args = settings.arguments as Map<String, dynamic>? ?? {};
+        final String url = args['url'] ?? '';
+        return MaterialPageRoute(builder: (_) => WebviewPage(url: url));
       default:
         return MaterialPageRoute(builder: (_) => const OnBoarding());
     }

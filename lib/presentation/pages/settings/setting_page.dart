@@ -40,25 +40,31 @@ class SettingPage extends StatelessWidget {
                           context: context,
                           title: 'هل انت متاكد من حذف حسابك؟',
                           deleteAction: () async {
-                            final userId = await CacheHelper.getUserField(key: 'Id');
-                            final userRole = await CacheHelper.getUserField(key: 'Role');
+                            final userId = await CacheHelper.getUserField(
+                              key: 'Id',
+                            );
+                            final userRole = await CacheHelper.getUserField(
+                              key: 'Role',
+                            );
                             if (userRole == 'admin') {
-                              await context
-                                .read<UsersCubit>()
-                                .deleteAdminUser(
-                                  id: userId,
-                                )
-                                .then((e) {if (context.mounted){Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    AppRoutes.login,
-                                    (route) => false,
-                                  );}
-                                  
-                                   CacheHelper.deleteUser();
-                                   CacheHelper.removeData(key: 'isAdmin');
-                                });
+                              if (context.mounted) {
+                                await context
+                                    .read<UsersCubit>()
+                                    .deleteAdminUser(id: userId)
+                                    .then((e) {
+                                      if (context.mounted) {
+                                        Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          AppRoutes.login,
+                                          (route) => false,
+                                        );
+                                      }
+
+                                      CacheHelper.deleteUser();
+                                      CacheHelper.removeData(key: 'isAdmin');
+                                    });
+                              }
                             }
-                          
                           },
                         ),
                     child: Row(

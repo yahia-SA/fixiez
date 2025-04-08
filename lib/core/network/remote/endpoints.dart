@@ -16,6 +16,7 @@ class ApiEndpoints {
   // repair
   static const String repairRequest = '/api/repair-requests';
   static const String repairRequestsUser = '/api/repair-requests/user';
+  static const String repairRequestUpated = '/api/repair-requests/status';
 
   // review
   static const String reviews = '/api/review';

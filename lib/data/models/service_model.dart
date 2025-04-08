@@ -1,15 +1,15 @@
 import 'package:fixiez/domain/entities/services.dart';
 
 class ServiceResponseModel {
-
   ServiceResponseModel({required this.status, required this.data});
 
   factory ServiceResponseModel.fromJson(Map<String, dynamic> json) {
     return ServiceResponseModel(
       status: json['status'],
-      data: (json['data'] as List)
-          .map((item) => ServiceModel.fromJson(item))
-          .toList(),
+      data:
+          (json['data'] as List)
+              .map((item) => ServiceModel.fromJson(item))
+              .toList(),
     );
   }
   final String status;
@@ -17,14 +17,13 @@ class ServiceResponseModel {
 }
 
 class ServiceModel {
-
   ServiceModel({
-    required this.id,
-    required this.name,
-    required this.cost,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.version,
+    this.id,
+    this.name,
+    this.cost,
+    this.createdAt,
+    this.updatedAt,
+    this.version,
   });
 
   factory ServiceModel.fromJson(Map<String, dynamic> json) {
@@ -37,18 +36,14 @@ class ServiceModel {
       version: json['__v'],
     );
   }
-  final String id;
-  final String name;
-  final int cost;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final int version;
+  final String? id;
+  final String? name;
+  final int? cost;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? version;
 
   Services toEntity() {
-    return Services(
-      id: id,
-      name: name, 
-      cost: cost,
-    );
+    return Services(id: id!, name: name!, cost: cost!);
   }
 }
