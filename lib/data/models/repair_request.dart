@@ -1,5 +1,6 @@
 import 'package:fixiez/data/models/meta_data_model.dart';
 import 'package:fixiez/data/models/service_model.dart';
+import 'package:fixiez/data/models/user_model.dart';
 import 'package:fixiez/domain/entities/repair_request.dart';
 
 class RepairRequestModel {
@@ -13,6 +14,9 @@ class RepairRequestModel {
       serviceType: json['serviceType'],
       date: DateTime.parse(json['date']),
       status: json['status'],
+      user: UserModel.fromJson(json['userId']),
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
     );
   }
 
@@ -25,6 +29,9 @@ class RepairRequestModel {
     required this.serviceType,
     required this.date,
     required this.status,
+    this.user,
+    this.createdAt,
+    this.updatedAt,
   });
   final String id;
   final String location;
@@ -34,6 +41,10 @@ class RepairRequestModel {
   final String serviceType;
   final DateTime date;
   final String status;
+  final UserModel? user;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
   RepairRequest toEntity() {
     return RepairRequest(
       id: id,
@@ -44,6 +55,9 @@ class RepairRequestModel {
       serviceType: serviceType,
       date: date,
       status: status,
+      user: user?.toEntity(),
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 
@@ -56,6 +70,9 @@ class RepairRequestModel {
     String? serviceType,
     DateTime? date,
     String? status,
+    UserModel? user,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) {
     return RepairRequestModel(
       id: id ?? this.id,

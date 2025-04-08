@@ -12,6 +12,8 @@ abstract class AuthRemoteDataSource {
   Future<void> sendResetOtp(String phone);
   Future<Object> verifyOtp(String phone, String otp,String api);
   Future<void> resetPassword(String otp, String password,String confirmPassword);
+
+ Future<bool> deleteUser();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -103,6 +105,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
   
   @override
+
   Future<void> resetPassword(String otp, String password, String confirmPassword) async {
     try {
       final response = await dioHelper.postData(
@@ -115,6 +118,22 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } catch (e) {
     // طباعة الخطأ عند الفشل
       throw 'حدث خطأ أثناء تغيير كلمة المرور';
+    }
+  }
+  
+  @override
+  Future<bool> deleteUser() async{
+    try {
+      final response = await dioHelper.deleteData(
+        url: ApiEndpoints.deleteUser,
+      );
+      if (response.data['status'] == 'success') {
+        return true;
+      } else {
+        throw Exception(response.data['message'] ?? '');
+      }
+    } catch (e) {
+      throw Exception('Failed to delete user: $e');
     }
   }
 }

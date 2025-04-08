@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fixiez/data/datasources/admin_remote_data_source.dart';
+import 'package:fixiez/data/models/repair_requsest_admin.dart';
 import 'package:fixiez/data/models/users_model.dart';
 import 'package:fixiez/domain/entities/banner.dart';
 import 'package:fixiez/domain/entities/services.dart';
@@ -48,4 +49,10 @@ class AdminRepositoryImpl implements AdminRepository {
       @override
       Future<bool> deleteUser({required String id}) async {
         return await remoteDataSource.deleteUser(id: id);}
+
+  @override
+  Future<RepairRequestResponse> getRepirs({required int pageIndex}) async {
+    final response = await remoteDataSource.getRepairs(pageIndex: pageIndex);
+    return response;
+  }
 }

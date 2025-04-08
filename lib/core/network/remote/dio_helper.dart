@@ -33,9 +33,9 @@ class DioHelper {
     );
     dio.interceptors.add(
       LogInterceptor(
-      request: true,
-      responseBody: true,
-      error: true,
+      // request: true,
+      // responseBody: true,
+      // error: true,
       ),
     );
   }

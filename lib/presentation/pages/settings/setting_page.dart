@@ -3,6 +3,7 @@ import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/routes/app_routes.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
+import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:fixiez/presentation/state/cubit/users/users_cubit.dart';
 import 'package:fixiez/presentation/widgets/delete.dart';
 import 'package:fixiez/presentation/widgets/name_header.dart';
@@ -59,7 +60,33 @@ class SettingPage extends StatelessWidget {
                                           (route) => false,
                                         );
                                       }
+                                      UiHelper.showNotification(
+                                        'تم حذف حسابك بنجاح',
+                                        backgroundColor: Colors.green,
+                                      );
 
+                                      CacheHelper.deleteUser();
+                                      CacheHelper.removeData(key: 'isAdmin');
+                                    });
+                              }
+                            }
+                            if (userRole == 'user') {
+                              if (context.mounted) {
+                                await context
+                                    .read<UsersCubit>()
+                                    .deleteUser()
+                                    .then((e) {
+                                      if (context.mounted) {
+                                        Navigator.pushNamedAndRemoveUntil(
+                                          context,
+                                          AppRoutes.login,
+                                          (route) => false,
+                                        );
+                                      }
+                                      UiHelper.showNotification(
+                                        'تم حذف حسابك بنجاح',
+                                        backgroundColor: Colors.green,
+                                      );
                                       CacheHelper.deleteUser();
                                       CacheHelper.removeData(key: 'isAdmin');
                                     });

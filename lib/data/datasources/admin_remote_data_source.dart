@@ -4,9 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/network/remote/endpoints.dart';
 import 'package:fixiez/data/models/banner_model.dart';
+import 'package:fixiez/data/models/repair_requsest_admin.dart';
 import 'package:fixiez/data/models/service_model.dart';
 import 'package:fixiez/data/models/users_model.dart';
 import 'package:fixiez/domain/entities/banner.dart';
+import 'package:flutter/material.dart';
 
 abstract class AdminRemoteDataSource {
   Future<UsersMdoel> getUsers({required int pageIndex});
@@ -17,6 +19,7 @@ abstract class AdminRemoteDataSource {
   Future<bool> deleteUser({required String id});
   Future<Banners> createBanner({required File image});
   Future<bool> updateBanner({required String id, required bool isActive});
+  Future<RepairRequestResponse> getRepairs({required int pageIndex});
 }
 
 class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
@@ -148,18 +151,39 @@ class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
       throw Exception('Failed to update banner: $e');
     }
   }
-  
+
   @override
-  Future<bool> deleteUser({required String id}) async{
-      try {
-        final response = await dioHelper.deleteData(url: '${ApiEndpoints.adminDeleteUser}/$id');
-        if (response.data['status'] == 'success') {
-          return true;
-        } else {
-          throw Exception(response.data['message'] ?? '');
-        }
-      } catch (e) {
-        throw Exception('Failed to delete user: $e');
+  Future<bool> deleteUser({required String id}) async {
+    try {
+      final response = await dioHelper.deleteData(
+        url: '${ApiEndpoints.adminDeleteUser}/$id',
+      );
+      if (response.data['status'] == 'success') {
+        return true;
+      } else {
+        throw Exception(response.data['message'] ?? '');
       }
+    } catch (e) {
+      throw Exception('Failed to delete user: $e');
     }
+  }
+
+  @override
+  Future<RepairRequestResponse> getRepairs({required int pageIndex}) async {
+    try {
+      final response = await dioHelper.getData(
+        url: ApiEndpoints.adminRepairRequests,
+        query: {'pageIndex': pageIndex, 'pageSize': 3},
+      );
+      debugPrint(response.data.toString());
+      debugPrint(response.statusMessage);
+      if (response.data['status'] == 'success') {
+        return RepairRequestResponse.fromJson(response.data);
+      } else {
+        throw Exception(response.data['message'] ?? '');
+      }
+    } on DioException catch (e) {
+      throw (e.response?.data['message'] ?? 'حدث خطأ أثناء معالجة الطلب');
+    }
+  }
 }

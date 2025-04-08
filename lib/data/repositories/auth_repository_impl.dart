@@ -30,4 +30,9 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> resetPassword(String otp, String password, String confirmPassword) async {
     return await remoteDataSource.resetPassword(otp,password,confirmPassword);
   }
+  
+  @override
+  Future<bool> deleteUser() async{
+    return await remoteDataSource.deleteUser();
+    }
 }

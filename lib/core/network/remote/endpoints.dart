@@ -4,6 +4,7 @@ class ApiEndpoints {
   static const String login = '/api/auth/login';
   static const String refresh = '/api/auth/refresh';
   static const String register = '/api/auth/register';
+  static const String deleteUser = '/api/auth/delete-account';
   static const String validateActiveCode = '/api/auth/validate-active-code';
   static const String sendActiveCode = '/api/auth/send-active-code';
   static const String updatePass = '/api/auth/update-pass';
@@ -36,6 +37,9 @@ class ApiEndpoints {
   static const String adminDeleteBanner = '/api/admin/delete-banner';
   static const String adminCreateBanner = '/api/admin/create-banner';
   static const String adminUpdateBanner = '/api/admin/update-banner';
+// Admin Repair Requests
+  static const String adminRepairRequests = '/api/admin/get-all-repair-requests';
+  static const String adminAnalysis = '/api/admin/analysis';
 }
 
 class ApiHeaders {

@@ -12,6 +12,7 @@ class RepairCubit extends Cubit<RepairState> {
   RepairCubit(this._repairRequestUseCase)
     : super(const RepairInitial(RepairFormData()));
   final RepairRequestUseCase _repairRequestUseCase;
+  
 
   // Form update methods should NOT emit loading state
   void updateLocation(String location) =>

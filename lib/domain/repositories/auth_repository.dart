@@ -7,4 +7,6 @@ abstract class AuthRepository {
   Future<Object> verifyOtp(String phone, String otp,String api);
   Future<void> resetPassword(String otp, String password,String confirmPassword);
 
+  Future<bool> deleteUser();
+
 }

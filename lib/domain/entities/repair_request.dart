@@ -1,6 +1,7 @@
 import 'package:fixiez/data/models/repair_request.dart';
 import 'package:fixiez/domain/entities/metadata.dart';
 import 'package:fixiez/domain/entities/services.dart';
+import 'package:fixiez/domain/entities/user.dart';
 
 class RepairRequest {
   const RepairRequest({
@@ -12,6 +13,10 @@ class RepairRequest {
     required this.serviceType,
     required this.date,
     required this.status,
+    this.user,
+    this.createdAt,
+    this.updatedAt,
+
   });
   final String id;
   final String location;
@@ -21,6 +26,10 @@ class RepairRequest {
   final String serviceType;
   final DateTime date;
   final String status;
+  final User? user;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+
   RepairRequest copyWith({required String status}) {
     return RepairRequest(
       id: id,
@@ -31,6 +40,9 @@ class RepairRequest {
       serviceType: serviceType,
       date: date,
       status: status,
+      user: user,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
     );
   }
 

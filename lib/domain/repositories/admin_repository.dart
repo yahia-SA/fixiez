@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fixiez/data/models/repair_requsest_admin.dart';
 import 'package:fixiez/data/models/users_model.dart';
 import 'package:fixiez/domain/entities/banner.dart';
 import 'package:fixiez/domain/entities/services.dart';
@@ -17,4 +18,8 @@ abstract class AdminRepository {
   Future<bool> deleteBanner({required String id});
   Future<Banners> createBanner({required File image});
   Future<bool> updateBanner({required String id,required bool isActive});
+
+
+  //repair
+  Future<RepairRequestResponse> getRepirs({required int pageIndex});
 }
