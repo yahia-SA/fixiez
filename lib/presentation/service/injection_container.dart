@@ -1,20 +1,24 @@
 import 'package:fixiez/data/datasources/admin_remote_data_source.dart';
 import 'package:fixiez/data/datasources/balance_remote_data_source.dart';
 import 'package:fixiez/data/datasources/banner_remote_data_source.dart';
+import 'package:fixiez/data/datasources/felix_remote_data_source.dart';
 import 'package:fixiez/data/datasources/review_remote_data_source.dart';
 import 'package:fixiez/data/repositories/admin_repository_impl.dart';
 import 'package:fixiez/data/repositories/balance_repository_impl.dart';
 import 'package:fixiez/data/repositories/banner_repository_impl.dart';
+import 'package:fixiez/data/repositories/felix_repository_impl.dart';
 import 'package:fixiez/data/repositories/repair_repo_impl.dart';
 import 'package:fixiez/data/repositories/review_repo_impl.dart';
 import 'package:fixiez/domain/repositories/admin_repository.dart';
 import 'package:fixiez/domain/repositories/auth_repository.dart';
 import 'package:fixiez/domain/repositories/balance_repository.dart';
 import 'package:fixiez/domain/repositories/banner_repository.dart';
+import 'package:fixiez/domain/repositories/felix_repository.dart';
 import 'package:fixiez/domain/repositories/repair_repository.dart';
 import 'package:fixiez/domain/repositories/review_repo.dart';
 import 'package:fixiez/domain/usecases/admin/repair/repair_admin.dart';
 import 'package:fixiez/domain/usecases/auth/delete_use_case.dart';
+import 'package:fixiez/domain/usecases/felix/felix_usecase.dart';
 import 'package:fixiez/domain/usecases/repair/repair_request.dart';
 import 'package:fixiez/domain/usecases/repair/repair_request_upated.dart';
 import 'package:fixiez/domain/usecases/repair/repair_requests.dart';
@@ -75,6 +79,9 @@ Future<void> init() async {
   sl.registerLazySingleton<BannerRemoteDataSource>(
     () => BannerRemoteDataSourceImpl(sl<DioHelper>()),
   );
+  sl.registerLazySingleton<FelixRemoteDataSource>(
+    () => FelixRemoteDataSourceImpl(sl<DioHelper>()),
+  );
   sl.registerLazySingleton<AdminRemoteDataSource>(
     () => AdminRemoteDataSourceImpl(sl<DioHelper>()),
   );
@@ -96,6 +103,9 @@ Future<void> init() async {
   sl.registerLazySingleton<BannerRepository>(
     () => BannerRepositoryImpl(remoteDataSource: sl<BannerRemoteDataSource>()),
   );
+  sl.registerLazySingleton<FelixRepository>(
+    () => FelixRepositoryImpl(remoteDataSource: sl<FelixRemoteDataSource>()),
+  );
   sl.registerLazySingleton<AdminRepository>(
     () => AdminRepositoryImpl(remoteDataSource: sl<AdminRemoteDataSource>()),
   );
@@ -115,6 +125,7 @@ Future<void> init() async {
   );
   sl.registerLazySingleton(() => ReviewUsecase(sl<ReviewRepository>()));
   sl.registerLazySingleton(() => BannerUsecase(sl<BannerRepository>()));
+  sl.registerLazySingleton(() => FelixUsecase(sl<FelixRepository>()));
   sl.registerLazySingleton(() => GetAdminUsersUseCase(sl<AdminRepository>()));
   sl.registerLazySingleton(() => GetRepairAdminUseCase(sl<AdminRepository>()));
   sl.registerLazySingleton(
@@ -149,6 +160,7 @@ Future<void> init() async {
       sl<GetBalanceUseCase>(),
       sl<RepairRequestsUseCase>(),
       sl<RepairRequestUpatedUseCase>(),
+      sl<FelixUsecase>(),
     ),
   );
   sl.registerFactory(() => ReviewCubit(sl<ReviewUsecase>()));

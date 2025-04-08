@@ -175,15 +175,26 @@ class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
         url: ApiEndpoints.adminRepairRequests,
         query: {'pageIndex': pageIndex, 'pageSize': 3},
       );
-      debugPrint(response.data.toString());
-      debugPrint(response.statusMessage);
+      debugPrint('Response Data: ${response.data}');
+      debugPrint('Response Status Message: ${response.statusMessage}');
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Headers: ${response.headers}');
+
+      if (response.data == null) {
+        throw Exception('Empty response from server');
+      }
+
       if (response.data['status'] == 'success') {
         return RepairRequestResponse.fromJson(response.data);
       } else {
-        throw Exception(response.data['message'] ?? '');
+        throw Exception(response.data['message'] ?? 'Failed to load repairs');
       }
     } on DioException catch (e) {
-      throw (e.response?.data['message'] ?? 'حدث خطأ أثناء معالجة الطلب');
+      debugPrint('Dio Error: ${e.message}');
+      debugPrint('Dio Response: ${e.response?.data}');
+      throw Exception(
+        e.response?.data['message'] ?? 'حدث خطأ أثناء معالجة الطلب',
+      );
     }
   }
 }

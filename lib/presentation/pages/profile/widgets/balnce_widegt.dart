@@ -7,14 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class GetBalnce extends StatefulWidget {
+class GetBalnce extends StatelessWidget {
   const GetBalnce({super.key});
 
-  @override
-  State<GetBalnce> createState() => _GetBalnceState();
-}
-
-class _GetBalnceState extends State<GetBalnce> {
   @override
   Widget build(BuildContext context) {
     return Row(

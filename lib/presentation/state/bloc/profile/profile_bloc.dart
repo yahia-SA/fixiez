@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/data/models/repair_request.dart';
+import 'package:fixiez/domain/entities/felix.dart';
 import 'package:fixiez/domain/entities/user.dart';
+import 'package:fixiez/domain/usecases/felix/felix_usecase.dart';
 import 'package:fixiez/domain/usecases/repair/repair_request_upated.dart';
 import 'package:fixiez/domain/usecases/repair/repair_requests.dart';
 import 'package:fixiez/domain/usecases/auth/get_balance.dart';
@@ -16,6 +18,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     this.getBalanceUseCase,
     this.repairRequestsUseCase,
     this.repairRequestUpatedUseCase,
+    this.felixUsecase
   ) : super(ProfileInitial()) {
     on<GetProfile>(_onGetProfile);
     on<RepairRequestsUpdate>(_onRepairRequestsUpdate);
@@ -24,6 +27,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetBalanceUseCase getBalanceUseCase;
   final RepairRequestsUseCase repairRequestsUseCase;
   final RepairRequestUpatedUseCase repairRequestUpatedUseCase;
+  final FelixUsecase felixUsecase;
+
 
   int _currentPage = 1;
   int _totalPages = 1;
@@ -47,6 +52,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
     try {
       final user = await _getUserBalance();
+      final felix = await _getFelix();
       await _cacheUserData(user);
       final repairRequestsModel = await repairRequestsUseCase(
         pageIndex: event.pageIndex,
@@ -61,6 +67,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         state is ProfileSuccess
             ? (state as ProfileSuccess).copyWith(
               user: user,
+              felix: felix,
               repairData: _repairRequests,
               currentPage: _currentPage,
               totalPages: _totalPages,
@@ -69,6 +76,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             )
             : ProfileSuccess(
               user: user,
+              felix: felix,
               repairData: _repairRequests,
               currentPage: _currentPage,
               totalPages: _totalPages,
@@ -81,11 +89,12 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
 
     _isLoading = false;
   }
-
   Future<User> _getUserBalance() async {
     return await getBalanceUseCase();
   }
-
+Future<List<FelixEntity>> _getFelix() async {
+  return await felixUsecase();
+}
   Future<void> _cacheUserData(User user) async {
     await CacheHelper.saveData(key: 'Balance', value: user.balance);
     await CacheHelper.saveData(key: 'CashBack', value: user.cashBack);

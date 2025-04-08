@@ -1,4 +1,3 @@
-import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
 import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/data/models/repair_request.dart';
@@ -131,14 +130,16 @@ class _RepairRequestsTableState extends State<RepairRequestsTable> {
     );
   }
 
-  _buildTableData(List<RepairRequestModel> requests) {
-    return requests.map((e) {
-      return [
-        e.user!.name,
-        serviceNameFromString(e.serviceModel.name!)?.arabicName ??
-            e.serviceModel.name ??
-            '',
-      ];
-    }).toList();
-  }
+  //  List<List<Object>> _buildTableData(List<RepairRequestModel> requests) {
+  //     return requests.map((e) => <Object>[
+  //         e.user!.name ,
+  //         e.serviceModel.name ?? '',
+  //       ]).toList();
+  //   }
+}
+
+_buildTableData(List<RepairRequestModel> requests) {
+  return requests
+      .map((e) => <Object>[e.user?.name ?? '', e.serviceModel.name ?? ''])
+      .toList();
 }

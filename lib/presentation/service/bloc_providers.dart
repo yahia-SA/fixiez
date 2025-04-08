@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BlocProvidersList extends StatelessWidget {
-  
   const BlocProvidersList({super.key, required this.child});
   final Widget child;
 
@@ -29,16 +28,14 @@ class BlocProvidersList extends StatelessWidget {
         BlocProvider(create: (_) => sl<SignupBloc>()),
         BlocProvider(create: (_) => sl<OtpBloc>()),
         BlocProvider(create: (_) => sl<RepairCubit>()),
-        BlocProvider(create: (_) => sl<ResetPasswordBloc>(),),
-        BlocProvider(create: (_) => sl<ForgetpasswordBloc>(),),
-        BlocProvider(create: (_) => sl<ProfileBloc>(),),
-        BlocProvider(create: (_) => sl<ReviewCubit>(),),
-        BlocProvider(create: (_) => sl<BannerCubit>(),),
-        BlocProvider(create: (_) => sl<ServiceCubit>(),),
-        BlocProvider(create: (_) => sl<UsersCubit>(),),
-        BlocProvider(create: (_) => sl<RepairAdminCubit>(),),
-
-
+        BlocProvider(create: (_) => sl<ResetPasswordBloc>()),
+        BlocProvider(create: (_) => sl<ForgetpasswordBloc>()),
+        BlocProvider(create: (_) => sl<ProfileBloc>()),
+        BlocProvider(create: (_) => sl<ReviewCubit>()),
+        BlocProvider(create: (_) => sl<BannerCubit>()),
+        BlocProvider(create: (_) => sl<ServiceCubit>()),
+        BlocProvider(create: (_) => sl<UsersCubit>()),
+        BlocProvider(create: (_) => sl<RepairAdminCubit>()),
       ],
       child: child,
     );

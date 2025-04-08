@@ -19,8 +19,10 @@ final class ProfileSuccess extends ProfileState {
     this.currentPage,
     this.totalPages,
     this.totalItems,
+    this.felix,
   });
   final User? user;
+  final List<FelixEntity>? felix;
   final RepairDataModel? repairData;
   final int? currentPage;
   final int? totalPages;
@@ -29,6 +31,7 @@ final class ProfileSuccess extends ProfileState {
 
   ProfileSuccess copyWith({
     User? user,
+    List<FelixEntity>? felix,
     RepairDataModel? repairData,
     int? currentPage,
     int? totalPages,
@@ -37,6 +40,7 @@ final class ProfileSuccess extends ProfileState {
   }) {
     return ProfileSuccess(
       user: user ?? this.user,
+      felix: felix ?? this.felix,
       repairData: repairData ?? this.repairData,
       currentPage: currentPage ?? this.currentPage,
       totalPages: totalPages ?? this.totalPages,
@@ -53,6 +57,7 @@ final class ProfileSuccess extends ProfileState {
     totalPages ?? 0,
     totalItems ?? 0,
     repairUpdateOnly ?? false,
+    felix ?? const [],
   ];
 }
 

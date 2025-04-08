@@ -13,6 +13,8 @@ class ApiEndpoints {
   static const String validateResetPassword =
       '/api/auth/validate-reset-password';
   static const String balanceCashBack = '/api/auth/balance-cash-back';
+  // felix
+  static const String felix = '/api/felix';
 
   // repair
   static const String repairRequest = '/api/repair-requests';
