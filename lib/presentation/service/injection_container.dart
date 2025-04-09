@@ -16,6 +16,10 @@ import 'package:fixiez/domain/repositories/banner_repository.dart';
 import 'package:fixiez/domain/repositories/felix_repository.dart';
 import 'package:fixiez/domain/repositories/repair_repository.dart';
 import 'package:fixiez/domain/repositories/review_repo.dart';
+import 'package:fixiez/domain/usecases/admin/felix/create_felix.dart';
+import 'package:fixiez/domain/usecases/admin/felix/delete_felix.dart';
+import 'package:fixiez/domain/usecases/admin/felix/get_felix.dart';
+import 'package:fixiez/domain/usecases/admin/felix/update_felix.dart';
 import 'package:fixiez/domain/usecases/admin/repair/repair_admin.dart';
 import 'package:fixiez/domain/usecases/auth/delete_use_case.dart';
 import 'package:fixiez/domain/usecases/felix/felix_usecase.dart';
@@ -41,6 +45,7 @@ import 'package:fixiez/presentation/state/bloc/profile/profile_bloc.dart';
 import 'package:fixiez/presentation/state/bloc/resetPassword/reset_password_bloc.dart';
 import 'package:fixiez/presentation/state/cubit/Services/service_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/banner/banner_cubit.dart';
+import 'package:fixiez/presentation/state/cubit/felix/felix_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/repair_admin/repair_admin_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/repair_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/review/review_cubit.dart';
@@ -148,6 +153,12 @@ Future<void> init() async {
     () => AdminDeleteUsersUsecase(sl<AdminRepository>()),
   );
 
+  //admin felix
+  sl.registerLazySingleton(() => GetFelixUsecase(sl<AdminRepository>()));
+  sl.registerLazySingleton(() => DeleteFelixUseCase(sl<AdminRepository>()));
+  sl.registerLazySingleton(() => UpdateFelixUseCase(sl<AdminRepository>()));
+  sl.registerLazySingleton(() => CreateFelixUseCase(sl<AdminRepository>()));
+
   // Register BLoCs
   sl.registerFactory(() => LoginBloc(sl<LoginUseCase>()));
   sl.registerFactory(() => SignupBloc(sl<SignupUseCase>()));
@@ -188,5 +199,14 @@ Future<void> init() async {
   );
   sl.registerFactory(
     () => RepairAdminCubit(repairAdminUseCase: sl<GetRepairAdminUseCase>()),
+  );
+
+  sl.registerFactory(
+    () => FelixCubit(
+      createFelixUseCase: sl<CreateFelixUseCase>(),
+      deleteFelixUseCase: sl<DeleteFelixUseCase>(),
+      updateFelixUseCase: sl<UpdateFelixUseCase>(),
+      getFelixUsecase: sl<GetFelixUsecase>(),
+    ),
   );
 }

@@ -7,9 +7,8 @@ import 'package:fixiez/presentation/state/bloc/resetPassword/reset_password_bloc
 import 'package:fixiez/presentation/state/bloc/signup/signup_bloc.dart';
 import 'package:fixiez/presentation/state/cubit/Services/service_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/banner/banner_cubit.dart';
+import 'package:fixiez/presentation/state/cubit/felix/felix_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/repair_admin/repair_admin_cubit.dart';
-// import 'package:fixiez/presentation/state/cubit/Services/service_cubit.dart';
-// import 'package:fixiez/presentation/state/cubit/banner/banner_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/repair_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/review/review_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/users/users_cubit.dart';
@@ -36,6 +35,7 @@ class BlocProvidersList extends StatelessWidget {
         BlocProvider(create: (_) => sl<ServiceCubit>()),
         BlocProvider(create: (_) => sl<UsersCubit>()),
         BlocProvider(create: (_) => sl<RepairAdminCubit>()),
+        BlocProvider(create: (_) => sl<FelixCubit>()),
       ],
       child: child,
     );

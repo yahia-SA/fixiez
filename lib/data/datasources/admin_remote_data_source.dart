@@ -4,22 +4,43 @@ import 'package:dio/dio.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/network/remote/endpoints.dart';
 import 'package:fixiez/data/models/banner_model.dart';
+import 'package:fixiez/data/models/felix_model.dart';
 import 'package:fixiez/data/models/repair_requsest_admin.dart';
 import 'package:fixiez/data/models/service_model.dart';
 import 'package:fixiez/data/models/users_model.dart';
 import 'package:fixiez/domain/entities/banner.dart';
+import 'package:fixiez/domain/entities/felix.dart';
 import 'package:flutter/material.dart';
 
 abstract class AdminRemoteDataSource {
+  // user
   Future<UsersMdoel> getUsers({required int pageIndex});
-  Future<ServiceResponseModel> getServices();
-  Future<bool> updateService({required String id, required int cost});
   Future<bool> updateUser({required String id, required String role});
-  Future<bool> deleteBanner({required String id});
   Future<bool> deleteUser({required String id});
+
+  //banner
   Future<Banners> createBanner({required File image});
   Future<bool> updateBanner({required String id, required bool isActive});
+  Future<bool> deleteBanner({required String id});
+
+  // setvice
+  Future<ServiceResponseModel> getServices();
+  Future<bool> updateService({required String id, required int cost});
+  //repairs
   Future<RepairRequestResponse> getRepairs({required int pageIndex});
+
+  //felix
+  Future<FelixResponse> getFelix({required int pageIndex});
+  Future<FelixEntity> createFelix({
+    required int felixNumber,
+    required double cost,
+  });
+  Future<bool> deleteFelix({required String id});
+  Future<bool> updateFelix({
+    required String id,
+    required int felixNumber,
+    required double cost,
+  });
 }
 
 class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
@@ -195,6 +216,81 @@ class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
       throw Exception(
         e.response?.data['message'] ?? 'حدث خطأ أثناء معالجة الطلب',
       );
+    }
+  }
+
+  @override
+  Future<FelixEntity> createFelix({
+    required int felixNumber,
+    required double cost,
+  }) async {
+    try {
+      final response = await dioHelper.postData(
+        url: ApiEndpoints.adminCreateFelix,
+        data: {'felixNumber': felixNumber, 'cost': cost},
+      );
+      if (response.data['status'] == 'success') {
+        return Felix.fromJson(response.data['data']).toEntity();
+      } else {
+        throw Exception(response.data['message'] ?? '');
+      }
+    } catch (e) {
+      throw Exception('Failed to create felix: $e');
+    }
+  }
+
+  @override
+  Future<bool> deleteFelix({required String id}) async {
+    try {
+      final response = await dioHelper.deleteData(
+        url: '${ApiEndpoints.adminDeleteFelix}/$id',
+      );
+      if (response.data['status'] == 'success') {
+        return true;
+      } else {
+        throw Exception(response.data['message'] ?? '');
+      }
+    } catch (e) {
+      throw Exception('Failed to delete user: $e');
+    }
+  }
+
+  @override
+  Future<FelixResponse> getFelix({required int pageIndex}) async {
+    try {
+      final response = await dioHelper.getData(
+        url: ApiEndpoints.adminFelix,
+        query: {'pageIndex': pageIndex, 'pageSize': 4},
+      );
+      if (response.data['status'] == 'success') {
+        debugPrint('Response Data: ${response.data}');
+        return FelixResponse.fromJson(response.data);
+      } else {
+        throw Exception(response.data['message'] ?? '');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch felix data: $e');
+    }
+  }
+
+  @override
+  Future<bool> updateFelix({
+    required String id,
+    required int felixNumber,
+    required double cost,
+  }) async {
+    try {
+      final response = await dioHelper.patchData(
+        url: '${ApiEndpoints.adminUpdateFelix}/$id',
+        data: {'felixNumber': felixNumber, 'cost': cost},
+      );
+      if (response.data['status'] == 'success') {
+        return true;
+      } else {
+        throw Exception(response.data['message'] ?? '');
+      }
+    } catch (e) {
+      throw Exception('Failed to update banner: $e');
     }
   }
 }

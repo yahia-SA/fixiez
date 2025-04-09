@@ -1,35 +1,34 @@
+import 'package:fixiez/data/models/meta_data_model.dart';
 import 'package:fixiez/domain/entities/felix.dart';
 
 class FelixResponse {
-
-  FelixResponse({
-    required this.status,
-    required this.message,
-    required this.data,
-  });
+  FelixResponse({this.status, this.message, this.data, this.metadata});
 
   factory FelixResponse.fromJson(Map<String, dynamic> json) {
     return FelixResponse(
-      status: json['status'],
-      message: json['message'],
-      data: (json['data'] as List)
-          .map((item) => Felix.fromJson(item))
-          .toList(),
+      status: json['status'] ?? '',
+      message: json['message'] ?? '',
+      data: (json['data'] as List).map((item) => Felix.fromJson(item)).toList(),
+      metadata:
+          json['metadata'] != null
+              ? Metadata.fromJson(json['metadata'] as Map<String, dynamic>)
+              : null,
     );
   }
-  final String status;
-  final String message;
-  final List<Felix> data;
+  final String? status;
+  final String? message;
+  final List<Felix>? data;
+  Metadata? metadata;
 
   Map<String, dynamic> toJson() => {
     'status': status,
     'message': message,
-    'data': List<dynamic>.from(data.map((x) => x.toJson())),
+    'data': (data?.map((x) => x.toJson())),
+    'metadata': metadata?.toJson(),
   };
 }
 
 class Felix {
-
   Felix({
     required this.id,
     required this.felixNumber,
@@ -57,11 +56,15 @@ class Felix {
     '__v': v,
   };
   FelixEntity toEntity() {
-    return FelixEntity(
-      id: id,
-      felixNumber: felixNumber,
-      cost: cost,
-      v: v,
+    return FelixEntity(id: id, felixNumber: felixNumber, cost: cost, v: v);
+  }
+
+  Felix copyWith({String? id, int? felixNumber, double? cost, int? v}) {
+    return Felix(
+      id: id ?? this.id,
+      felixNumber: felixNumber ?? this.felixNumber,
+      cost: cost ?? this.cost,
+      v: v ?? this.v,
     );
   }
 }

@@ -31,6 +31,12 @@ class ApiEndpoints {
   static const String adminUpdateUser = '/api/admin/update-user-role';
   static const String adminDeleteUser = '/api/admin/delete-user';
 
+  // Admin Felix
+  static const String adminFelix = '/api/admin/get-all-felix';
+  static const String adminCreateFelix = '/api/admin/create-felix';
+  static const String adminUpdateFelix = '/api/admin/update-felix';
+  static const String adminDeleteFelix = '/api/admin/delete-felix';
+
   // Admin Services
   static const String adminServices = '/api/admin/get-all-repair-services';
   static const String adminUpdateService = '/api/admin/update-repair-service';

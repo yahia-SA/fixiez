@@ -3,15 +3,16 @@ import 'package:fixiez/domain/entities/user.dart';
 class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-        id: json['_id'],
-        name: json['name'],
-        phoneNumber: json['phoneNumber'],
-        role: json['role'] ,
-        isActive: json['isActive'] ,
-        balance: (json['balance'] as num).toDouble() ,
-        cashBack: (json['cashBack'] as num).toDouble(),
-        accessToken: json['accessToken'] ??'',
-        refreshToken: json['refreshToken'] ??'',);
+      id: json['_id'],
+      name: json['name'] ?? '',
+      phoneNumber: json['phoneNumber'],
+      role: json['role'],
+      isActive: json['isActive'],
+      balance: (json['balance'] as num).toDouble(),
+      cashBack: (json['cashBack'] as num).toDouble(),
+      accessToken: json['accessToken'] ?? '',
+      refreshToken: json['refreshToken'] ?? '',
+    );
   }
   factory UserModel.fromLoginJson(Map<String, dynamic> json) {
     return UserModel(
@@ -74,6 +75,7 @@ class UserModel {
       refreshToken: refreshToken,
     );
   }
+
   UserModel copyWith({
     String? id,
     String? name,

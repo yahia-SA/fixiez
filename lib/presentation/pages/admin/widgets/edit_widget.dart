@@ -15,6 +15,7 @@ class EditWidget extends StatefulWidget {
     required this.userData2,
     this.userTypes = const ['مستخدم', 'ادمن'],
     this.isEditUser = true,
+    this.isDouble = false,
     this.onChanged,
   });
 
@@ -27,7 +28,8 @@ class EditWidget extends StatefulWidget {
   final String userData2;
   final List<String> userTypes;
   final bool isEditUser;
-  final Function(int)? onChanged;
+  final Function(dynamic)? onChanged;
+  final bool isDouble;
 
   @override
   State<EditWidget> createState() => _EditWidgetState();
@@ -35,24 +37,26 @@ class EditWidget extends StatefulWidget {
 
 class _EditWidgetState extends State<EditWidget> {
   late String userData2;
-  late int value;
+  late dynamic value;
   @override
   void initState() {
     super.initState();
     userData2 = widget.userData2;
-    value = int.tryParse(userData2)??0;
+    widget.isDouble
+        ? value = double.tryParse(userData2) ?? 0
+        : value = int.tryParse(userData2) ?? 0;
   }
 
   void increaseValue() {
     setState(() {
-      value += 10;
+      widget.isDouble ? value += 0.5 : value += 10;
       widget.onChanged?.call(value);
     });
   }
 
   void decreaseValue() {
     setState(() {
-      value -= 10;
+      widget.isDouble ? value -= 0.5 : value -= 10;
       widget.onChanged?.call(value);
     });
   }
@@ -147,9 +151,8 @@ class _EditWidgetState extends State<EditWidget> {
                                           size: 18.sp,
                                         ),
                                       ),
-                                      
-                                      onChanged: 
-                                       (String? newValue) {
+
+                                      onChanged: (String? newValue) {
                                         setState(() {
                                           userData2 = newValue!;
                                         });
@@ -227,16 +230,15 @@ class _EditWidgetState extends State<EditWidget> {
                       onPressed: () {
                         if (userData2.toString() == 'ادمن') {
                           widget.saveAction('admin');
-                        }
-                        else if (userData2.toString() == 'مستخدم') {
+                        } else if (userData2.toString() == 'مستخدم') {
                           widget.saveAction('user');
-                        }else{
-                      widget.saveAction(value.toString());
+                        } else {
+                          widget.saveAction(value.toString());
                         }
                       },
                       child: Text(
                         widget.buttontext ?? 'حفظ',
-                        style: context.bold16Blue!.copyWith(
+                        style: context.med16Blue!.copyWith(
                           color: AppColors.white,
                         ),
                       ),

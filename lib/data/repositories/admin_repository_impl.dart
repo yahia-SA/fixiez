@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:fixiez/data/datasources/admin_remote_data_source.dart';
+import 'package:fixiez/data/models/felix_model.dart';
 import 'package:fixiez/data/models/repair_requsest_admin.dart';
 import 'package:fixiez/data/models/users_model.dart';
 import 'package:fixiez/domain/entities/banner.dart';
+import 'package:fixiez/domain/entities/felix.dart';
 import 'package:fixiez/domain/entities/services.dart';
 import 'package:fixiez/domain/repositories/admin_repository.dart';
 
@@ -41,18 +43,57 @@ class AdminRepositoryImpl implements AdminRepository {
   Future<Banners> createBanner({required File image}) async {
     return await remoteDataSource.createBanner(image: image);
   }
-  
+
   @override
-  Future<bool> updateBanner({required String id, required bool isActive}) async {
-    return await remoteDataSource.updateBanner(id: id, isActive: isActive);}
-    
-      @override
-      Future<bool> deleteUser({required String id}) async {
-        return await remoteDataSource.deleteUser(id: id);}
+  Future<bool> updateBanner({
+    required String id,
+    required bool isActive,
+  }) async {
+    return await remoteDataSource.updateBanner(id: id, isActive: isActive);
+  }
+
+  @override
+  Future<bool> deleteUser({required String id}) async {
+    return await remoteDataSource.deleteUser(id: id);
+  }
 
   @override
   Future<RepairRequestResponse> getRepirs({required int pageIndex}) async {
     final response = await remoteDataSource.getRepairs(pageIndex: pageIndex);
     return response;
+  }
+
+  @override
+  Future<FelixEntity> createFelix({
+    required int felixNumber,
+    required double cost,
+  }) async {
+    return await remoteDataSource.createFelix(
+      felixNumber: felixNumber,
+      cost: cost,
+    );
+  }
+
+  @override
+  Future<bool> deleteFelix({required String id}) async {
+    return await remoteDataSource.deleteFelix(id: id);
+  }
+
+  @override
+  Future<FelixResponse> getFelix({required int pageIndex}) async {
+    return await remoteDataSource.getFelix(pageIndex: pageIndex);
+  }
+
+  @override
+  Future<bool> updateFelix({
+    required String id,
+    required int felixNumber,
+    required double cost,
+  }) async {
+    return await remoteDataSource.updateFelix(
+      id: id,
+      felixNumber: felixNumber,
+      cost: cost,
+    );
   }
 }

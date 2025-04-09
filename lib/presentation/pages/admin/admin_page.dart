@@ -5,12 +5,10 @@ import 'package:fixiez/presentation/pages/admin/widgets/banners_table.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/bar_chart_widget.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/custom_banner.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/custom_chart.dart';
+import 'package:fixiez/presentation/pages/admin/widgets/felix_table.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/repair_requests_table.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/service_table.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/users_tabel.dart';
-// import 'package:fixiez/presentation/service/injection_container.dart';
-// import 'package:fixiez/presentation/state/cubit/Services/service_cubit.dart';
-// import 'package:fixiez/presentation/state/cubit/banner/banner_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/users/users_cubit.dart';
 import 'package:fixiez/presentation/widgets/name_header.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -99,6 +97,8 @@ class AdminPage extends StatelessWidget {
                   const UsersTable(),
                   SizedBox(height: 24.h),
                   const RepairRequestsTable(),
+                  SizedBox(height: 24.h),
+                  const FelixTable(),
                   SizedBox(height: 24.h),
                 ],
               ),
