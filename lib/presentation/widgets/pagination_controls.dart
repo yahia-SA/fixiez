@@ -26,7 +26,7 @@ class PaginationControls extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           TextButton(
-            onPressed: (pageIndex > 1 && !isLoading) ? onNext : null,
+            onPressed: (pageIndex > 1 && !isLoading) ? onBack : null,
             child: TextWidget('السابق', style: context.med14Black),
           ),
           TextWidget('$pageIndex : $totalPages'),

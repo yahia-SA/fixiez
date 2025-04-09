@@ -47,6 +47,7 @@ class FelixCubit extends Cubit<FelixState> {
     } catch (e) {
       emit(FelixFailure(e.toString()));
     }
+    _isLoading =false;
   }
 
   Future<void> deleteFelix({required String id}) async {
