@@ -5,7 +5,7 @@ import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:fixiez/data/models/repair_request.dart';
 import 'package:fixiez/presentation/state/bloc/profile/profile_bloc.dart';
 import 'package:fixiez/presentation/widgets/custom_table.dart';
-import 'package:fixiez/presentation/widgets/text_widget.dart';
+import 'package:fixiez/presentation/widgets/pagination_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -134,30 +134,12 @@ class _CustomRepairTableState extends State<CustomRepairTable> {
               dataCellStyle: context.med14Black,
               titleheight: 16.h,
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.symmetric(
-                vertical: 1.h,
-                horizontal: 28.w,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                children: [
-                  TextButton(
-                    onPressed:
-                        (_pageIndex > 1 && !isLoading) ? _onClickBack : null,
-                    child: TextWidget('السابق', style: context.med14Black),
-                  ),
-                  TextWidget('$_pageIndex : $totalPages'),
-                  TextButton(
-                    onPressed:
-                        (_pageIndex < totalPages! && !isLoading)
-                            ? _onClickNext
-                            : null,
-                    child: TextWidget('التالي', style: context.med14Black),
-                  ),
-                ],
-              ),
+            PaginationControls(
+              pageIndex: _pageIndex,
+              totalPages: totalPages!,
+              isLoading: isLoading,
+              onNext: _onClickNext,
+              onBack: _onClickBack,
             ),
           ],
         );

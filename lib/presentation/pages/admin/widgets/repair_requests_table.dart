@@ -1,13 +1,11 @@
 import 'package:fixiez/core/theme/app_colors.dart';
-import 'package:fixiez/core/theme/app_text.dart';
 import 'package:fixiez/data/models/repair_request.dart';
 import 'package:fixiez/data/models/repair_requsest_admin.dart';
 import 'package:fixiez/presentation/state/cubit/repair_admin/repair_admin_cubit.dart';
 import 'package:fixiez/presentation/widgets/custom_table.dart';
-import 'package:fixiez/presentation/widgets/text_widget.dart';
+import 'package:fixiez/presentation/widgets/pagination_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RepairRequestsTable extends StatefulWidget {
   const RepairRequestsTable({super.key});
@@ -100,42 +98,18 @@ class _RepairRequestsTableState extends State<RepairRequestsTable> {
                 headingRowHeight: 36,
                 dataRowHeight: 36,
               ),
-            Padding(
-              padding: EdgeInsetsDirectional.symmetric(
-                vertical: 1.h,
-                horizontal: 28.w,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  TextButton(
-                    onPressed:
-                        (_pageIndex > 1 && !isLoading) ? _onClickBack : null,
-                    child: TextWidget('السابق', style: context.med14Black),
-                  ),
-                  TextWidget('$_pageIndex : $totalPages'),
-                  TextButton(
-                    onPressed:
-                        (_pageIndex < totalPages! && !isLoading)
-                            ? _onClickNext
-                            : null,
-                    child: TextWidget('التالي', style: context.med14Black),
-                  ),
-                ],
-              ),
+            PaginationControls(
+              pageIndex: _pageIndex,
+              totalPages: totalPages!,
+              isLoading: isLoading,
+              onNext: _onClickNext,
+              onBack: _onClickBack,
             ),
           ],
         );
       },
     );
   }
-
-  //  List<List<Object>> _buildTableData(List<RepairRequestModel> requests) {
-  //     return requests.map((e) => <Object>[
-  //         e.user!.name ,
-  //         e.serviceModel.name ?? '',
-  //       ]).toList();
-  //   }
 }
 
 _buildTableData(List<RepairRequestModel> requests) {

@@ -24,10 +24,10 @@ final class RepairAdminSuccess extends RepairAdminState {
   final int? totalItems;
   @override
   List<Object> get props => [
-    repairRequestResponse!,
-    totalPages!,
-    currentPage!,
-    totalItems!,
+    repairRequestResponse ??  RepairRequestResponse() ,
+    totalPages ?? 1,
+    currentPage ?? 1,
+    totalItems ?? 0,
   ];
 }
 

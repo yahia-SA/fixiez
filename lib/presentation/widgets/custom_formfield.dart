@@ -17,6 +17,7 @@ class CustomFormfield extends StatelessWidget {
     required this.label,
     this.autofillHints,
     this.onEditingComplete,
+    this.isFelix=false,
   });
   final TextEditingController controller;
   final TextInputType type;
@@ -27,6 +28,7 @@ class CustomFormfield extends StatelessWidget {
   final bool isPassword;
   final List<TextInputFormatter>? inputFormatters;
   final String label;
+  final bool isFelix;
   final List<String>? autofillHints;
   final void Function()? onEditingComplete;
   @override
@@ -34,7 +36,9 @@ class CustomFormfield extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: context.med14Black),
+        Text(label, style: isFelix? context.bold16Blue!.copyWith(
+          height: 1.4.h
+        ) :context.med14Black),
         SizedBox(height: 12.h),
         SizedBox(
           width: 327.w,

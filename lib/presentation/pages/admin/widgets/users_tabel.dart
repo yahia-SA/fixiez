@@ -4,7 +4,7 @@ import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:fixiez/data/models/users_model.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/edit_widget.dart';
 import 'package:fixiez/presentation/widgets/delete.dart';
-import 'package:fixiez/presentation/widgets/text_widget.dart';
+import 'package:fixiez/presentation/widgets/pagination_controls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
@@ -129,14 +129,18 @@ class _UsersTableState extends State<UsersTable> {
                                                       role: newrole,
                                                     );
                                                 setState(() {
-                                                  final index = cachedUsers!.data
+                                                  final index = cachedUsers!
+                                                      .data
                                                       ?.indexWhere(
-                                                        (item) => item.id == e.id,
+                                                        (item) =>
+                                                            item.id == e.id,
                                                       );
                                                   if (index != null &&
                                                       index != -1) {
-                                                    cachedUsers!.data![index] = e
-                                                        .copyWith(role: newrole);
+                                                    cachedUsers!.data![index] =
+                                                        e.copyWith(
+                                                          role: newrole,
+                                                        );
                                                   }
                                                 });
                                                 Navigator.pop(context);
@@ -145,7 +149,8 @@ class _UsersTableState extends State<UsersTable> {
                                               tabletitle2: 'نوعه',
                                               userData1: e.name.toString(),
                                               userData2:
-                                                  e.role.toArabicRole.toString(),
+                                                  e.role.toArabicRole
+                                                      .toString(),
                                             ),
                                       ),
                                   child: Icon(
@@ -154,30 +159,44 @@ class _UsersTableState extends State<UsersTable> {
                                     size: 20.sp,
                                   ),
                                 ),
-                              InkWell(onTap: () => deleteDialog(context: context, title: 'هل انت متاكد من حذف المستخدم', deleteAction: () {
-                                      context
-                                          .read<UsersCubit>()
-                                          .deleteAdminUser(id: e.id)
-                                          .then((success) {
-                                            setState(() {
-                                              cachedUsers!.data!.removeWhere(
-                                                (element) => element.id == e.id,
-                                              );
-                                            });
-                                            UiHelper.showNotification(
-                                              'تم حذف المستخدم بنجاح',
-                                              backgroundColor: Colors.green,
-                                            );
-                                          })
-                                          .catchError((e) {
-                                            UiHelper.showNotification(
-                                              'حدث خطأ:$e',
-                                            );
-                                          });
+                                InkWell(
+                                  onTap:
+                                      () => deleteDialog(
+                                        context: context,
+                                        title: 'هل انت متاكد من حذف المستخدم',
+                                        deleteAction: () {
+                                          context
+                                              .read<UsersCubit>()
+                                              .deleteAdminUser(id: e.id)
+                                              .then((success) {
+                                                setState(() {
+                                                  cachedUsers!.data!
+                                                      .removeWhere(
+                                                        (element) =>
+                                                            element.id == e.id,
+                                                      );
+                                                });
+                                                UiHelper.showNotification(
+                                                  'تم حذف المستخدم بنجاح',
+                                                  backgroundColor: Colors.green,
+                                                );
+                                              })
+                                              .catchError((e) {
+                                                UiHelper.showNotification(
+                                                  'حدث خطأ:$e',
+                                                );
+                                              });
 
-                                      Navigator.pop(context);
-                                    }),
-                                child: Icon(Icons.delete,color: AppColors.error,size: 20.sp,),),],
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: AppColors.error,
+                                    size: 20.sp,
+                                  ),
+                                ),
+                              ],
                             ),
                           ];
                         })
@@ -186,29 +205,12 @@ class _UsersTableState extends State<UsersTable> {
                 dataRowHeight: 38,
                 columnWidths: [81.75, 81.75, 81.75, 81.75],
               ),
-            Padding(
-              padding: EdgeInsetsDirectional.symmetric(
-                vertical: 1.h,
-                horizontal: 28.w,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  TextButton(
-                    onPressed:
-                        (_pageIndex > 1 && !isLoading) ? _onClickBack : null,
-                    child: TextWidget('السابق', style: context.med14Black),
-                  ),
-                  TextWidget('$_pageIndex : $totalPages'),
-                  TextButton(
-                    onPressed:
-                        (_pageIndex < totalPages! && !isLoading)
-                            ? _onClickNext
-                            : null,
-                    child: TextWidget('التالي', style: context.med14Black),
-                  ),
-                ],
-              ),
+            PaginationControls(
+              pageIndex: _pageIndex,
+              totalPages: totalPages!,
+              isLoading: isLoading,
+              onNext: _onClickNext,
+              onBack: _onClickBack,
             ),
           ],
         );
