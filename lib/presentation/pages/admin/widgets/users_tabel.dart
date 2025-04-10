@@ -33,8 +33,6 @@ class _UsersTableState extends State<UsersTable> {
       if (state is UsersSuccess) {
         cachedUsers = state.users;
         cachedTotalPages = state.totalPages;
-      } else {
-        _fetchData();
       }
     });
   }

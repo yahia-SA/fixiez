@@ -19,14 +19,6 @@ class AnalysisWidget extends StatefulWidget {
 
 class _AnalysisWidgetState extends State<AnalysisWidget> {
   @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-       await context.read<AnalysisCubit>().getAnalysis();
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -41,7 +33,7 @@ class _AnalysisWidgetState extends State<AnalysisWidget> {
                     return CustomBanner(
                       title: 'عدد المستخدمين',
                       iconPath: ImageAssets.person,
-                      number: state.userResult?.total.toString() ??'1',
+                      number: state.userResult?.total.toString() ?? '1',
                       chart: CustomChart(
                         spots: [
                           for (

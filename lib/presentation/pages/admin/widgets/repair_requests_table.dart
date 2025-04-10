@@ -28,8 +28,6 @@ class _RepairRequestsTableState extends State<RepairRequestsTable> {
       if (state is RepairAdminSuccess) {
         cachedData = state.repairRequestResponse!.data;
         cachedTotalPages = state.totalPages;
-      } else {
-        _fetchData();
       }
     });
   }

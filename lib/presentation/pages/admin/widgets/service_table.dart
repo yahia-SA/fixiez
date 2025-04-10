@@ -26,19 +26,8 @@ class _ServiceTableState extends State<ServiceTable> {
       final state = context.read<ServiceCubit>().state;
       if (state is ServiceSuccess) {
         cachedServices = state.service;
-      } else {
-        _fetchData();
       }
     });
-  }
-
-  void _fetchData() {
-    if (!isLoading) {
-      setState(() => isLoading = true);
-      context.read<ServiceCubit>().getServices().then(
-        (_) => setState(() => isLoading = false),
-      );
-    }
   }
 
   @override
@@ -108,9 +97,12 @@ class _ServiceTableState extends State<ServiceTable> {
                                           },
                                           tabletitle1: 'اسم الخدمه',
                                           tabletitle2: 'سعر الخدمه',
-                                          userData1: serviceNameFromString(e.name)?.arabicName ?? e.name,
+                                          userData1:
+                                              serviceNameFromString(
+                                                e.name,
+                                              )?.arabicName ??
+                                              e.name,
                                           userData2: e.cost.toString(),
-
                                         ),
                                   ),
                               child: Icon(

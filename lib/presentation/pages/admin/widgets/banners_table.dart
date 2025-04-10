@@ -30,8 +30,6 @@ class _BannersTableState extends State<BannersTable> {
       final state = context.read<BannerCubit>().state;
       if (state is BannerSuccess) {
         cachedBanners = state.banner;
-      } else {
-        _fetchData();
       }
     });
   }
@@ -44,20 +42,6 @@ class _BannersTableState extends State<BannersTable> {
       );
     }
   }
-
-  // void _onClickNext() {
-  //   if (!isLoading ) {
-  //     setState(() => _pageIndex++);
-  //     _fetchData();
-  //   }
-  // }
-
-  // void _onClickBack() {
-  //   if (!isLoading) {
-  //     setState(() => _pageIndex--);
-  //     _fetchData();
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

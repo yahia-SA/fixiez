@@ -33,8 +33,6 @@ class _FelixTableState extends State<FelixTable> {
       if (state is FelixSuccess) {
         cachedFelixs = state.felix;
         cachedTotalPages = state.totalPages;
-      } else {
-        _fetchData();
       }
     });
   }
