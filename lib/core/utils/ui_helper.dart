@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:fixiez/core/constants/strings.dart';
 import 'package:fixiez/core/theme/app_colors.dart';
@@ -65,7 +64,7 @@ class UiHelper {
         }
       }
     } catch (e) {
-      log('object');
+
       await launchUrl(Uri.parse(webUrl), mode: LaunchMode.externalApplication);
     }
   }

@@ -6,18 +6,20 @@ import 'package:fixiez/data/models/banner_model.dart';
 abstract class BannerRemoteDataSource {
   Future<BannerResponseModel> getBanners();
 }
-class BannerRemoteDataSourceImpl implements BannerRemoteDataSource {
 
-  BannerRemoteDataSourceImpl( this.dioHelper);
+class BannerRemoteDataSourceImpl implements BannerRemoteDataSource {
+  BannerRemoteDataSourceImpl(this.dioHelper);
   final DioHelper dioHelper;
   @override
   Future<BannerResponseModel> getBanners() async {
     try {
-      final response = await dioHelper.getData(
-        url: CacheHelper.getData(key:'isAdmin') ? ApiEndpoints.adminBanners : ApiEndpoints.banners,
-      );
-      if (response.data['status'] == 'success') {
+      final bool isAdmin = CacheHelper.getData(key: 'isAdmin') ?? false;
 
+      final response = await dioHelper.getData(
+        url: isAdmin ? ApiEndpoints.adminBanners : ApiEndpoints.banners,
+      );
+
+      if (response.data['status'] == 'success') {
         return BannerResponseModel.fromJson(response.data);
       } else {
         throw Exception(response.data['message'] ?? '');

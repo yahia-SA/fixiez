@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:fixiez/core/constants/enums.dart';
 import 'package:fixiez/core/utils/ui_helper.dart';
 import 'package:fixiez/domain/usecases/repair/repair_request.dart';
@@ -40,7 +38,7 @@ class RepairCubit extends Cubit<RepairState> {
         (state as RepairFailure).message,
       ),
     });
-    log('state: $state');
+
   }
 
   Future<void> submitRepairRequest() async {

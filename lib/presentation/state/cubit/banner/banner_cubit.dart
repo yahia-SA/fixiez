@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:equatable/equatable.dart';
 import 'package:fixiez/domain/entities/banner.dart';
 import 'package:fixiez/domain/usecases/admin/banner/create_banner.dart';
@@ -11,7 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'banner_state.dart';
 
 class BannerCubit extends Cubit<BannerState> {
-  BannerCubit({required this.bannerUsecase, required this.deleteBannerAdminUseCase, required this.createBannerAdminUseCase, required this.updateBannerAdminUseCase}) : super(BannerInitial());
+  BannerCubit({
+    required this.bannerUsecase,
+    required this.deleteBannerAdminUseCase,
+    required this.createBannerAdminUseCase,
+    required this.updateBannerAdminUseCase,
+  }) : super(BannerInitial());
   final BannerUsecase bannerUsecase;
   final DeleteBannerAdminUseCase deleteBannerAdminUseCase;
   final CreateBannerAdminUseCase createBannerAdminUseCase;
@@ -36,10 +40,11 @@ class BannerCubit extends Cubit<BannerState> {
       emit(BannerFailure(e.toString()));
     }
   }
+
   Future<void> createBanner({required File image}) async {
     emit(BannerCreating());
     try {
-     await createBannerAdminUseCase(image: image);
+      await createBannerAdminUseCase(image: image);
       emit(BannerCreated());
     } catch (e) {
       emit(BannerFailure(e.toString()));
@@ -47,18 +52,23 @@ class BannerCubit extends Cubit<BannerState> {
     }
   }
 
-  Future<void> updateBanner({required String id, required bool isActive}) async {
+  Future<void> updateBanner({
+    required String id,
+    required bool isActive,
+  }) async {
     emit(BannerUpdating());
     try {
-    final success =  await updateBannerAdminUseCase(id: id, isActive: isActive);
+      final success = await updateBannerAdminUseCase(
+        id: id,
+        isActive: isActive,
+      );
       if (success) {
-      emit(BannerUpdated());
-    }else{
-      emit(const BannerFailure('Failed to update banner.'));
-    }
-    }catch (e) {
+        emit(BannerUpdated());
+      } else {
+        emit(const BannerFailure('Failed to update banner.'));
+      }
+    } catch (e) {
       emit(BannerFailure(e.toString()));
     }
   }
 }
-
