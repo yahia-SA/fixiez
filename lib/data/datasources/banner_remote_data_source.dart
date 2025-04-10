@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:fixiez/core/network/local/cache_helper.dart';
 import 'package:fixiez/core/network/remote/dio_helper.dart';
 import 'package:fixiez/core/network/remote/endpoints.dart';
@@ -24,7 +25,7 @@ class BannerRemoteDataSourceImpl implements BannerRemoteDataSource {
       } else {
         throw Exception(response.data['message'] ?? '');
       }
-    } catch (e) {
+    } on DioException catch(e) {
       throw Exception('Failed to fetch banner data: $e');
     }
   }
