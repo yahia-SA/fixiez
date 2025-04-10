@@ -8,7 +8,7 @@ import 'package:fixiez/data/models/felix_model.dart';
 import 'package:fixiez/data/models/repair_requsest_admin.dart';
 import 'package:fixiez/data/models/service_model.dart';
 import 'package:fixiez/data/models/users_model.dart';
-import 'package:fixiez/domain/analtyis_model.dart';
+import 'package:fixiez/data/models/analtyis_model.dart';
 import 'package:fixiez/domain/entities/banner.dart';
 import 'package:fixiez/domain/entities/felix.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +42,7 @@ abstract class AdminRemoteDataSource {
     required int felixNumber,
     required double cost,
   });
+  //analysis
   Future<AnalysisModel> getAnalysis();
 }
 
@@ -299,9 +300,8 @@ class AdminRemoteDataSourceImpl implements AdminRemoteDataSource {
   @override
   Future<AnalysisModel> getAnalysis() async {
     try {
-      final response = await dioHelper.patchData(
+      final response = await dioHelper.getData(
         url: ApiEndpoints.adminAnalysis,
-        data: {},
       );
       if (response.data['status'] == 'success') {
         return AnalysisModel.fromJson(response.data);

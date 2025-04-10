@@ -228,7 +228,7 @@ class _FelixTableState extends State<FelixTable> {
                         .toList(),
                 headingRowHeight: 36,
                 dataRowHeight: 38,
-                columnWidths: [109, 109, 109],
+                // columnWidths: 109,
               ),
             PaginationControls(
               pageIndex: _pageIndex,

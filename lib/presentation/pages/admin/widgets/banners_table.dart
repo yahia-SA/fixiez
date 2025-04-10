@@ -302,7 +302,7 @@ class _BannersTableState extends State<BannersTable> {
                         .toList(),
                 headingRowHeight: 52,
                 dataRowHeight: 36,
-                columnWidths: [81.75, 81.75, 81.75, 81.75],
+                // columnWidths: 81.75,
               ),
             // Padding(
             //   padding: EdgeInsetsDirectional.symmetric(

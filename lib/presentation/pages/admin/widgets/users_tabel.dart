@@ -203,7 +203,7 @@ class _UsersTableState extends State<UsersTable> {
                         .toList(),
                 headingRowHeight: 52,
                 dataRowHeight: 38,
-                columnWidths: [81.75, 81.75, 81.75, 81.75],
+                // columnWidths: 81.75,
               ),
             PaginationControls(
               pageIndex: _pageIndex,

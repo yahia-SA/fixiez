@@ -5,7 +5,7 @@ import 'package:fixiez/presentation/pages/home/widget/customer_order_text.dart';
 import 'package:fixiez/presentation/pages/home/widget/customer_reviews_list.dart';
 import 'package:fixiez/presentation/pages/home/widget/location_contanier.dart';
 import 'package:fixiez/presentation/state/cubit/banner/banner_cubit.dart';
-import 'package:fixiez/presentation/state/cubit/repair_cubit.dart';
+import 'package:fixiez/presentation/state/cubit/repair_user/repair_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/review/review_cubit.dart';
 import 'package:fixiez/presentation/widgets/name_header.dart';
 import 'package:fixiez/presentation/pages/home/widget/order_request_widget.dart';

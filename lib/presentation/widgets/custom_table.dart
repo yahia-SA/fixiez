@@ -31,14 +31,13 @@ class CustomTable extends StatelessWidget {
   final TextStyle? dataCellStyle;
   final Color? headersColor;
   final double? titleheight;
-  final List<double>? columnWidths; // Fixed widths for each column
+  final double? columnWidths; // Fixed widths for each column
 
   @override
   Widget build(BuildContext context) {
     // Default column widths if not provided
-    final defaultColumnWidth = (327.w) / headers.length;
-    final effectiveColumnWidths =
-        columnWidths ?? List<double>.filled(headers.length, defaultColumnWidth);
+    final defaultColumnWidth = (327) / headers.length;
+    final effectiveColumnWidth = columnWidths ?? defaultColumnWidth;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -87,93 +86,103 @@ class CustomTable extends StatelessWidget {
             ),
             SizedBox(height: titleheight ?? 8.h),
             data.isEmpty
-                ? const SizedBox()
-                : ClipRRect(
-                  borderRadius: BorderRadius.circular(4.r),
-                  child: SizedBox(
-                    width:
-                        effectiveColumnWidths.reduce((a, b) => a + b) +
-                        (headers.length - 1) *
-                            12.w, // Total width of all columns
-                    child: DataTable(
-                      columnSpacing: 1.w,
-                      headingRowHeight: headingRowHeight.h,
-                      dataRowMinHeight: 36.h,
-                      dataRowMaxHeight: dataRowHeight.h,
-                      headingTextStyle:
-                          headingTextStyle ??
-                          AppText.bold12.copyWith(color: AppColors.white),
-                      dataTextStyle: AppText.reg10.copyWith(
-                        color: AppColors.black,
-                      ),
-                      headingRowColor: WidgetStateProperty.all(
-                        headersColor ?? const Color(0xffE6F1FF),
-                      ),
-                      border: TableBorder.all(
-                        color: const Color(0xFFB9B9B9),
-                        width: 1.w,
-                        borderRadius: BorderRadius.circular(4.r),
-                      ),
-                      columns:
-                          headers.asMap().entries.map((entry) {
-                            final index = entry.key;
-                            return DataColumn(
-                              label: SizedBox(
-                                width: effectiveColumnWidths[index],
-                                child: Center(
-                                  child: Text(
-                                    entry.value,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 2,
-                                    textAlign: TextAlign.center,
-                                    style:
-                                        headingTextStyle ??
-                                        AppText.bold12.copyWith(
-                                          color: AppColors.primary,
-                                        ),
+                ? const SizedBox(child: Text('Data is empty'))
+                : Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.r),
+                    border: Border.all(
+                      color: const Color(0xFFB9B9B9),
+                      width: 1.w,
+                    ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4.r),
+                    child: SizedBox(
+                      width:
+                          (effectiveColumnWidth * headers.length) +
+                          (headers.length - 1) * 12.w,
+                      // Total width of all columns
+                      child: DataTable(
+                        columnSpacing: 1.w,
+                        headingRowHeight: headingRowHeight.h,
+                        dataRowMinHeight: 36.h,
+                        dataRowMaxHeight: dataRowHeight.h,
+                        headingTextStyle:
+                            headingTextStyle ??
+                            AppText.bold12.copyWith(color: AppColors.white),
+                        dataTextStyle: AppText.reg10.copyWith(
+                          color: AppColors.black,
+                        ),
+                        headingRowColor: WidgetStateProperty.all(
+                          headersColor ?? const Color(0xffE6F1FF),
+                        ),
+                        border: TableBorder.symmetric(
+                          inside: BorderSide(
+                            color: const Color(0xFFB9B9B9),
+                            width: 1.w,
+                          ),
+                        ),
+                        columns:
+                            headers.asMap().entries.map((entry) {
+                              return DataColumn(
+                                label: SizedBox(
+                                  width: effectiveColumnWidth,
+                                  child: Center(
+                                    child: Text(
+                                      entry.value,
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      textAlign: TextAlign.center,
+                                      style:
+                                          headingTextStyle ??
+                                          AppText.bold12.copyWith(
+                                            color: AppColors.primary,
+                                          ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          }).toList(),
-                      rows:
-                          data
-                              .map(
-                                (row) => DataRow(
-                                  cells:
-                                      row.asMap().entries.map((entry) {
-                                        final index = entry.key;
-                                        return DataCell(
-                                          SizedBox(
-                                            width: effectiveColumnWidths[index],
-                                            child: Center(
-                                              child:
-                                                  entry.value is String
-                                                      ? Text(
-                                                        entry.value.toString(),
-                                                        overflow:
-                                                            TextOverflow
-                                                                .ellipsis,
-                                                        style:
-                                                            dataCellStyle ??
-                                                            AppText.reg12
-                                                                .copyWith(
-                                                                  color:
-                                                                      AppColors
-                                                                          .black,
-                                                                  height: 1.3.h,
-                                                                ),
-                                                      )
-                                                      : entry.value is Widget
-                                                      ? entry.value as Widget
-                                                      : const SizedBox(),
+                              );
+                            }).toList(),
+                        rows:
+                            data
+                                .map(
+                                  (row) => DataRow(
+                                    cells:
+                                        row.asMap().entries.map((entry) {
+                                          return DataCell(
+                                            SizedBox(
+                                              width: effectiveColumnWidth,
+                                              child: Center(
+                                                child:
+                                                    entry.value is String
+                                                        ? Text(
+                                                          entry.value
+                                                              .toString(),
+                                                          overflow:
+                                                              TextOverflow
+                                                                  .ellipsis,
+                                                          style:
+                                                              dataCellStyle ??
+                                                              AppText.reg12
+                                                                  .copyWith(
+                                                                    color:
+                                                                        AppColors
+                                                                            .black,
+                                                                    height:
+                                                                        1.3.h,
+                                                                  ),
+                                                        )
+                                                        : entry.value is Widget
+                                                        ? entry.value as Widget
+                                                        : const SizedBox(),
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                ),
-                              )
-                              .toList(),
+                                          );
+                                        }).toList(),
+                                  ),
+                                )
+                                .toList(),
+                      ),
                     ),
                   ),
                 ),

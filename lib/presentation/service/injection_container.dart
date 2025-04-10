@@ -16,6 +16,7 @@ import 'package:fixiez/domain/repositories/banner_repository.dart';
 import 'package:fixiez/domain/repositories/felix_repository.dart';
 import 'package:fixiez/domain/repositories/repair_repository.dart';
 import 'package:fixiez/domain/repositories/review_repo.dart';
+import 'package:fixiez/domain/usecases/admin/analysis/analysis_use_case.dart';
 import 'package:fixiez/domain/usecases/admin/felix/create_felix.dart';
 import 'package:fixiez/domain/usecases/admin/felix/delete_felix.dart';
 import 'package:fixiez/domain/usecases/admin/felix/get_felix.dart';
@@ -44,10 +45,11 @@ import 'package:fixiez/presentation/state/bloc/forget_password/forget_password_b
 import 'package:fixiez/presentation/state/bloc/profile/profile_bloc.dart';
 import 'package:fixiez/presentation/state/bloc/resetPassword/reset_password_bloc.dart';
 import 'package:fixiez/presentation/state/cubit/Services/service_cubit.dart';
+import 'package:fixiez/presentation/state/cubit/analysis/analysis_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/banner/banner_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/felix/felix_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/repair_admin/repair_admin_cubit.dart';
-import 'package:fixiez/presentation/state/cubit/repair_cubit.dart';
+import 'package:fixiez/presentation/state/cubit/repair_user/repair_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/review/review_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/users/users_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -159,6 +161,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => UpdateFelixUseCase(sl<AdminRepository>()));
   sl.registerLazySingleton(() => CreateFelixUseCase(sl<AdminRepository>()));
 
+  //admin analysis
+  sl.registerLazySingleton(() => AnalysisAdminUseCase(sl<AdminRepository>()));
+
   // Register BLoCs
   sl.registerFactory(() => LoginBloc(sl<LoginUseCase>()));
   sl.registerFactory(() => SignupBloc(sl<SignupUseCase>()));
@@ -209,4 +214,5 @@ Future<void> init() async {
       getFelixUsecase: sl<GetFelixUsecase>(),
     ),
   );
+  sl.registerFactory(() => AnalysisCubit(sl<AnalysisAdminUseCase>()));
 }

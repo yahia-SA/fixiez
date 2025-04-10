@@ -110,6 +110,7 @@ class _ServiceTableState extends State<ServiceTable> {
                                           tabletitle2: 'سعر الخدمه',
                                           userData1: serviceNameFromString(e.name)?.arabicName ?? e.name,
                                           userData2: e.cost.toString(),
+
                                         ),
                                   ),
                               child: Icon(
@@ -123,6 +124,7 @@ class _ServiceTableState extends State<ServiceTable> {
                         .toList(),
                 headingRowHeight: 36,
                 dataRowHeight: 38,
+                // columnWidths: 109,
               ),
           ],
         );

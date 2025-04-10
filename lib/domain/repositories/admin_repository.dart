@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:fixiez/data/models/felix_model.dart';
 import 'package:fixiez/data/models/repair_requsest_admin.dart';
 import 'package:fixiez/data/models/users_model.dart';
-import 'package:fixiez/domain/analtyis_model.dart';
+import 'package:fixiez/data/models/analtyis_model.dart';
 import 'package:fixiez/domain/entities/banner.dart';
 import 'package:fixiez/domain/entities/felix.dart';
 import 'package:fixiez/domain/entities/services.dart';

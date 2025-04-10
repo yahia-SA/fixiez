@@ -127,6 +127,7 @@ class _CustomRepairTableState extends State<CustomRepairTable> {
               data: _buildTableData(requests),
               headingRowHeight: 46.h,
               dataRowHeight: 46.h,
+              // columnWidths: 108.66667175292969,
               headersColor: AppColors.primary,
               headingTextStyle: context.med14Black!.copyWith(
                 color: AppColors.white,

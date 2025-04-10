@@ -97,6 +97,7 @@ class _RepairRequestsTableState extends State<RepairRequestsTable> {
                 data: _buildTableData(requests),
                 headingRowHeight: 36,
                 dataRowHeight: 36,
+                //  columnWidths: 163.5,
               ),
             PaginationControls(
               pageIndex: _pageIndex,
