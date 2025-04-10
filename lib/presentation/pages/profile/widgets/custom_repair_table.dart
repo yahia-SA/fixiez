@@ -116,7 +116,9 @@ class _CustomRepairTableState extends State<CustomRepairTable> {
         }
 
         if (requests == null || requests.isEmpty) {
-          return Text('لا يوجد بيانات حاليا', style: AppText.med14);
+          return Center(
+            child: Text('لا يوجد بيانات حاليا', style: AppText.med14),
+          );
         }
 
         return Column(
