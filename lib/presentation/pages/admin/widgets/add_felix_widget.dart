@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fixiez/core/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,6 +50,7 @@ class AddFelix extends StatelessWidget {
                           signed: false,
                         ),
                         inputFormatters: [
+                          ArabicToEnglishNumberInputFormatter(),
                           FilteringTextInputFormatter.digitsOnly,
                         ],
                         validate: (value) {
@@ -72,6 +74,7 @@ class AddFelix extends StatelessWidget {
                           signed: false,
                         ),
                         inputFormatters: [
+                          ArabicToEnglishNumberInputFormatter(),
                           FilteringTextInputFormatter.allow(
                             RegExp(r'^\d*\.?\d*'),
                           ),
@@ -88,6 +91,7 @@ class AddFelix extends StatelessWidget {
                         },
                         label: 'سعر الباقه',
                         hint: 'سعر الباقه',
+
                         onEditingComplete: () {
                           if (_formKey.currentState!.validate()) {
                             final int felix = int.parse(_felixController.text);
@@ -118,12 +122,14 @@ class AddFelix extends StatelessWidget {
                       ),
                       child: TextButton(
                         onPressed: () {
-                          final int felix = int.parse(_felixController.text);
-                          final double cost = double.parse(
-                            _costController.text,
-                          );
+                          if (_formKey.currentState!.validate()) {
+                            final int felix = int.parse(_felixController.text);
+                            final double cost = double.parse(
+                              _costController.text,
+                            );
 
-                          saveAction(felix, cost);
+                            saveAction(felix, cost);
+                          }
                         },
                         child: Text(
                           'اضافه',

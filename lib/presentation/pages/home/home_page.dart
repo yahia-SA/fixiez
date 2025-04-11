@@ -26,9 +26,10 @@ class HomePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => sl<BannerCubit>()..getBanners()),
-        BlocProvider(create: (context) => sl<ReviewCubit>()..getReviews(page: 1)),
+        BlocProvider(
+          create: (context) => sl<ReviewCubit>()..getReviews(page: 1),
+        ),
         BlocProvider(create: (context) => sl<RepairCubit>()),
-        
       ],
       child: SafeArea(
         child: Builder(
@@ -53,7 +54,9 @@ class HomePage extends StatelessWidget {
                   builder: (context, state) {
                     if (state is RepairLoading) {
                       return const Center(
-                        child: CircularProgressIndicator(color: AppColors.primary),
+                        child: CircularProgressIndicator(
+                          color: AppColors.primary,
+                        ),
                       );
                     }
                     return Stack(
@@ -82,14 +85,17 @@ class HomePage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     SizedBox(height: 25.h),
-                                    NameHeader(onBackPressed: () {}, isHome: true),
+                                    NameHeader(
+                                      onBackPressed: () {},
+                                      isHome: true,
+                                    ),
                                     SizedBox(height: 16.h),
                                     const LocationContainer(),
                                   ],
                                 ),
                               ),
                               SizedBox(height: 16.h),
-                              const SilderPosterWidgetState(),
+                              SilderPosterWidgetState(),
                               SizedBox(height: 20.h),
                               const ServiceListWidget(),
                               SizedBox(height: 16.h),
@@ -120,7 +126,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             );
-          }
+          },
         ),
       ),
     );

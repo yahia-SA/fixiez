@@ -39,7 +39,10 @@ class Signup extends StatelessWidget {
                   SizedBox(height: 50.h),
                   BlocConsumer<SignupBloc, SignupState>(
                     listener: (context, state) {
-                      if (state is SignupSuccess) {
+                      if (state is SignupSuccess ||
+                          (state is SignupFailure &&
+                              state.message ==
+                                  'حسابك غير مفعل تحقق من رسالة الجوال الخاصة بك')) {
                         Navigator.pushNamed(
                           context,
                           AppRoutes.otpScreen,
@@ -48,24 +51,14 @@ class Signup extends StatelessWidget {
                             'origin': OtpPages.signup,
                           },
                         );
-                      } else if (state is SignupFailure) {
-                        if (state.message ==
-                            'حسابك غير مفعل تحقق من رسالة الجوال الخاصة بك') {
-                          Navigator.pushNamed(
-                            context,
-                            AppRoutes.otpScreen,
-                            arguments: {
-                              'phone': _phoneController.text.trim(),
-                              'origin': OtpPages.signup,
-                            },
-                          );
+                        if (state is SignupFailure) {
                           UiHelper.showNotification(
-                            'حسابك غير مفعل تحقق من رسالة الجوال الخاصة بك',
+                            state.message,
                             backgroundColor: AppColors.yellow,
                           );
-                        } else {
-                          UiHelper.showNotification(state.message);
                         }
+                      } else if (state is SignupFailure) {
+                        UiHelper.showNotification(state.message);
                       }
                     },
                     builder: (context, state) {
@@ -79,6 +72,8 @@ class Signup extends StatelessWidget {
                             SizedBox(height: 20.h),
                             CustomFormfield(
                               label: 'اسم المستخدم',
+                              onEditingComplete:
+                                  () => FocusScope.of(context).nextFocus(),
                               controller: _usernameController,
                               hint: 'اسم المستخدم',
                               type: TextInputType.name,
@@ -94,6 +89,8 @@ class Signup extends StatelessWidget {
                             CustomFormfield(
                               label: 'رقم الهاتف',
                               controller: _phoneController,
+                              onEditingComplete:
+                                  () => FocusScope.of(context).nextFocus(),
                               hint: 'رقم الهاتف الخاص بك',
                               autofillHints: [AutofillHints.telephoneNumber],
                               type: TextInputType.phone,
@@ -116,6 +113,8 @@ class Signup extends StatelessWidget {
                                   controller: _passwordController,
                                   hint: 'قم بانشاء كلمه مرور الخاصه بك',
                                   type: TextInputType.visiblePassword,
+                                  onEditingComplete:
+                                      () => FocusScope.of(context).nextFocus(),
                                   suffix:
                                       isPasswordVisible
                                           ? Icons.visibility_outlined

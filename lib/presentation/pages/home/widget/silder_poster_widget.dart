@@ -8,22 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SilderPosterWidgetState extends StatefulWidget {
-  const SilderPosterWidgetState({super.key});
+class SilderPosterWidgetState extends StatelessWidget {
+  SilderPosterWidgetState({super.key});
+
+  final ValueNotifier<int> _currentIndex = ValueNotifier<int>(0);
 
   @override
-  State<SilderPosterWidgetState> createState() =>
-      _SilderPosterWidgetStateState();
-}
-
-class _SilderPosterWidgetStateState extends State<SilderPosterWidgetState> {
-  int _currentIndex = 0;
-  @override
-  void initState() {
-    super.initState();
-    context.read<BannerCubit>().getBanners();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BannerCubit, BannerState>(
@@ -92,34 +82,37 @@ class _SilderPosterWidgetStateState extends State<SilderPosterWidgetState> {
                   enlargeCenterPage: true,
                   enlargeFactor: 0.3,
                   onPageChanged: (index, reason) {
-                    setState(() {
-                      _currentIndex = index;
-                    });
+                    _currentIndex.value = index;
                   },
                   scrollDirection: Axis.horizontal,
                 ),
               ),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children:
-                    state.banner.asMap().entries.map((entry) {
-                      return Container(
-                        width: 11.w,
-                        height: 11.h,
+              ValueListenableBuilder(
+                valueListenable: _currentIndex,
+                builder: (BuildContext context, dynamic value, Widget? child) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children:
+                        state.banner.asMap().entries.map((entry) {
+                          return Container(
+                            width: 11.w,
+                            height: 11.h,
 
-                        margin: const EdgeInsets.symmetric(horizontal: 4.0),
-                        decoration: ShapeDecoration(
-                          color:
-                              _currentIndex == entry.key
-                                  ? AppColors.primary
-                                  : Colors.grey,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      );
-                    }).toList(),
+                            margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                            decoration: ShapeDecoration(
+                              color:
+                                  _currentIndex.value == entry.key
+                                      ? AppColors.primary
+                                      : Colors.grey,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                  );
+                },
               ),
             ],
           );

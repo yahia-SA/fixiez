@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => sl<ProfileBloc>()),
-        BlocProvider(create: (context) => sl<BannerCubit>()),
+        BlocProvider(create: (context) => sl<BannerCubit>()..getBanners()),
         BlocProvider(create: (context) => sl<ReviewCubit>()),
       ],
       child: Builder(
@@ -75,7 +75,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 14.h),
-                          const SilderPosterWidgetState(),
+                          SilderPosterWidgetState(),
                           SizedBox(height: 4.h),
                           Padding(
                             padding: EdgeInsets.only(right: 24.w),
@@ -113,7 +113,7 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           SizedBox(height: 18.h),
                           const ReviewWidget(),
-          
+
                           SizedBox(height: 116.h),
                         ],
                       ),
@@ -141,7 +141,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           );
-        }
+        },
       ),
     );
   }

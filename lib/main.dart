@@ -8,8 +8,10 @@ import 'package:fixiez/presentation/pages/home/home_page.dart';
 import 'package:fixiez/presentation/pages/login/login_screen.dart';
 import 'package:fixiez/presentation/pages/onboarding/onboarding_screen.dart';
 import 'package:fixiez/presentation/service/injection_container.dart';
+import 'package:fixiez/presentation/widgets/bloc_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:overlay_support/overlay_support.dart';
 
@@ -19,19 +21,23 @@ Future<void> main() async {
   await DioHelper.instance.loadTokens();
   await CacheHelper.init();
   await init();
-  ErrorWidget.builder = (FlutterErrorDetails errorDetails) =>  MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: Scaffold(
-      body: Center(child: Column(
-        children: [
-          Icon(Icons.error,color: AppColors.error, size: 100.sp),
-          Text(errorDetails.summary.toString()),
-          Text(errorDetails.exception.toString()),
-          const Text('Oops something went wrong'),
-        ],
-      )),
-    ),
-  );
+  Bloc.observer = MyBlocObserver();
+  ErrorWidget.builder =
+      (FlutterErrorDetails errorDetails) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Center(
+            child: Column(
+              children: [
+                Icon(Icons.error, color: AppColors.error, size: 100.sp),
+                Text(errorDetails.summary.toString()),
+                Text(errorDetails.exception.toString()),
+                const Text('Oops something went wrong'),
+              ],
+            ),
+          ),
+        ),
+      );
   final bool onBoarding = CacheHelper.getData(key: 'onBoarding') ?? false;
   final bool isAdmin = CacheHelper.getData(key: 'isAdmin') ?? false;
   final bool rememberMe = CacheHelper.getUserField(key: 'AccessToken') != null;

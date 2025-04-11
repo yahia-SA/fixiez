@@ -39,6 +39,23 @@ class Resetpassword extends StatelessWidget {
         builder: (context, state) {
           var bloc = context.read<ResetPasswordBloc>();
           return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              leading: SizedBox(
+                width: 10.67.w,
+                height: 18.67.h,
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: AppColors.primary,
+                    size: 18.67.h,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ),
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Form(
@@ -78,6 +95,8 @@ class Resetpassword extends StatelessWidget {
                             hint: 'قم باعادة تعيين كلمه مرور خاصه بك ',
                             type: TextInputType.visiblePassword,
                             isPassword: !isPasswordVisible,
+                            onEditingComplete:
+                                () => FocusScope.of(context).nextFocus(),
                             suffix:
                                 isPasswordVisible
                                     ? Icons.visibility_outlined
@@ -102,6 +121,18 @@ class Resetpassword extends StatelessWidget {
                             hint: 'اعد ادخال كلمة المرور',
                             type: TextInputType.visiblePassword,
                             isPassword: !isPasswordVisible0,
+                            onEditingComplete: () {
+                              if (_formKey.currentState!.validate()) {
+                                bloc.add(
+                                  ResetpasswordSubmitted(
+                                    otp: otp,
+                                    password: _passwordController.text,
+                                    confirmPassword:
+                                        _confirmPasswordController.text,
+                                  ),
+                                );
+                              }
+                            },
                             suffix:
                                 isPasswordVisible0
                                     ? Icons.visibility_outlined

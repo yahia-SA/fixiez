@@ -96,7 +96,7 @@ class _FelixTableState extends State<FelixTable> {
                     () => showDialog(
                       context: context,
                       builder:
-                          (context) => AddFelix(
+                          (dialogContext) => AddFelix(
                             saveAction: (felix, cost) {
                               context
                                   .read<FelixCubit>()
@@ -105,7 +105,9 @@ class _FelixTableState extends State<FelixTable> {
                                     setState(() {
                                       _fetchData();
                                     });
-                                    if (context.mounted) Navigator.pop(context);
+                                    if (dialogContext.mounted) {
+                                      Navigator.pop(dialogContext);
+                                    }
                                     UiHelper.showNotification(
                                       'تم اضافه الباقه بنجاح',
                                       backgroundColor: Colors.green,

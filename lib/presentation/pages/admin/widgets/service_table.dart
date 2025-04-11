@@ -68,7 +68,7 @@ class _ServiceTableState extends State<ServiceTable> {
                                   () => showDialog(
                                     context: context,
                                     builder:
-                                        (context) => EditWidget(
+                                        (dialogContext) => EditWidget(
                                           isEditUser: false,
                                           title: 'تعديل سعر الخدمه',
                                           saveAction: (newcost) {
@@ -93,7 +93,7 @@ class _ServiceTableState extends State<ServiceTable> {
                                               });
                                             }
 
-                                            Navigator.pop(context);
+                                            Navigator.pop(dialogContext);
                                           },
                                           tabletitle1: 'اسم الخدمه',
                                           tabletitle2: 'سعر الخدمه',

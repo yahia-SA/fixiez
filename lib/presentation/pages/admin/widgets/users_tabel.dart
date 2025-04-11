@@ -117,7 +117,7 @@ class _UsersTableState extends State<UsersTable> {
                                       () => showDialog(
                                         context: context,
                                         builder:
-                                            (context) => EditWidget(
+                                            (dialogContext) => EditWidget(
                                               title: 'تعديل نوع المستخدم',
                                               saveAction: (newrole) {
                                                 context
@@ -141,7 +141,7 @@ class _UsersTableState extends State<UsersTable> {
                                                         );
                                                   }
                                                 });
-                                                Navigator.pop(context);
+                                                Navigator.pop(dialogContext);
                                               },
                                               tabletitle1: 'اسم المستخدم',
                                               tabletitle2: 'نوعه',

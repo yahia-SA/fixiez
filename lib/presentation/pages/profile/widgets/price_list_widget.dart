@@ -24,59 +24,62 @@ class PriceListWidget extends StatelessWidget {
         } else if (state is ProfileSuccess) {
           debugPrint('State Felix: ${state.felix}');
           final felixes = state.felix ?? [];
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children:
-                felixes
-                    .map(
-                      (service) => InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          child: Container(
-                            width: 69.w,
-                            height: 92.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: AppColors.yellow,
-                            ),
-                            child: Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    width: 61.w,
-                                    height: 46.h,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: AppColors.white,
-                                    ),
-                                    child: Center(
-                                      child: TextWidget(
-                                        '${service.felixNumber} Fx',
-                                        style: AppText.bold14.copyWith(
-                                          color: AppColors.primary,
+          return SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children:
+                  felixes
+                      .map(
+                        (service) => InkWell(
+                          onTap: () {},
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            child: Container(
+                              width: 69.w,
+                              height: 92.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: AppColors.yellow,
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      width: 61.w,
+                                      height: 46.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: AppColors.white,
+                                      ),
+                                      child: Center(
+                                        child: TextWidget(
+                                          '${service.felixNumber} Fx',
+                                          style: AppText.bold14.copyWith(
+                                            color: AppColors.primary,
+                                          ),
+                                          textDirection: TextDirection.ltr,
                                         ),
-                                        textDirection: TextDirection.ltr,
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(height: 3.h),
-                                  TextWidget(
-                                    '${service.cost} LE',
-                                    style: AppText.bold14.copyWith(
-                                      color: AppColors.primary,
+                                    SizedBox(height: 5.h),
+                                    TextWidget(
+                                      '${service.cost} LE',
+                                      style: AppText.bold14.copyWith(
+                                        color: AppColors.primary,
+                                      ),
+                                      textDirection: TextDirection.ltr,
                                     ),
-                                    textDirection: TextDirection.ltr,
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    )
-                    .toList(),
+                      )
+                      .toList(),
+            ),
           );
         }
 

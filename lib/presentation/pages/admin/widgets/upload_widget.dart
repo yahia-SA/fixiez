@@ -7,8 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UploadWidget extends StatefulWidget {
-  const UploadWidget({super.key, required this.onPressed
-  });
+  const UploadWidget({super.key, required this.onPressed});
   final void Function(File file) onPressed;
 
   @override
@@ -17,27 +16,47 @@ class UploadWidget extends StatefulWidget {
 
 class _UploadWidgetState extends State<UploadWidget> {
   File? _image;
-  bool _isImage = true; 
+  bool _isImage = true;
+  bool isLoading = false;
+
   Future<void> pickFile() async {
     try {
-      final result = await FilePicker.platform.pickFiles(
-        
-        type: FileType.image,
-        // allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf'],
-      );
-      if (result == null) return;
+      final result = await FilePicker.platform.pickFiles(type: FileType.image);
+      if (result == null || result.files.isEmpty) return;
 
       if (result.files.single.size >= 10 * 1024 * 1024) {
-        UiHelper.showNotification('حجم الملف يجب ان يكون اقل من 10 ميجابايت');
+        UiHelper.showNotification('حجم الملف يجب أن يكون أقل من 10 ميجابايت');
+        return;
       }
+
       _isImage = !(result.files.single.extension!.toLowerCase() == 'pdf');
-      final encdoePath = Uri.file(result.files.single.path!).toFilePath();
+      final encodePath = Uri.file(result.files.single.path!).toFilePath();
+
       setState(() {
-        _image = File(encdoePath);
+        _image = File(encodePath);
       });
     } catch (e) {
-      UiHelper.showNotification('حدث خطأ في تحميل الملف');
+      UiHelper.showNotification('حدث خطأ في تحميل الملف');
       debugPrint('Failed to pick file $e');
+    }
+  }
+
+  Future<void> _onSavePressed() async {
+    if (_image == null) {
+      UiHelper.showNotification('الرجاء اختيار ملف أولاً');
+      return;
+    }
+
+    setState(() => isLoading = true);
+
+    try {
+      await Future.delayed(const Duration(seconds: 2));
+      widget.onPressed(_image!);
+      if (mounted) Navigator.pop(context);
+    } catch (e) {
+      UiHelper.showNotification('فشل إرسال الملف');
+    } finally {
+      if (mounted) setState(() => isLoading = false);
     }
   }
 
@@ -62,7 +81,8 @@ class _UploadWidgetState extends State<UploadWidget> {
                 ),
                 child:
                     _image != null
-                            ? _isImage ? Image.file(
+                        ? _isImage
+                            ? Image.file(
                               _image!,
                               fit: BoxFit.fill,
                               errorBuilder:
@@ -73,9 +93,8 @@ class _UploadWidgetState extends State<UploadWidget> {
                                     ),
                                   ),
                             )
-                            
-                        : PdfPreview(image: _image)
-                         :Column(
+                            : PdfPreview(image: _image)
+                        : Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Icon(
@@ -106,7 +125,7 @@ class _UploadWidgetState extends State<UploadWidget> {
                                 ),
                               ),
                               child: TextButton(
-                                onPressed: () => pickFile(),
+                                onPressed: pickFile,
                                 child: Text(
                                   'Select File'.toUpperCase(),
                                   style: context.reg14Hint92!.copyWith(
@@ -124,22 +143,28 @@ class _UploadWidgetState extends State<UploadWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 79.w,
                       height: 30.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(4.r),
-                      ),
-                      child: TextButton(
-                        onPressed:() =>widget.onPressed(_image!),
-                        child: Text(
-                          'حفظ',
-                          textAlign: TextAlign.center,
-                          style: context.bold16Blue!.copyWith(
-                            color: AppColors.white,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4.r),
                           ),
                         ),
+                        onPressed: isLoading ? null : _onSavePressed,
+                        child:
+                            isLoading
+                                ? const CircularProgressIndicator(
+                                  color: AppColors.primary,
+                                )
+                                : Text(
+                                  'حفظ',
+                                  style: context.bold16Blue!.copyWith(
+                                    color: AppColors.white,
+                                  ),
+                                ),
                       ),
                     ),
                     Container(
@@ -173,36 +198,26 @@ class _UploadWidgetState extends State<UploadWidget> {
 }
 
 class PdfPreview extends StatelessWidget {
-  const PdfPreview({
-    super.key,
-    required File? image,
-  }) : _image = image;
+  const PdfPreview({super.key, required File? image}) : _image = image;
 
   final File? _image;
 
   @override
   Widget build(BuildContext context) {
     return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.picture_as_pdf,
-                color: Colors.red,
-                size: 50.sp,
-              ),
-              SizedBox(height: 8.h),
-              Text('PDF Document', style: AppText.med14),
-              Text(
-                _image!.path.split('/').last,
-                style: AppText.reg12.copyWith(
-                  color: Colors.grey,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.picture_as_pdf, color: Colors.red, size: 50.sp),
+          SizedBox(height: 8.h),
+          Text('PDF Document', style: AppText.med14),
+          Text(
+            _image!.path.split('/').last,
+            style: AppText.reg12.copyWith(color: Colors.grey),
+            overflow: TextOverflow.ellipsis,
           ),
-        );
+        ],
+      ),
+    );
   }
 }
-

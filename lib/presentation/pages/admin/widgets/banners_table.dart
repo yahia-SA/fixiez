@@ -74,21 +74,26 @@ class _BannersTableState extends State<BannersTable> {
                     () => showDialog(
                       context: context,
                       builder:
-                          (context) => UploadWidget(
+                          (dialogContext) => UploadWidget(
                             onPressed: (newImage) async {
                               try {
                                 setState(() {
                                   isLoading = true;
                                 });
-                                await context.read<BannerCubit>().createBanner(
-                                  image: newImage,
-                                );
+                                await context
+                                    .read<BannerCubit>()
+                                    .createBanner(image: newImage)
+                                    .then(
+                                      (_) => const CircularProgressIndicator(
+                                        color: AppColors.primary,
+                                      ),
+                                    );
                                 setState(() {
                                   isLoading = false;
                                 });
                                 _fetchData();
-                                if (context.mounted) {
-                                  Navigator.pop(context);
+                                if (dialogContext.mounted) {
+                                  Navigator.pop(dialogContext);
                                 }
                                 UiHelper.showNotification(
                                   'تم إضافة البانر بنجاح',
