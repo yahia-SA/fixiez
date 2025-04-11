@@ -32,7 +32,7 @@ class _CustomerReviewsListState extends State<CustomerReviewsList> {
       if (state is ReviewSuccess) {
         cachedReviews = state.reviews;
         cachedTotalPages = state.totalPages;
-      } else {
+      } else if (state is! ReviewSuccess || state.reviews!.data!.isEmpty) {
         _fetchData();
       }
     });

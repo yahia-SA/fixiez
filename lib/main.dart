@@ -7,7 +7,6 @@ import 'package:fixiez/presentation/pages/admin/admin_page.dart';
 import 'package:fixiez/presentation/pages/home/home_page.dart';
 import 'package:fixiez/presentation/pages/login/login_screen.dart';
 import 'package:fixiez/presentation/pages/onboarding/onboarding_screen.dart';
-import 'package:fixiez/presentation/service/bloc_providers.dart';
 import 'package:fixiez/presentation/service/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,29 +68,27 @@ class MyApp extends StatelessWidget {
         break;
     }
 
-    return BlocProvidersList(
-      child: ScreenUtilInit(
-        designSize: const Size(375, 812),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, child) {
-          return OverlaySupport.global(
-            child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              title: 'Fixiez',
-              theme: AppTheme.appTheme,
-              onGenerateRoute: RouteGenerator.generateRoute,
-              home: startScreen,
-              builder: (context, child) {
-                return Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: child!,
-                );
-              },
-            ),
-          );
-        },
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return OverlaySupport.global(
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Fixiez',
+            theme: AppTheme.appTheme,
+            onGenerateRoute: RouteGenerator.generateRoute,
+            home: startScreen,
+            builder: (context, child) {
+              return Directionality(
+                textDirection: TextDirection.rtl,
+                child: child!,
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

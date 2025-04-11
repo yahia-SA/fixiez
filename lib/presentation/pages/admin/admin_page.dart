@@ -5,6 +5,7 @@ import 'package:fixiez/presentation/pages/admin/widgets/felix_table.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/repair_requests_table.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/service_table.dart';
 import 'package:fixiez/presentation/pages/admin/widgets/users_tabel.dart';
+import 'package:fixiez/presentation/service/injection_container.dart';
 import 'package:fixiez/presentation/state/cubit/Services/service_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/analysis/analysis_cubit.dart';
 import 'package:fixiez/presentation/state/cubit/banner/banner_cubit.dart';
@@ -41,41 +42,51 @@ class _AdminPageState extends State<AdminPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.backgroundColor,
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Column(
-                textDirection: TextDirection.ltr,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(24.w, 35.h, 24.w, 0),
-                    child: const NameHeader(
-                      isThereSettings: true,
-                      isblue: true,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => sl<BannerCubit>()),
+        BlocProvider(create: (context) => sl<ServiceCubit>()),
+        BlocProvider(create: (context) => sl<UsersCubit>()),
+        BlocProvider(create: (context) => sl<RepairAdminCubit>()),
+        BlocProvider(create: (context) => sl<FelixCubit>()),
+        BlocProvider(create: (context) => sl<AnalysisCubit>()),
+      ],
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: AppColors.backgroundColor,
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Column(
+                  textDirection: TextDirection.ltr,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(24.w, 35.h, 24.w, 0),
+                      child: const NameHeader(
+                        isThereSettings: true,
+                        isblue: true,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 48.h),
-                  const AnalysisWidget(),
-                  SizedBox(height: 24.h),
-                  const BannersTable(),
-                  SizedBox(height: 24.h),
-                  const ServiceTable(),
-                  SizedBox(height: 24.h),
-                  const UsersTable(),
-                  SizedBox(height: 24.h),
-                  const RepairRequestsTable(),
-                  SizedBox(height: 24.h),
-                  const FelixTable(),
-                  SizedBox(height: 24.h),
-                ],
+                    SizedBox(height: 48.h),
+                    const AnalysisWidget(),
+                    SizedBox(height: 24.h),
+                    const BannersTable(),
+                    SizedBox(height: 24.h),
+                    const ServiceTable(),
+                    SizedBox(height: 24.h),
+                    const UsersTable(),
+                    SizedBox(height: 24.h),
+                    const RepairRequestsTable(),
+                    SizedBox(height: 24.h),
+                    const FelixTable(),
+                    SizedBox(height: 24.h),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

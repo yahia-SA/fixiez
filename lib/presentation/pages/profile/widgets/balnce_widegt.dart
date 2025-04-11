@@ -47,7 +47,7 @@ class GetBalnce extends StatelessWidget {
                     () => UiHelper.showNotification(state.message),
                   );
                   return TextWidget(
-                    state.message,
+                    '0',
                     style: AppText.medium20.copyWith(color: Colors.black),
                   );
                 } else {

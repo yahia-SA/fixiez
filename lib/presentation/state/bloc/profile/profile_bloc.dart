@@ -19,7 +19,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     this.repairRequestsUseCase,
     this.repairRequestUpatedUseCase,
     this.felixUsecase
-  ) : super(ProfileInitial()) {
+  ) :   super(ProfileInitial()) {
     on<GetProfile>(_onGetProfile);
     on<RepairRequestsUpdate>(_onRepairRequestsUpdate);
   }
@@ -60,8 +60,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       final repairRequests = repairRequestsModel.toEntity();
 
       _currentPage = event.pageIndex;
-      _totalPages = repairRequests.metadata.totalPages!;
-      _totalItems = repairRequests.metadata.totalItems!;
+      _totalPages = repairRequests.metadata.totalPages ?? 1;
+      _totalItems = repairRequests.metadata.totalItems ?? 1;
       _repairRequests = repairRequestsModel; // تحميل الصفحة الجديدة فقط
       emit(
         state is ProfileSuccess
