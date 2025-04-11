@@ -72,6 +72,9 @@ class _CustomerReviewsListState extends State<CustomerReviewsList> {
 
   @override
   Widget build(BuildContext context) {
+    if (cachedReviews == null && !isLoading) {
+      _fetchData();
+    }
     return BlocConsumer<ReviewCubit, ReviewState>(
       listener: (context, state) {
         if (state is ReviewSuccess) {
@@ -114,7 +117,9 @@ class _CustomerReviewsListState extends State<CustomerReviewsList> {
                         contentPadding: EdgeInsets.zero,
                         leading: CircleAvatar(
                           radius: 50.r,
-                          backgroundColor: _avatarColors[index % 3].withValues(alpha: 0.7),
+                          backgroundColor: _avatarColors[index % 3].withValues(
+                            alpha: 0.7,
+                          ),
                           child: Text(
                             UiHelper.getTransliteratedFirstLetter(
                               review.userId?.name ?? '',
